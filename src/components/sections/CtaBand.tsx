@@ -9,11 +9,13 @@ export function CtaBand({ title, text }: { title: string; text: string }) {
         <div className="relative z-10 flex h-full max-w-[640px] flex-col justify-center">
           <h2
             id="cta-title"
-            className="max-w-[620px] text-[36px] leading-[1.1] tracking-[-0.02em] text-on-primary md:text-[52px] md:leading-[55px]"
+            className="max-w-[600px] text-[36px] leading-[1.1] tracking-[-0.02em] text-on-primary md:text-[52px] md:leading-[55px]"
           >
             {title}
           </h2>
-          <p className="mt-[13px] text-[18px] leading-[1.55] text-[rgb(27_29_33/0.8)]">{text}</p>
+          <p className="mt-[13px] max-w-[520px] text-[18px] leading-[1.55] text-[rgb(27_29_33/0.8)]">
+            {text}
+          </p>
           <div className="mt-[30px] flex flex-wrap gap-[14px]">
             <ButtonLink href="/contact" variant="dark">
               Get a Quote
