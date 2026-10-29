@@ -36,7 +36,7 @@ export function ProductGrid({
         <div
           role="group"
           aria-label="Filter products"
-          className="mb-[42px] flex flex-wrap gap-[10px]"
+          className="mb-[45px] flex flex-wrap gap-[10px]"
         >
           {PRODUCT_FILTERS.map((f) => {
             const selected = filter === f.key;
@@ -47,10 +47,10 @@ export function ProductGrid({
                 type="button"
                 aria-pressed={selected}
                 onClick={() => setFilter(f.key)}
-                className={`h-[40px] cursor-pointer rounded-full px-[20px] text-[15px] leading-none font-medium transition-colors ${
+                className={`h-[41px] cursor-pointer rounded-full px-[21px] text-[15px] leading-none transition-colors ${
                   selected
-                    ? "bg-primary text-on-primary"
-                    : "border border-line text-text/90 hover:border-[rgb(244_241_238/0.35)]"
+                    ? "bg-primary font-medium text-on-primary"
+                    : "border border-line text-[rgb(244_241_238/0.8)] hover:border-[rgb(244_241_238/0.35)]"
                 }`}
               >
                 {label}
