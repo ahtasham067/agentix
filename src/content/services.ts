@@ -372,7 +372,7 @@ export const services: Service[] = [
     },
     seo: {
       keyword: "Next.js web app development",
-      title: "Next.js & Supabase Web App Development | Agentix",
+      title: "Next.js Web App Development with Supabase | Agentix",
       description:
         "Next.js web app development with Supabase and Ruby on Rails: dashboards, internal tools, customer portals and stores with payments, built to stay secure.",
     },
@@ -415,6 +415,7 @@ export const services: Service[] = [
       paragraphs: [
         "We build most new web apps with Next.js and Supabase: Next.js for fast, server-rendered pages and Supabase for the Postgres database, authentication and row level security.",
         "For larger back ends we also use Ruby on Rails with PostgreSQL, Sidekiq and Redis for background jobs. Front ends can be React, Next.js or Vue.js. We deploy to Vercel or AWS and set up GitHub Actions for releases.",
+        "Security is part of the build, not an extra. Data access is checked on the server, secrets never reach the browser, and forms are validated on both sides, so the app stays safe as it grows.",
       ],
     },
     process: { heading: "How we build your web app", steps: howWeWork },

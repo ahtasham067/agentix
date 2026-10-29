@@ -33,7 +33,7 @@ export const pageSeo = {
     path: "/services",
     title: "AI Agent, n8n & Web App Development Services | Agentix",
     description:
-      "AI agent development, n8n automation and web app development services. One team builds the agent, the workflow and the app, from plan to launch.",
+      "AI agent, n8n and web app development services from one team: we build the agent, the workflow and the app that ties them together, from plan to launch.",
     keyword: "AI agent, n8n and web app development services",
     lastModified: "2026-10-30",
     ogLabel: "Services",
@@ -42,7 +42,7 @@ export const pageSeo = {
     path: "/about",
     title: "Agentix: Software House for AI Agents and Web Apps",
     description:
-      "Agentix is a software house in Pakistan building AI agents, n8n automation and web apps, founded by full-stack developer Ahtasham Naeem.",
+      "The Agentix software house builds AI agents, n8n automation and web apps. Meet founder Ahtasham Naeem and see how we plan, build and support projects.",
     keyword: "Agentix software house",
     lastModified: "2026-10-30",
     ogLabel: "About",

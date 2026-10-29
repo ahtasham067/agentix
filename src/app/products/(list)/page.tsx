@@ -38,7 +38,7 @@ export default async function ProductsPage() {
 
       <SeoSection
         id="portfolio-title"
-        title="A portfolio of AI agents and web apps"
+        title="Our software products portfolio: AI agents and web apps"
         className="mt-[104px]"
       >
         <div className="grid max-w-[880px] gap-[14px] text-[17px] leading-[1.6] text-muted">
@@ -58,9 +58,20 @@ export default async function ProductsPage() {
             </Link>
             .
           </p>
+          <ul className="m-0 grid list-disc gap-[8px] pl-[22px]">
+            {products.map((p) => (
+              <li key={p.slug}>
+                <Link href={`/products/${p.slug}`} className={link}>
+                  {p.name}
+                </Link>
+                : {p.summary}
+              </li>
+            ))}
+          </ul>
           <p>
             Some of these are our own products and some are client projects. Each product page
-            explains what the product does, how it is built and what our role was.
+            explains what the product does, how it is built and what our role was. Use the filter
+            above to see only AI agents, web apps or the products that run on n8n automation.
           </p>
           <p>
             Newer work runs on Next.js, Supabase and n8n. Larger back ends use Ruby on Rails with

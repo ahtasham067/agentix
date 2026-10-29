@@ -51,7 +51,7 @@ export default function ContactPage() {
       <SeoSection
         id="include-title"
         title="What to include in your quote request"
-        intro="A few details help us give you an accurate plan and price for AI automation or web development."
+        intro="To get a quote for AI automation and web development, share a few details. They help us give you an accurate plan, timeline and price."
         className="mb-[104px]"
       >
         <CheckList
@@ -60,10 +60,13 @@ export default function ContactPage() {
             "The tools you use today, such as WhatsApp, Gmail, Sheets or a CRM",
             "Roughly how many messages, bookings or users you expect",
             "When you would like it to go live",
+            "Any links, screenshots or examples of what you like",
           ]}
         />
         <p className="mt-[20px] max-w-[760px] text-[17px] leading-[1.6] text-muted">
-          Not sure which service you need? Read about{" "}
+          You do not need a full specification. A few honest sentences are enough for a first reply,
+          and we will ask about anything that is missing. Not sure which service you need? Read
+          about{" "}
           <Link href="/services/ai-agents" className={link}>
             custom AI agent development
           </Link>

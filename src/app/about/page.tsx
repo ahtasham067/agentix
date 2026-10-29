@@ -96,7 +96,7 @@ export default async function AboutPage() {
 
       <SeoSection
         id="software-house-title"
-        title="What Agentix does as a software house"
+        title="What the Agentix software house does"
         className="mt-[104px]"
       >
         <div className="grid max-w-[880px] gap-[14px] text-[17px] leading-[1.6] text-muted">
@@ -108,9 +108,28 @@ export default async function AboutPage() {
             with n8n, OpenAI, retrieval (RAG) and MCP.
           </p>
           <p>
+            Most of our clients find us through Upwork or a referral, and many come back for a
+            second project. We work remotely from Pakistan with businesses in other countries and
+            time zones, and we keep everyone updated in writing so nothing depends on a meeting.
+          </p>
+          <p>
             You work with the people who write the code. We agree the scope and price before we
             start, keep the stack simple so your system is easy to run, and stay available after
             launch for fixes and changes.
+          </p>
+          <p>
+            A typical project has four steps. First we learn the task and map where time is lost.
+            Then we agree the workflow or screens and the scope. We build and test with your real
+            data and tools, and finally we deploy, check that everything works and stay on hand for
+            changes.
+          </p>
+          <p>
+            We are a good fit if you want a working system rather than a slide deck, prefer clear
+            prices over open-ended hours, and like to see progress early. We are not the right team
+            for very large enterprise programmes that need dozens of people. For small and
+            medium-sized businesses, one small team that owns the agent, the workflow and the app
+            usually means faster decisions and fewer handovers, and you always know who to call when
+            something needs to change.
           </p>
           <p>
             See our{" "}

@@ -85,6 +85,7 @@ export default function ServicesPage() {
       <SeoSection
         id="together-title"
         title="How our AI agent, n8n and web app services work together"
+        intro="Our AI agent, n8n and web app development services are designed to fit together, so one team owns the whole system."
         className="mt-[104px]"
       >
         <div className="grid max-w-[880px] gap-[14px] text-[17px] leading-[1.6] text-muted">
@@ -101,6 +102,39 @@ export default function ServicesPage() {
               CliniDesk WhatsApp booking system
             </Link>{" "}
             case to see how the parts fit.
+          </p>
+          <p>
+            You do not have to start with all three. Many clients begin with one workflow or one
+            agent for a single job, see it working with real data, and then add the next piece. We
+            build each part so it can grow without being rewritten.
+          </p>
+          <h3 className="mt-[14px] text-[24px] leading-[1.25] tracking-[-0.01em] text-text">
+            What every project includes
+          </h3>
+          <p>
+            A written scope and price before work starts. Regular check-ins while we build, with
+            something you can try early. Testing with your real tools and data. Deployment on
+            infrastructure you control, simple notes on how it works, and support after launch for
+            fixes and changes.
+          </p>
+          <h3 className="mt-[14px] text-[24px] leading-[1.25] tracking-[-0.01em] text-text">
+            How pricing works
+          </h3>
+          <p>
+            Every project is quoted on its scope. The main factors are how many tasks or screens are
+            involved, which tools need to be connected, how much AI usage the work needs, and the
+            hosting and support you want afterwards. Send us a short description through the quote
+            form and we reply with a plan, a timeline and a clear price. There are no hidden hourly
+            charges: if the scope changes, we agree the change and its price with you before we
+            build it.
+          </p>
+          <h3 className="mt-[14px] text-[24px] leading-[1.25] tracking-[-0.01em] text-text">
+            Who we build for
+          </h3>
+          <p>
+            Our work so far has covered clinics, online stores, cross-border fintech, schools and
+            researchers. The common thread is a team that repeats the same steps every day and wants
+            software to take them over, without hiring a large agency.
           </p>
         </div>
       </SeoSection>
