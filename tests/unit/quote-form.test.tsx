@@ -25,7 +25,14 @@ describe("QuoteForm", () => {
 
   it("labels every field", () => {
     render(<QuoteForm />);
-    for (const label of ["Full name", "Email", "WhatsApp number", "Service", "Budget range", "Project details"]) {
+    for (const label of [
+      "Full name",
+      "Email",
+      "WhatsApp number",
+      "Service",
+      "Budget range",
+      "Project details",
+    ]) {
       expect(screen.getByLabelText(label)).toBeInTheDocument();
     }
   });
@@ -38,7 +45,10 @@ describe("QuoteForm", () => {
     expect(await screen.findByText("Please enter your full name.")).toBeInTheDocument();
     expect(screen.getByText("Please choose a service.")).toBeInTheDocument();
     expect(screen.getByLabelText("Full name")).toHaveAttribute("aria-invalid", "true");
-    expect(screen.getByLabelText("Full name")).toHaveAttribute("aria-describedby", "fullName-error");
+    expect(screen.getByLabelText("Full name")).toHaveAttribute(
+      "aria-describedby",
+      "fullName-error",
+    );
     expect(submitQuote).not.toHaveBeenCalled();
   });
 

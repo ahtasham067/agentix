@@ -25,7 +25,10 @@ describe("ProductGrid", () => {
     const user = userEvent.setup();
     render(<ProductGrid products={projects} showFilters />);
     const filters = screen.getByRole("group", { name: "Filter products" });
-    expect(within(filters).getByRole("button", { name: "All 7" })).toHaveAttribute("aria-pressed", "true");
+    expect(within(filters).getByRole("button", { name: "All 7" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
 
     await user.click(within(filters).getByRole("button", { name: "AI Agents" }));
     expect(screen.getAllByRole("article").map((a) => a.querySelector("h3")?.textContent)).toEqual([
@@ -70,7 +73,10 @@ describe("FAQ", () => {
 
     await user.click(second);
     expect(second).toHaveAttribute("aria-expanded", "true");
-    expect(screen.getByRole("button", { name: "First?" })).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByRole("button", { name: "First?" })).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    );
     expect(panel).not.toHaveAttribute("hidden");
   });
 });
@@ -87,7 +93,9 @@ describe("Navbar", () => {
     pathname.current = path;
     render(<Navbar />);
     const nav = screen.getByRole("navigation", { name: "Main" });
-    const active = within(nav).getAllByRole("link").filter((l) => l.getAttribute("aria-current") === "page");
+    const active = within(nav)
+      .getAllByRole("link")
+      .filter((l) => l.getAttribute("aria-current") === "page");
     expect(active.map((l) => l.textContent)).toEqual([label]);
   });
 
@@ -103,7 +111,10 @@ describe("Navbar", () => {
     const toggle = screen.getByRole("button", { name: "Open menu" });
     expect(toggle).toHaveAttribute("aria-expanded", "false");
     await user.click(toggle);
-    expect(screen.getByRole("button", { name: "Close menu" })).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByRole("button", { name: "Close menu" })).toHaveAttribute(
+      "aria-expanded",
+      "true",
+    );
     expect(document.getElementById("mobile-menu")).not.toHaveAttribute("hidden");
   });
 });
