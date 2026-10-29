@@ -28,6 +28,51 @@ export type Database = {
   };
   public: {
     Tables: {
+      posts: {
+        Row: {
+          author_name: string;
+          body: string;
+          created_at: string;
+          description: string;
+          id: string;
+          published: boolean;
+          published_at: string | null;
+          related_services: string[];
+          seo_title: string;
+          slug: string;
+          title: string;
+          updated_at: string;
+        };
+        Insert: {
+          author_name?: string;
+          body: string;
+          created_at?: string;
+          description: string;
+          id?: string;
+          published?: boolean;
+          published_at?: string | null;
+          related_services?: string[];
+          seo_title: string;
+          slug: string;
+          title: string;
+          updated_at?: string;
+        };
+        Update: {
+          author_name?: string;
+          body?: string;
+          created_at?: string;
+          description?: string;
+          id?: string;
+          published?: boolean;
+          published_at?: string | null;
+          related_services?: string[];
+          seo_title?: string;
+          slug?: string;
+          title?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       products: {
         Row: {
           audience: string | null;
