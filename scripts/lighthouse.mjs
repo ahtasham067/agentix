@@ -16,6 +16,8 @@ const THRESHOLDS = {
   seo: Number(process.env.LH_MIN_SEO ?? 1),
 };
 const OUT = "test-results/lighthouse";
+// Lighthouse scores vary between runs; use the median of several (Lighthouse's own advice).
+const RUNS = Number(process.env.LH_RUNS ?? 5);
 
 async function waitForServer(url, ms = 120_000) {
   const start = Date.now();
@@ -53,12 +55,20 @@ try {
     const url = BASE + path;
     // Warm the route so the measured run reflects a cached production response.
     await fetch(url);
-    const { lhr } = await lighthouse(url, {
-      port: chrome.port,
-      output: "json",
-      logLevel: "error",
-      onlyCategories: Object.keys(THRESHOLDS),
-    });
+    const runs = [];
+    for (let i = 0; i < RUNS; i++) {
+      const { lhr: run } = await lighthouse(url, {
+        port: chrome.port,
+        output: "json",
+        logLevel: "error",
+        onlyCategories: Object.keys(THRESHOLDS),
+      });
+      runs.push(run);
+      // Let the machine settle so one busy moment does not skew the next run.
+      await new Promise((r) => setTimeout(r, 1500));
+    }
+    runs.sort((a, b) => a.categories.performance.score - b.categories.performance.score);
+    const lhr = runs[Math.floor(runs.length / 2)];
     const scores = Object.fromEntries(
       Object.keys(THRESHOLDS).map((k) => [k, Math.round((lhr.categories[k]?.score ?? 0) * 100)]),
     );
