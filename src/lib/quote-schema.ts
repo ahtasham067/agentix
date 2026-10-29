@@ -1,4 +1,5 @@
-import { z } from "zod";
+// zod/mini keeps the client bundle small; the same schema runs on the server.
+import * as z from "zod/mini";
 
 export const SERVICE_OPTIONS = [
   { value: "ai-agents", label: "AI Agents" },
@@ -25,29 +26,35 @@ const PHONE_RE = /^\+?[0-9][0-9 ()-]{6,19}$/;
 export const quoteSchema = z.object({
   fullName: z
     .string()
-    .trim()
-    .min(2, "Please enter your full name.")
-    .max(100, "Please keep your name under 100 characters."),
+    .check(
+      z.trim(),
+      z.minLength(2, "Please enter your full name."),
+      z.maxLength(100, "Please keep your name under 100 characters."),
+    ),
   email: z
     .string()
-    .trim()
-    .min(1, "Please enter your email address.")
-    .max(254, "Please use a shorter email address.")
-    .regex(EMAIL_RE, "Please enter a valid email address."),
-  whatsapp: z
-    .string()
-    .trim()
-    .max(20, "Please enter a valid phone number, for example +92 300 0000000.")
-    .refine((v) => v === "" || PHONE_RE.test(v), {
+    .check(
+      z.trim(),
+      z.minLength(1, "Please enter your email address."),
+      z.maxLength(254, "Please use a shorter email address."),
+      z.regex(EMAIL_RE, "Please enter a valid email address."),
+    ),
+  whatsapp: z.string().check(
+    z.trim(),
+    z.maxLength(20, "Please enter a valid phone number, for example +92 300 0000000."),
+    z.refine((v) => v === "" || PHONE_RE.test(v), {
       message: "Please enter a valid phone number, for example +92 300 0000000.",
     }),
+  ),
   service: z.enum(serviceValues, { error: "Please choose a service." }),
   budget: z.enum(budgetValues, { error: "Please select a budget range." }),
   details: z
     .string()
-    .trim()
-    .min(20, "Please tell us a bit more (at least 20 characters).")
-    .max(4000, "Please keep it under 4,000 characters."),
+    .check(
+      z.trim(),
+      z.minLength(20, "Please tell us a bit more (at least 20 characters)."),
+      z.maxLength(4000, "Please keep it under 4,000 characters."),
+    ),
 });
 
 export type QuoteInput = z.infer<typeof quoteSchema>;
