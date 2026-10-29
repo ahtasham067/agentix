@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { AppLink as Link } from "@/components/ui/AppLink";
 import { contact, footerServices, mainNav, social } from "@/content/site";
 import { Logo } from "./Logo";
 

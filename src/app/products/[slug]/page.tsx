@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { AppLink as Link } from "@/components/ui/AppLink";
 import { notFound } from "next/navigation";
 import { ClinideskDashboard } from "@/components/illustrations/ClinideskDashboard";
 import { ProductThumb } from "@/components/illustrations/ProductThumbs";

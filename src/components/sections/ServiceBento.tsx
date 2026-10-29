@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { AppLink as Link } from "@/components/ui/AppLink";
 import { ChatBubbles } from "@/components/illustrations/ChatBubbles";
 import { StatsMini } from "@/components/illustrations/StatsMini";
 import { WorkflowMini } from "@/components/illustrations/WorkflowMini";

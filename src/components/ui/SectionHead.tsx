@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { AppLink as Link } from "@/components/ui/AppLink";
 
 /** Section title (h2), optional intro line and optional right-aligned link. */
 export function SectionHead({

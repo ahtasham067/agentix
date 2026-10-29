@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { AppLink as Link } from "@/components/ui/AppLink";
 import { notFound } from "next/navigation";
 import { DashboardWindow } from "@/components/illustrations/DashboardWindow";
 import { HeroWorkflow } from "@/components/illustrations/HeroWorkflow";

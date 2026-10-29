@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { AppLink as Link } from "@/components/ui/AppLink";
 
 /** Agentix mark: an orange tile with a compass-style "A". */
 export function LogoMark({ size = 34 }: { size?: number }) {
