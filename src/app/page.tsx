@@ -19,7 +19,7 @@ export default async function HomePage() {
   return (
     <>
       <section className="relative pt-[84px]">
-        <PageGlow variant="center" />
+        <PageGlow />
         <div className="container-site relative">
           <h1 className="mx-auto mt-[47px] max-w-[760px] text-center text-[44px] leading-[1.05] tracking-[-0.035em] md:text-[70px] md:leading-[74px]">
             Your repetitive work, <br className="hidden md:block" />
