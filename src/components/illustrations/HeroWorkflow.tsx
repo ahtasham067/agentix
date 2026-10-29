@@ -28,8 +28,8 @@ export function WorkflowNode({
 }) {
   return (
     <div
-      className={`flex shrink-0 flex-col justify-center rounded-[12px] bg-bg ${
-        compact ? "h-[72px] w-[116px] pl-[12px]" : "h-[85px] w-[134px] pl-[15px]"
+      className={`flex w-full shrink-0 flex-col justify-center rounded-[12px] bg-bg ${
+        compact ? "h-[72px] pl-[12px] sm:w-[116px]" : "h-[85px] pl-[15px] sm:w-[134px]"
       } ${active ? "border-2 border-primary" : "border border-[rgb(244_241_238/0.2)]"}`}
     >
       <span
@@ -53,7 +53,7 @@ export function WorkflowNode({
 export function NodeConnector({ compact = false }: { compact?: boolean }) {
   return (
     <span
-      className={`relative flex shrink-0 items-center ${compact ? "w-[29px]" : "w-[31px]"}`}
+      className={`relative hidden shrink-0 items-center sm:flex ${compact ? "w-[29px]" : "w-[31px]"}`}
       aria-hidden="true"
     >
       <span className="h-0 w-full border-t-2 border-dotted border-[rgb(255_107_44/0.75)]" />
@@ -80,14 +80,14 @@ export function HeroWorkflow({
     >
       <div className={compact ? "grid" : "grid lg:grid-cols-[684px_1fr]"}>
         <div
-          className={`dot-grid flex overflow-x-auto ${
+          className={`dot-grid grid grid-cols-2 gap-[12px] p-[16px] sm:flex sm:gap-0 ${
             compact
-              ? "h-[138px] items-start border-b border-line px-[25px] pt-[38px]"
-              : "items-start px-[26px] pt-[41px] pb-[41px] lg:border-r lg:border-line"
+              ? "border-b border-line sm:h-[138px] sm:items-start sm:px-[25px] sm:pt-[38px] sm:pb-0"
+              : "sm:items-start sm:px-[26px] sm:pt-[41px] sm:pb-[41px] lg:border-r lg:border-line"
           }`}
         >
           {nodes.map((node, i) => (
-            <div key={node.title} className="flex items-stretch">
+            <div key={node.title} className="flex min-w-0 items-stretch">
               {i > 0 && <NodeConnector compact={compact} />}
               <WorkflowNode {...node} compact={compact} />
             </div>

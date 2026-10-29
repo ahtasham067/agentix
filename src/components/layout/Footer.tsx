@@ -19,11 +19,6 @@ export function Footer() {
                 {item.label}
               </FooterLink>
             ))}
-            <li data-seo-extra>
-              <Link href="/blog" className="text-muted transition-colors hover:text-text">
-                Blog
-              </Link>
-            </li>
           </FooterColumn>
           <FooterColumn title="Services">
             {footerServices.map((item) => (

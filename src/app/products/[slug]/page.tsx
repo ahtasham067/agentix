@@ -19,8 +19,8 @@ import { serviceLinks } from "@/content/services";
 import type { Product } from "@/lib/product-model";
 import { getProductBySlug, getPublishedProducts } from "@/lib/products";
 
-// Blocking render: unknown slugs return a real 404 and pages ship complete HTML.
-export const instant = false;
+// Wait for the complete page (no streamed shell), so unknown slugs return a real 404.
+export const ensureStatic = "navigation";
 
 export async function generateStaticParams() {
   const products = await getPublishedProducts();
@@ -182,13 +182,19 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
             {services.map((s, i) => (
               <span key={s.href}>
                 {i > 0 && (i === services.length - 1 ? " and " : ", ")}
-                <Link href={s.href} className="text-accent hover:underline">
+                <Link
+                  href={s.href}
+                  className="text-accent underline underline-offset-[3px] hover:text-text"
+                >
                   {s.anchor}
                 </Link>
               </span>
             ))}{" "}
             work. Want something similar?{" "}
-            <Link href="/contact" className="text-accent hover:underline">
+            <Link
+              href="/contact"
+              className="text-accent underline underline-offset-[3px] hover:text-text"
+            >
               Get a quote for your project
             </Link>
             .

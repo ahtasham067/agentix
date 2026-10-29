@@ -13,7 +13,7 @@ export function CtaBand({ title, text }: { title: string; text: string }) {
           >
             {title}
           </h2>
-          <p className="mt-[13px] max-w-[520px] text-[18px] leading-[1.55] text-[rgb(27_29_33/0.8)]">
+          <p className="mt-[13px] max-w-[520px] text-[18px] leading-[1.55] text-[rgb(27_29_33/0.9)]">
             {text}
           </p>
           <div className="mt-[30px] flex flex-wrap gap-[14px]">

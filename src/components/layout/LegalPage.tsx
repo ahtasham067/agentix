@@ -31,7 +31,10 @@ export function LegalPage({
         ))}
         <p className="mt-[48px] text-[17px] leading-[1.7] text-muted">
           Questions?{" "}
-          <Link href="/contact" className="text-accent hover:underline">
+          <Link
+            href="/contact"
+            className="text-accent underline underline-offset-[3px] hover:text-text"
+          >
             Contact us
           </Link>
           .

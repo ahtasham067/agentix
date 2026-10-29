@@ -19,8 +19,8 @@ import { getService, serviceLinks, services, type Service } from "@/content/serv
 import { matchesService } from "@/lib/product-model";
 import { getPublishedProducts } from "@/lib/products";
 
-// Blocking render: unknown slugs return a real 404 and pages ship complete HTML.
-export const instant = false;
+// Wait for the complete page (no streamed shell), so unknown slugs return a real 404.
+export const ensureStatic = "navigation";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -173,13 +173,19 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           {others.map((s, i) => (
             <span key={s.slug}>
               {i > 0 && " and "}
-              <Link href={serviceLinks[s.slug].href} className="text-accent hover:underline">
+              <Link
+                href={serviceLinks[s.slug].href}
+                className="text-accent underline underline-offset-[3px] hover:text-text"
+              >
                 {serviceLinks[s.slug].anchor}
               </Link>
             </span>
           ))}
           , or browse the{" "}
-          <Link href="/products" className="text-accent hover:underline">
+          <Link
+            href="/products"
+            className="text-accent underline underline-offset-[3px] hover:text-text"
+          >
             AI agents and web apps we have built
           </Link>
           .
