@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import { HeroWorkflow } from "@/components/illustrations/HeroWorkflow";
 import { PageGlow } from "@/components/layout/PageGlow";
 import { ProductGrid } from "@/components/products/ProductGrid";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { FAQ } from "@/components/sections/FAQ";
+import { FeatureCards } from "@/components/sections/FeatureCards";
+import { SeoSection } from "@/components/sections/SeoSection";
 import { ServiceBento } from "@/components/sections/ServiceBento";
 import { StatsBand } from "@/components/sections/StatsBand";
 import { Steps } from "@/components/sections/Steps";
@@ -10,8 +13,13 @@ import { ToolsGrid } from "@/components/sections/ToolsGrid";
 import { TrustStrip } from "@/components/sections/TrustStrip";
 import { ButtonLink } from "@/components/ui/Button";
 import { SectionHead } from "@/components/ui/SectionHead";
-import { homeFaq, howWeWork } from "@/content/home";
+import { AppLink as Link } from "@/components/ui/AppLink";
+import { homeFaq, homeUseCases, howWeWork } from "@/content/home";
+import { pageSeo } from "@/content/seo";
 import { getPublishedProducts } from "@/lib/products";
+import { buildMetadata } from "@/lib/seo/metadata";
+
+export const metadata: Metadata = buildMetadata(pageSeo.home);
 
 export default async function HomePage() {
   const products = await getPublishedProducts();
@@ -91,6 +99,37 @@ export default async function HomePage() {
           <ToolsGrid />
         </div>
       </section>
+
+      <SeoSection
+        id="use-cases-title"
+        title={homeUseCases.heading}
+        intro={homeUseCases.intro}
+        className="mt-[104px]"
+      >
+        <FeatureCards features={homeUseCases.items} />
+        <p className="mt-[28px] max-w-[760px] text-[17px] leading-[1.6] text-muted">
+          Explore our{" "}
+          <Link href="/services/ai-agents" className="text-accent underline underline-offset-[3px]">
+            custom AI agent development
+          </Link>
+          ,{" "}
+          <Link
+            href="/services/n8n-automation"
+            className="text-accent underline underline-offset-[3px]"
+          >
+            n8n automation services
+          </Link>{" "}
+          and{" "}
+          <Link href="/services/web-apps" className="text-accent underline underline-offset-[3px]">
+            Next.js web app development
+          </Link>
+          , or read{" "}
+          <Link href="/about" className="text-accent underline underline-offset-[3px]">
+            how Agentix works
+          </Link>
+          .
+        </p>
+      </SeoSection>
 
       <section
         aria-labelledby="faq-title"

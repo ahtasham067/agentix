@@ -1,4 +1,5 @@
 import { AppLink as Link } from "@/components/ui/AppLink";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DashboardWindow } from "@/components/illustrations/DashboardWindow";
 import { HeroWorkflow } from "@/components/illustrations/HeroWorkflow";
@@ -15,6 +16,9 @@ import { ButtonLink } from "@/components/ui/Button";
 import { CheckList } from "@/components/ui/CheckList";
 import { ChipList } from "@/components/ui/Chip";
 import { SectionHead } from "@/components/ui/SectionHead";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildMetadata } from "@/lib/seo/metadata";
+import { serviceSchema } from "@/lib/seo/schema";
 import { getService, serviceLinks, services, type Service } from "@/content/services";
 import { matchesService } from "@/lib/product-model";
 import { getPublishedProducts } from "@/lib/products";
@@ -24,6 +28,15 @@ export const ensureStatic = "navigation";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/services/[slug]">): Promise<Metadata> {
+  const { slug } = await params;
+  const service = getService(slug);
+  if (!service) return {};
+  return buildMetadata({ ...service.seo, path: `/services/${service.slug}` });
 }
 
 function HeroVisual({ service }: { service: Service }) {
@@ -197,6 +210,15 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         </h2>
         <FAQ items={service.faqs} />
       </section>
+
+      <JsonLd
+        data={serviceSchema({
+          name: service.anchor.charAt(0).toUpperCase() + service.anchor.slice(1),
+          serviceType: service.seo.keyword,
+          description: service.seo.description,
+          path: `/services/${service.slug}`,
+        })}
+      />
 
       <div className="mt-[104px] mb-[104px]">
         <CtaBand title={service.cta.title} text={service.cta.text} />

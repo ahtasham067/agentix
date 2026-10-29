@@ -113,4 +113,6 @@ export interface Project {
   featured: boolean;
   sortOrder: number;
   published: boolean;
+  /** Last database update (ISO date). Only set on products read from Supabase. */
+  updatedAt?: string;
 }

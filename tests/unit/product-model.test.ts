@@ -42,7 +42,7 @@ function toRow(p: (typeof projects)[number]): ProductRow {
 
 describe("rowToProduct", () => {
   it.each(projects.map((p) => [p.slug, p] as const))("round-trips %s", (_, p) => {
-    expect(rowToProduct(toRow(p))).toEqual(p);
+    expect(rowToProduct(toRow(p))).toEqual({ ...p, updatedAt: "2026-10-29T00:00:00Z" });
   });
 
   it("rejects rows with unknown categories", () => {

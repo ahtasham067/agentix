@@ -1,4 +1,5 @@
 import { AppLink as Link } from "@/components/ui/AppLink";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ClinideskDashboard } from "@/components/illustrations/ClinideskDashboard";
 import { ProductThumb } from "@/components/illustrations/ProductThumbs";
@@ -15,6 +16,9 @@ import { Steps } from "@/components/sections/Steps";
 import { ButtonLink } from "@/components/ui/Button";
 import { ChipList } from "@/components/ui/Chip";
 import { SectionHead } from "@/components/ui/SectionHead";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildMetadata } from "@/lib/seo/metadata";
+import { productSchema } from "@/lib/seo/schema";
 import { serviceLinks } from "@/content/services";
 import type { Product } from "@/lib/product-model";
 import { getProductBySlug, getPublishedProducts } from "@/lib/products";
@@ -25,6 +29,20 @@ export const ensureStatic = "navigation";
 export async function generateStaticParams() {
   const products = await getPublishedProducts();
   return products.map((p) => ({ slug: p.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/products/[slug]">): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await getProductBySlug(slug);
+  if (!product) return {};
+  return buildMetadata({
+    title: product.seo.title,
+    description: product.seo.description,
+    path: `/products/${product.slug}`,
+    noindex: !product.indexable,
+  });
 }
 
 function HeroVisual({ product }: { product: Product }) {
@@ -205,6 +223,8 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
           </div>
         </SeoSection>
       )}
+
+      <JsonLd data={productSchema(product)} />
 
       <div className="mt-[104px] mb-[104px]">
         <CtaBand

@@ -1,4 +1,6 @@
 import { Icon } from "@/components/icons";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { faqSchema } from "@/lib/seo/schema";
 
 export interface FaqItem {
   question: string;
@@ -17,12 +19,15 @@ export function FAQ({
   name = "faq",
   defaultOpen = 0,
   headingLevel = 3,
+  schema = true,
 }: {
   items: FaqItem[];
   /** Groups the items into one exclusive accordion. Unique per page. */
   name?: string;
   defaultOpen?: number | null;
   headingLevel?: 3 | 4;
+  /** Emit FAQPage JSON-LD built from exactly these items. */
+  schema?: boolean;
 }) {
   const Heading = `h${headingLevel}` as "h3" | "h4";
 
@@ -58,6 +63,7 @@ export function FAQ({
           </div>
         </details>
       ))}
+      {schema && <JsonLd data={faqSchema(items)} />}
     </div>
   );
 }

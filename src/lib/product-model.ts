@@ -76,6 +76,7 @@ const rowSchema = z.object({
   featured: z.boolean(),
   sort_order: z.number(),
   published: z.boolean(),
+  updated_at: z.string(),
 });
 
 /** Validates a database row and maps it to the site's product shape. */
@@ -110,6 +111,7 @@ export function rowToProduct(row: ProductRow): Product {
     featured: r.featured,
     sortOrder: r.sort_order,
     published: r.published,
+    updatedAt: r.updated_at,
   };
 }
 

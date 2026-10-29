@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/PageHero";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { FeatureCards } from "@/components/sections/FeatureCards";
@@ -5,9 +6,19 @@ import { FounderCard } from "@/components/sections/FounderCard";
 import { StatsBand } from "@/components/sections/StatsBand";
 import { ToolsGrid } from "@/components/sections/ToolsGrid";
 import { ButtonLink } from "@/components/ui/Button";
+import { SeoSection } from "@/components/sections/SeoSection";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { AppLink as Link } from "@/components/ui/AppLink";
 import { SectionHead } from "@/components/ui/SectionHead";
 import { aboutIntro, principles, story } from "@/content/about";
+import { pageSeo } from "@/content/seo";
 import { getPublishedProductCount } from "@/lib/products";
+import { buildMetadata } from "@/lib/seo/metadata";
+import { aboutPageSchema, founderPageSchema } from "@/lib/seo/schema";
+
+export const metadata: Metadata = buildMetadata(pageSeo.about);
+
+const link = "text-accent underline underline-offset-[3px]";
 
 export default async function AboutPage() {
   const productCount = await getPublishedProductCount();
@@ -82,6 +93,44 @@ export default async function AboutPage() {
           <ToolsGrid />
         </div>
       </section>
+
+      <SeoSection
+        id="software-house-title"
+        title="What Agentix does as a software house"
+        className="mt-[104px]"
+      >
+        <div className="grid max-w-[880px] gap-[14px] text-[17px] leading-[1.6] text-muted">
+          <p>
+            Agentix is a small software house led by founder Ahtasham Naeem, a full-stack developer
+            with more than 5 years of experience across fintech, e-commerce, education and
+            healthcare and a BS in Computer Science from COMSATS University Islamabad. We build with
+            Ruby on Rails, React, Next.js, Vue.js and Supabase, and we build AI agents and workflows
+            with n8n, OpenAI, retrieval (RAG) and MCP.
+          </p>
+          <p>
+            You work with the people who write the code. We agree the scope and price before we
+            start, keep the stack simple so your system is easy to run, and stay available after
+            launch for fixes and changes.
+          </p>
+          <p>
+            See our{" "}
+            <Link href="/services" className={link}>
+              AI agent, n8n and web app development services
+            </Link>
+            , browse the{" "}
+            <Link href="/products" className={link}>
+              products we have built
+            </Link>
+            , or{" "}
+            <Link href="/contact" className={link}>
+              tell us about your project
+            </Link>
+            .
+          </p>
+        </div>
+      </SeoSection>
+
+      <JsonLd data={[aboutPageSchema(pageSeo.about), founderPageSchema()]} />
 
       <div className="mt-[103px] mb-[103px]">
         <CtaBand title="Let's work together" text="Tell us what you want to build or automate." />
