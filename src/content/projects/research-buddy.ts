@@ -1,0 +1,92 @@
+import type { Project } from "../types";
+
+// Facts and results from the owner's CV.
+// TODO: confirm who owns Research Buddy.
+export const researchBuddy: Project = {
+  slug: "research-buddy",
+  name: "Research Buddy",
+  summary: "A reference and citation manager for researchers.",
+  tagline: "References and citations without the busywork.",
+  description:
+    "A reference and citation manager with tags, folders, DOI and ISBN lookup, and automatic APA, MLA and Chicago citations.",
+  tags: ["Web app", "React", "Rails"],
+  stack: "React, Rails",
+  category: "web-apps",
+  thumbnail: "research-buddy",
+  role: "Built tagging, folders, filters, DOI/ISBN lookup and citations",
+  audience: "Researchers and students",
+  clientWork: true,
+  facts: [
+    { label: "Type", value: "Web app" },
+    { label: "Audience", value: "Researchers" },
+    { label: "Stack", value: "React, Rails" },
+    { label: "Citation styles", value: "APA, MLA, Chicago" },
+  ],
+  features: [
+    { icon: "folder", title: "Tags and folders", text: "Every source is tagged and filed." },
+    {
+      icon: "search",
+      title: "Advanced filters",
+      text: "Narrow the library down to the source you need.",
+    },
+    {
+      icon: "book",
+      title: "DOI and ISBN lookup",
+      text: "Enter a DOI or ISBN and the details fill in.",
+    },
+    { icon: "check", title: "Automatic citations", text: "APA, MLA and Chicago, written for you." },
+  ],
+  steps: [
+    { title: "Add a source", text: "Enter a DOI or ISBN and the metadata fills in." },
+    { title: "Organize it", text: "Tag it, file it in a folder and filter your library." },
+    { title: "Cite it", text: "Copy the citation in APA, MLA or Chicago style." },
+  ],
+  sections: [
+    {
+      heading: "A reference and citation manager for researchers",
+      paragraphs: [
+        "Researchers collect many sources, and formatting citations by hand is slow and easy to get wrong. Research Buddy keeps every reference in one library and writes the citation for you.",
+        "Sources come in through DOI and ISBN metadata lookup. Tags, folders and advanced filters keep the library easy to search.",
+      ],
+    },
+    {
+      heading: "Results for researchers",
+      paragraphs: [
+        "Research Buddy cut the time spent searching documents and writing citations by 50%.",
+      ],
+    },
+  ],
+  faqs: [
+    {
+      question: "Which citation styles does Research Buddy support?",
+      answer: "APA, MLA and Chicago. Citations are generated automatically.",
+    },
+    {
+      question: "How does it fill in source details?",
+      answer: "Enter a DOI or an ISBN and Research Buddy looks up the metadata for you.",
+    },
+    {
+      question: "How do researchers organize their sources?",
+      answer: "With tags, folders and advanced filters.",
+    },
+    {
+      question: "What changed for users?",
+      answer: "Time spent searching documents and writing citations dropped by 50%.",
+    },
+  ],
+  screenshots: [],
+  screens: [],
+  builtWith: ["React.js", "Ruby on Rails"],
+  relatedServices: ["web-apps"],
+  relatedProjects: ["nizame-taleem", "autobuffy", "meyamb"],
+  seo: {
+    keyword: "reference and citation manager",
+    title: "Reference & Citation Manager – Research Buddy | Agentix",
+    description:
+      "Research Buddy is a reference and citation manager with tags, folders, DOI and ISBN lookup, and automatic APA, MLA and Chicago citations for researchers.",
+  },
+  indexable: true,
+  featured: false,
+  sortOrder: 5,
+  published: true,
+};
