@@ -28,7 +28,7 @@ function CardFooter({ product }: { product: CardProduct }) {
         href={`/products/${product.slug}`}
         className="text-[14px] font-semibold text-accent after:absolute after:inset-0 after:rounded-card after:content-[''] hover:underline"
       >
-        View details<span className="sr-only"> about {product.name}</span>
+        View details <span className="sr-only">about {product.name}</span>
       </Link>
     </div>
   );
