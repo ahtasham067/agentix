@@ -33,12 +33,12 @@ export function PageHero({
             <Breadcrumbs items={crumbs} />
             {eyebrow}
             <h1
-              className={`mt-[18px] text-[40px] leading-[1.08] tracking-[-0.03em] md:text-[60px] ${titleClassName}`}
+              className={`mt-[18px] text-[40px] leading-[1.08] tracking-[-0.03em] md:text-[60px] md:leading-[63px] ${titleClassName}`}
             >
               {title}
             </h1>
             {intro && (
-              <p className="mt-[16px] max-w-[640px] text-[18px] leading-[1.55] text-muted md:text-[19.5px] md:leading-[31px]">
+              <p className="mt-[16px] max-w-[690px] text-[18px] leading-[1.55] text-muted md:text-[19.5px] md:leading-[31px]">
                 {intro}
               </p>
             )}
