@@ -55,6 +55,19 @@ export const researchBuddy: Project = {
         "Research Buddy cut the time spent searching documents and writing citations by 50%.",
       ],
     },
+    {
+      heading: "APA, MLA and Chicago in one library",
+      paragraphs: [
+        "Different fields expect different citation styles. Psychology and education often use APA, the humanities often use MLA, and history often uses Chicago. Each style orders the author, date, title and publisher in its own way, which is easy to get wrong when you format by hand.",
+        "Research Buddy stores each source once, with the details it looked up from the DOI or ISBN, and produces the citation in the style you need. Switching a paper from one style to another no longer means retyping the reference list.",
+      ],
+    },
+    {
+      heading: "How DOI and ISBN lookup saves time",
+      paragraphs: [
+        "A DOI identifies a journal article and an ISBN identifies a book. Entering one of these numbers is enough for Research Buddy to fill in the title, authors and publication details, so researchers spend less time typing and make fewer mistakes.",
+      ],
+    },
   ],
   faqs: [
     {

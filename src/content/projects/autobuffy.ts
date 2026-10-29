@@ -66,6 +66,19 @@ export const autobuffy: Project = {
         "Handled releases and deployments",
       ],
     },
+    {
+      heading: "What vehicle-fitment search means for a parts store",
+      paragraphs: [
+        "In auto parts e-commerce, the hard question is not price but fit. A brake pad or filter that suits one model year can be wrong for the next. Fitment search starts from the shopper's vehicle, usually its year, make and model, and only then shows the parts that match it.",
+        "That changes how the back end has to work. Every search filters a very large catalog by compatibility, so queries must stay fast and the data must stay consistent. It is also why a store like this needs careful database work as the catalog grows, which was part of our role on AutoBuffy.",
+      ],
+    },
+    {
+      heading: "Payments shoppers expect",
+      paragraphs: [
+        "Car parts can be expensive, so payment choice matters at checkout. AutoBuffy offers PayPal and Apple Pay for speed, and Afterpay and Klarna for shoppers who prefer to split a larger order into instalments.",
+      ],
+    },
   ],
   faqs: [
     {

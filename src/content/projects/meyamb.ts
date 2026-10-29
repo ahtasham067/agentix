@@ -49,6 +49,19 @@ export const meyamb: Project = {
         "Meyamb is client work. Agentix founder Ahtasham Naeem worked on the platform. It is built with Ruby on Rails and Vue.js, uses Redis, and ships through AWS CodePipeline.",
       ],
     },
+    {
+      heading: "Why KYC and real-time history matter in a money app",
+      paragraphs: [
+        "KYC stands for know your customer. Before someone can hold a card or send money, the platform checks who they are. It protects users from fraud and lets the service work with banks and card networks.",
+        "Real-time transaction history matters for the same reason: trust. When people send money home or pay a bill in another country, they want to see straight away that it went through. A virtual card adds a safe way to pay online without exposing a physical card.",
+      ],
+    },
+    {
+      heading: "Built for people who manage money across borders",
+      paragraphs: [
+        "For a diaspora audience, one app that covers a card, bills, transfers and savings means fewer services to juggle. If you are planning a fintech product of your own, our web app development service covers secure back ends, payment integrations and the dashboards around them.",
+      ],
+    },
   ],
   faqs: [
     {

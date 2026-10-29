@@ -52,6 +52,13 @@ export const nizameTaleem: Project = {
         "Routine tasks done 80% faster",
       ],
     },
+    {
+      heading: "What each part of a school management system does",
+      paragraphs: [
+        "Admissions keep a record of every applicant and new student. Staff and class records show who teaches what and where. Fees track what each family owes and has paid. Attendance records who was present each day, exams store marks, and reports pull all of this together for the school office and the leadership team.",
+        "When these parts share one database, a change in one place shows up everywhere. A new student added at admission already appears in class lists, fee records and attendance, so staff stop entering the same details again and again.",
+      ],
+    },
   ],
   faqs: [
     {
