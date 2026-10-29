@@ -8,3 +8,4 @@ supabase/.temp
 supabase/seed.sql
 package-lock.json
 *.md
+scripts/.*
