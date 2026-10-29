@@ -21,63 +21,68 @@ describe("ProductGrid", () => {
     }
   });
 
-  it("filters by category with the chips", async () => {
+  it("tags each card with the filters it matches", () => {
+    render(<ProductGrid products={projects} />);
+    const match = (slug: string) =>
+      document.querySelector(`[data-product="${slug}"]`)?.getAttribute("data-match");
+    expect(match("clinidesk")).toBe("ai-agents automation");
+    expect(match("nexa-ai")).toBe("ai-agents");
+    expect(match("meyamb")).toBe("web-apps");
+  });
+
+  it("filters with the chips by setting data-filter", async () => {
     const user = userEvent.setup();
-    render(<ProductGrid products={projects} showFilters />);
+    const { container } = render(<ProductGrid products={projects} showFilters />);
     const filters = screen.getByRole("group", { name: "Filter products" });
+    const wrapper = container.querySelector("[data-filter]")!;
     expect(within(filters).getByRole("button", { name: "All 7" })).toHaveAttribute(
       "aria-pressed",
       "true",
     );
+    expect(wrapper).toHaveAttribute("data-filter", "all");
 
     await user.click(within(filters).getByRole("button", { name: "AI Agents" }));
-    expect(screen.getAllByRole("article").map((a) => a.querySelector("h3")?.textContent)).toEqual([
-      "CliniDesk",
-      "Nexa AI",
-      "Your project here",
-    ]);
+    expect(wrapper).toHaveAttribute("data-filter", "ai-agents");
+    expect(within(filters).getByRole("button", { name: "AI Agents" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    expect(within(filters).getByRole("button", { name: "All 7" })).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
 
     await user.click(within(filters).getByRole("button", { name: "Automation" }));
-    expect(screen.getByRole("heading", { name: "CliniDesk" })).toBeInTheDocument();
-    expect(screen.queryByRole("heading", { name: "Meyamb" })).not.toBeInTheDocument();
-
-    await user.click(within(filters).getByRole("button", { name: "Web Apps" }));
-    expect(screen.queryByRole("heading", { name: "CliniDesk" })).not.toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Nizame-Taleem" })).toBeInTheDocument();
+    expect(wrapper).toHaveAttribute("data-filter", "automation");
   });
 });
 
 describe("FAQ", () => {
   const items = [
     { question: "First?", answer: "First answer." },
-    { question: "Second?", answer: "Second answer." },
+    { question: "Second?", answer: "Second answer.", extra: true },
   ];
 
-  it("opens the first answer and links buttons to panels", () => {
-    render(<FAQ items={items} />);
-    const first = screen.getByRole("button", { name: "First?" });
-    expect(first).toHaveAttribute("aria-expanded", "true");
-    const panel = document.getElementById(first.getAttribute("aria-controls")!);
-    expect(panel).toHaveTextContent("First answer.");
-    expect(panel).not.toHaveAttribute("hidden");
+  it("renders an exclusive accordion with the first answer open", () => {
+    const { container } = render(<FAQ items={items} name="test-faq" />);
+    const details = container.querySelectorAll("details");
+    expect(details).toHaveLength(2);
+    expect(details[0]).toHaveAttribute("open");
+    expect(details[1]).not.toHaveAttribute("open");
+    details.forEach((d) => expect(d).toHaveAttribute("name", "test-faq"));
   });
 
-  it("toggles answers and keeps closed ones in the DOM", async () => {
-    const user = userEvent.setup();
+  it("keeps every answer in the DOM and uses headings for questions", () => {
     render(<FAQ items={items} />);
-    const second = screen.getByRole("button", { name: "Second?" });
-    const panel = document.getElementById(second.getAttribute("aria-controls")!)!;
-    expect(second).toHaveAttribute("aria-expanded", "false");
-    expect(panel).toHaveAttribute("hidden");
-    expect(panel).toHaveTextContent("Second answer.");
+    expect(screen.getByRole("heading", { level: 3, name: "First?" })).toBeInTheDocument();
+    expect(screen.getByText("Second answer.")).toBeInTheDocument();
+  });
 
-    await user.click(second);
-    expect(second).toHaveAttribute("aria-expanded", "true");
-    expect(screen.getByRole("button", { name: "First?" })).toHaveAttribute(
-      "aria-expanded",
-      "false",
-    );
-    expect(panel).not.toHaveAttribute("hidden");
+  it("marks SEO-only questions for the visual tests", () => {
+    const { container } = render(<FAQ items={items} />);
+    const details = container.querySelectorAll("details");
+    expect(details[0]).not.toHaveAttribute("data-seo-extra");
+    expect(details[1]).toHaveAttribute("data-seo-extra", "true");
   });
 });
 
