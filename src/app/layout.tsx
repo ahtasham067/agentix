@@ -2,7 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Inter } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { Analytics } from "@/components/seo/Analytics";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageSeo } from "@/content/seo";
 import { SITE_NAME, siteUrl } from "@/content/site";
+import { organizationSchema, websiteSchema } from "@/lib/seo/schema";
 import "./globals.css";
 
 const bricolage = Bricolage_Grotesque({
@@ -19,10 +23,21 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const bingVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
-  description: "AI agents, n8n automation and web apps for business.",
+  title: { default: pageSeo.home.title, template: `%s | ${SITE_NAME}` },
+  description: pageSeo.home.description,
+  applicationName: SITE_NAME,
+  authors: [{ name: "Ahtasham Naeem" }],
+  creator: SITE_NAME,
+  formatDetection: { telephone: false },
+  verification: {
+    ...(googleVerification ? { google: googleVerification } : {}),
+    ...(bingVerification ? { other: { "msvalidate.01": bingVerification } } : {}),
+  },
 };
 
 export const viewport: Viewport = {
@@ -43,6 +58,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar />
         <main id="main">{children}</main>
         <Footer />
+        <JsonLd data={[organizationSchema(), websiteSchema()]} />
+        <Analytics />
       </body>
     </html>
   );
