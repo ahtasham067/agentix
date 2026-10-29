@@ -15,8 +15,8 @@ export function FeatureCards({ features, columns = 4 }: { features: Feature[]; c
           className="rounded-card border border-line bg-secondary p-[28px] pb-[26px]"
         >
           <IconTile name={f.icon} size={48} iconSize={20} />
-          <h3 className="mt-[19px] text-[21px] leading-[26px] tracking-[-0.01em]">{f.title}</h3>
-          <p className="mt-[10px] text-[15px] leading-[24px] text-muted">{f.text}</p>
+          <h3 className="mt-[19px] text-[21.5px] leading-[26px] tracking-[-0.01em]">{f.title}</h3>
+          <p className="mt-[10px] text-[15.5px] leading-[24px] text-muted">{f.text}</p>
         </li>
       ))}
     </ul>

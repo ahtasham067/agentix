@@ -34,12 +34,8 @@ export default async function HomePage() {
               Our Services
             </ButtonLink>
           </div>
-          <div className="relative mt-[48px]">
-            <div
-              aria-hidden="true"
-              className="absolute inset-x-[-40px] top-[60%] bottom-[-40px] rounded-[40px] bg-[rgb(255_107_44/0.35)] blur-[60px]"
-            />
-            <HeroWorkflow className="relative" />
+          <div className="mt-[48px]">
+            <HeroWorkflow className="window-glow" />
           </div>
         </div>
       </section>
@@ -52,6 +48,7 @@ export default async function HomePage() {
           title="What we build for you"
           intro="Three ways we put AI to work in your business."
           link={{ href: "/services", label: "All services" }}
+          className="[&_p]:mt-[12px]!"
         />
         <div className="mt-[35px]">
           <ServiceBento />
@@ -70,14 +67,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section aria-labelledby="numbers-title" className="container-site mt-[104px]">
+      <section aria-labelledby="numbers-title" className="container-site mt-[103px]">
         <SectionHead id="numbers-title" title="Agentix in numbers" />
-        <div className="mt-[35px]">
+        <div className="mt-[36px]">
           <StatsBand productCount={products.length} />
         </div>
       </section>
 
-      <section aria-labelledby="how-title" className="container-site mt-[105px]">
+      <section aria-labelledby="how-title" className="container-site mt-[104px]">
         <SectionHead
           id="how-title"
           title="How we work"
@@ -97,7 +94,7 @@ export default async function HomePage() {
 
       <section
         aria-labelledby="faq-title"
-        className="container-site mt-[104px] grid gap-10 lg:grid-cols-[464px_1fr]"
+        className="container-site mt-[102px] grid gap-10 lg:grid-cols-[464px_1fr]"
       >
         <div>
           <h2
@@ -106,10 +103,10 @@ export default async function HomePage() {
           >
             Questions, answered
           </h2>
-          <p className="mt-[12px] text-[17px] leading-[1.55] text-muted">
+          <p className="mt-[14px] text-[17.2px] leading-[26.35px] text-muted">
             Can&apos;t find yours? Send us a message and we will reply.
           </p>
-          <ButtonLink href="/contact" variant="secondary" size="sm" className="mt-[27px]">
+          <ButtonLink href="/contact" variant="secondary" size="sm" className="mt-[26px]">
             Contact us
           </ButtonLink>
         </div>

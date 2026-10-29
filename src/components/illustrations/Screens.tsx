@@ -93,7 +93,9 @@ export function PatientHistoryScreen() {
             key={v.date}
             className={`flex h-[36px] items-center gap-[12px] text-[14px] ${i > 0 ? "border-t border-line" : ""}`}
           >
-            <span className="w-[43px] font-mono text-[12px] text-muted">{v.date}</span>
+            <span className="w-[44px] font-mono text-[12px] whitespace-nowrap text-muted">
+              {v.date}
+            </span>
             <span>
               {v.visit} <span className="text-muted">Dr. Khan</span>
             </span>

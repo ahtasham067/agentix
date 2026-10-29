@@ -39,7 +39,7 @@ export function PageHero({
             <Breadcrumbs items={crumbs} />
             {eyebrow}
             <h1
-              className={`mt-[18px] text-[40px] leading-[1.08] tracking-[-0.03em] md:text-[60px] md:leading-[63px] ${titleClassName}`}
+              className={`mt-[18px] text-[40px] leading-[1.08] tracking-[-0.03em] md:text-[60px] md:leading-[65px] ${titleClassName}`}
             >
               {title}
             </h1>

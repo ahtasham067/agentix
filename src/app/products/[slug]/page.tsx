@@ -29,10 +29,10 @@ export async function generateStaticParams() {
 
 function HeroVisual({ product }: { product: Product }) {
   if (product.thumbnail === "clinidesk") {
-    return <ClinideskDashboard className="relative" />;
+    return <ClinideskDashboard className="window-glow" />;
   }
   return (
-    <WindowFrame title={`${product.name} · Preview`} className="relative">
+    <WindowFrame title={`${product.name} · Preview`} className="window-glow">
       <div className="flex h-[294px] items-center justify-center bg-brown">
         <ProductThumb thumbnail={product.thumbnail} />
       </div>
@@ -64,13 +64,9 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
           { name: product.name, href: `/products/${product.slug}` },
         ]}
         title={product.name}
-        titleClassName="md:text-[64px] mt-[12px]!"
+        titleClassName="md:text-[64px] mt-[12px]! md:leading-[69px]!"
         aside={
           <div className="relative w-full lg:mt-[5px] lg:w-[672px]">
-            <div
-              aria-hidden="true"
-              className="absolute inset-x-[30px] top-[45%] bottom-[-30px] rounded-[40px] bg-[rgb(255_107_44/0.35)] blur-[60px]"
-            />
             <HeroVisual product={product} />
           </div>
         }
@@ -99,7 +95,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
       </PageHero>
 
       {product.facts.length > 0 && (
-        <div className="container-site mt-[49px]">
+        <div className="container-site mt-[48px]">
           <FactsStrip facts={product.facts} />
         </div>
       )}

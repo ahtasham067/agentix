@@ -27,13 +27,13 @@ export function generateStaticParams() {
 }
 
 function HeroVisual({ service }: { service: Service }) {
-  if (service.hero.visual === "support-chat") return <SupportChat className="relative" />;
-  if (service.hero.visual === "workflow") return <HeroWorkflow compact className="relative" />;
-  return <DashboardWindow className="relative" />;
+  if (service.hero.visual === "support-chat") return <SupportChat className="window-glow" />;
+  if (service.hero.visual === "workflow") return <HeroWorkflow compact className="window-glow" />;
+  return <DashboardWindow className="window-glow" />;
 }
 
 function OutcomeVisual({ service }: { service: Service }) {
-  if (service.slug === "ai-agents") return <HeroWorkflow compact className="relative" />;
+  if (service.slug === "ai-agents") return <HeroWorkflow compact className="window-glow" />;
   return <ServiceVisual visual={service.hero.visual} />;
 }
 
@@ -57,20 +57,16 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           { name: service.name, href: `/services/${service.slug}` },
         ]}
         title={service.hero.title}
-        titleClassName="max-w-[600px] md:text-[62px]"
+        titleClassName="mt-[19px]! max-w-[600px] md:text-[62px] md:leading-[63.5px]!"
         intro={service.hero.intro}
         introClassName="max-w-[490px] mt-[22px]!"
         aside={
           <div className="relative w-full lg:mt-[22px] lg:w-[672px]">
-            <div
-              aria-hidden="true"
-              className="absolute inset-x-[30px] top-[45%] bottom-[-30px] rounded-[40px] bg-[rgb(255_107_44/0.35)] blur-[60px]"
-            />
             <HeroVisual service={service} />
           </div>
         }
       >
-        <div className="mt-[33px] flex flex-wrap gap-[14px]">
+        <div className="mt-[32px] flex flex-wrap gap-[14px]">
           <ButtonLink href="/contact">Get a Quote</ButtonLink>
           <ButtonLink href="/products" variant="secondary">
             View Products
@@ -84,14 +80,14 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           title={service.capabilitiesTitle}
           intro={service.capabilitiesIntro}
         />
-        <div className="mt-[36px]">
+        <div className="mt-[35px]">
           <FeatureCards features={service.capabilities} />
         </div>
       </section>
 
       <section
         aria-labelledby="get-title"
-        className="container-site mt-[105px] grid items-center gap-10 lg:grid-cols-2 lg:gap-x-[64px]"
+        className="container-site mt-[104px] grid items-center gap-10 lg:grid-cols-2 lg:gap-x-[64px]"
       >
         <div>
           <h2
@@ -102,17 +98,13 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           </h2>
           <CheckList
             items={service.outcomes}
-            className="mt-[26px] gap-[14.67px] [&_li]:text-[16.8px]"
+            className="mt-[29px] gap-[14.67px] [&_li]:text-[16.8px]"
           />
           <ButtonLink href="/contact" className="mt-[35px]">
             Get a Quote
           </ButtonLink>
         </div>
         <div className="relative">
-          <div
-            aria-hidden="true"
-            className="absolute inset-x-[30px] top-[55%] bottom-[-30px] rounded-[40px] bg-[rgb(255_107_44/0.3)] blur-[60px]"
-          />
           <OutcomeVisual service={service} />
         </div>
       </section>
@@ -124,7 +116,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             title={service.productsTitle}
             link={{ href: "/products", label: "See all products" }}
           />
-          <ul className="m-0 mt-[34px] grid list-none gap-[24px] p-0 md:grid-cols-2">
+          <ul className="m-0 mt-[35px] grid list-none gap-[24px] p-0 md:grid-cols-2">
             {products.map((p) => (
               <li key={p.slug}>
                 <ProductCard product={p} />
@@ -134,7 +126,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         </section>
       )}
 
-      <section aria-labelledby="connects-title" className="container-site mt-[104px]">
+      <section aria-labelledby="connects-title" className="container-site mt-[105px]">
         <SectionHead id="connects-title" title="Connects with" />
         <ChipList items={service.connects} className="mt-[36px] gap-[10px]" />
       </section>
@@ -198,7 +190,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
 
       <section
         aria-labelledby="faq-title"
-        className="container-site mt-[105px] grid gap-10 lg:grid-cols-[464px_1fr]"
+        className="container-site mt-[102px] grid gap-10 lg:grid-cols-[464px_1fr]"
       >
         <h2 id="faq-title" className="text-[34px] leading-[1.1] tracking-[-0.02em] md:text-[44px]">
           {service.faqTitle}

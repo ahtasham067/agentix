@@ -14,11 +14,11 @@ export function ContactDetails() {
     { icon: "clock" as const, label: "Reply time", value: "Within one working day" },
   ];
   return (
-    <ul className="m-0 list-none rounded-card border border-line bg-secondary px-[31px] py-[31px]">
+    <ul className="m-0 list-none rounded-card border border-line bg-secondary px-[31px] pt-[31px] pb-[29px]">
       {rows.map((row, i) => (
         <li
           key={row.label}
-          className={`flex items-center gap-[14px] ${i > 0 ? "h-[83px] border-t border-line" : "h-[82px]"}`}
+          className={`flex items-center gap-[14px] ${i > 0 ? "h-[83px] border-t border-line" : "h-[81px]"}`}
         >
           <IconTile name={row.icon} size={46} iconSize={22} />
           <span>
@@ -26,13 +26,13 @@ export function ContactDetails() {
             {row.href ? (
               <a
                 href={row.href}
-                className="block font-heading text-[17px] leading-[22px] font-semibold hover:underline"
+                className="block font-heading text-[17.3px] leading-[22px] font-semibold hover:underline"
                 {...(row.href.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}
               >
                 {row.value}
               </a>
             ) : (
-              <span className="block font-heading text-[17px] leading-[22px] font-semibold">
+              <span className="block font-heading text-[17.3px] leading-[22px] font-semibold">
                 {row.value}
               </span>
             )}
@@ -47,7 +47,7 @@ export function NextSteps({ steps }: { steps: Step[] }) {
   return (
     <section
       aria-labelledby="next-title"
-      className="rounded-card border border-line bg-secondary px-[31px] pt-[30px] pb-[18px]"
+      className="rounded-card border border-line bg-secondary px-[31px] pt-[30px] pb-[30px]"
     >
       <h2 id="next-title" className="text-[22px] leading-[28px] tracking-[-0.01em]">
         What happens next
@@ -63,7 +63,7 @@ export function NextSteps({ steps }: { steps: Step[] }) {
             </span>
             <span>
               <h3 className="text-[17px] leading-[22px] font-semibold">{step.title}</h3>
-              <p className="mt-[2px] text-[13.2px] leading-[19px] text-muted">{step.text}</p>
+              <p className="mt-[2px] text-[12.95px] leading-[19px] text-muted">{step.text}</p>
             </span>
           </li>
         ))}

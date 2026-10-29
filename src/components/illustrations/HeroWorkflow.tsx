@@ -94,7 +94,7 @@ export function HeroWorkflow({
           ))}
         </div>
         <ol
-          className={`m-0 list-none px-[20px] ${compact ? "pt-[6px] pb-[10px]" : "pt-[5px] pb-[10px]"}`}
+          className={`m-0 list-none px-[20px] ${compact ? "pt-[6px] pb-[9px]" : "pt-[5px] pb-[10px]"}`}
         >
           {log.map((row, i) => (
             <li

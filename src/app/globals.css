@@ -98,6 +98,11 @@
     margin-inline: auto;
   }
 
+  /* Orange glow under hero windows (matches the designs). */
+  .window-glow {
+    box-shadow: 0 42px 60px -30px rgb(255 107 44 / 0.42);
+  }
+
   .dot-grid {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Crect width='2' height='2' fill='%23f4f1ee' fill-opacity='0.1'/%3E%3C/svg%3E");
     background-size: 22px 22px;

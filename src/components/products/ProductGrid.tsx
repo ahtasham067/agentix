@@ -36,7 +36,7 @@ export function ProductGrid({
         <div
           role="group"
           aria-label="Filter products"
-          className="mb-[45px] flex flex-wrap gap-[10px]"
+          className="mb-[44px] flex flex-wrap gap-[10px]"
         >
           {PRODUCT_FILTERS.map((f) => {
             const selected = filter === f.key;

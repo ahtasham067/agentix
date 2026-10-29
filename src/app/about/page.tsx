@@ -28,14 +28,14 @@ export default async function AboutPage() {
         }
         titleClassName="md:text-[62px] md:leading-[65px]"
         intro={aboutIntro}
-        introClassName="max-w-[530px] mt-[20px]!"
+        introClassName="max-w-[530px] mt-[20px]! md:leading-[30px]!"
         aside={
           <div className="w-full self-center lg:w-[672px]">
             <FounderCard />
           </div>
         }
       >
-        <div className="mt-[30px] flex flex-wrap gap-[14px]">
+        <div className="mt-[33px] flex flex-wrap gap-[14px]">
           <ButtonLink href="/contact">Get a Quote</ButtonLink>
           <ButtonLink href="/products" variant="secondary">
             View Products
@@ -53,7 +53,7 @@ export default async function AboutPage() {
       >
         <h2
           id="story-title"
-          className="text-[34px] leading-[1.1] tracking-[-0.02em] md:text-[44px]"
+          className="text-[34px] leading-[1.1] tracking-[-0.02em] md:text-[44px] lg:translate-y-[2px]"
         >
           Our story
         </h2>
@@ -69,7 +69,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section aria-labelledby="how-title" className="container-site mt-[104px]">
+      <section aria-labelledby="how-title" className="container-site mt-[106px]">
         <SectionHead id="how-title" title="How we work" />
         <div className="mt-[35px] [&_ul]:gap-[24px]">
           <FeatureCards features={principles} columns={3} />
@@ -83,7 +83,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <div className="mt-[104px] mb-[104px]">
+      <div className="mt-[103px] mb-[103px]">
         <CtaBand title="Let's work together" text="Tell us what you want to build or automate." />
       </div>
     </>

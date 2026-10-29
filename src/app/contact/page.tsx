@@ -13,8 +13,9 @@ export default function ContactPage() {
           { name: "Contact", href: "/contact" },
         ]}
         title="Get a quote"
+        titleClassName="md:leading-[63px]!"
         intro="Tell us what you want to build or automate. We reply with a plan and a timeline."
-        introClassName="max-w-[640px]"
+        introClassName="max-w-[640px] md:text-[19px]!"
       />
 
       <div className="container-site mt-[44px] grid items-start gap-[24px] lg:grid-cols-[723px_1fr] lg:gap-x-[40px]">
@@ -27,9 +28,9 @@ export default function ContactPage() {
 
       <section
         aria-labelledby="faq-title"
-        className="container-site mt-[105px] mb-[105px] grid gap-10 lg:grid-cols-[464px_1fr]"
+        className="container-site mt-[104px] mb-[104px] grid gap-10 lg:grid-cols-[464px_1fr]"
       >
-        <h2 id="faq-title" className="text-[34px] leading-[1.1] tracking-[-0.02em] md:text-[46px]">
+        <h2 id="faq-title" className="text-[34px] leading-[1.1] tracking-[-0.02em] md:text-[44px]">
           Before you write
         </h2>
         <FAQ items={contactFaq} />

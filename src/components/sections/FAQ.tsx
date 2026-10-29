@@ -52,7 +52,7 @@ export function FAQ({
             className="border-b border-line"
             data-seo-extra={item.extra || undefined}
           >
-            <Heading className="m-0 font-heading text-[19px] leading-[24px] font-semibold">
+            <Heading className="m-0 font-heading text-[19.6px] leading-[24px] font-semibold">
               <button
                 id={buttonId}
                 type="button"

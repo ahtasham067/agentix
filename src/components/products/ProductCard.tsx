@@ -44,7 +44,7 @@ export function ProductCard({
 }) {
   const Heading = `h${headingLevel}` as "h2" | "h3";
   return (
-    <article className="relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-secondary transition-colors hover:border-[rgb(244_241_238/0.28)] lg:h-[423.33px]">
+    <article className="relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-secondary transition-colors hover:border-[rgb(244_241_238/0.28)] lg:h-[423.5px]">
       <div className="flex h-[209px] shrink-0 items-center justify-center border-b border-line bg-brown">
         <ProductThumb thumbnail={product.thumbnail} />
       </div>
@@ -53,7 +53,7 @@ export function ProductCard({
         <Heading className="mt-[14px] text-[23px] leading-[1.2] tracking-[-0.01em]">
           {product.name}
         </Heading>
-        <p className="mt-[8px] text-[15px] leading-[1.55] text-muted">{product.summary}</p>
+        <p className="mt-[8px] text-[15.1px] leading-[1.55] text-muted">{product.summary}</p>
         <CardFooter product={product} />
       </div>
     </article>
@@ -70,7 +70,7 @@ export function FeaturedProductCard({
 }) {
   const Heading = `h${headingLevel}` as "h2" | "h3";
   return (
-    <article className="relative grid h-full overflow-hidden rounded-card border border-line bg-secondary transition-colors hover:border-[rgb(244_241_238/0.28)] md:grid-cols-[439px_1fr] lg:h-[423.33px]">
+    <article className="relative grid h-full overflow-hidden rounded-card border border-line bg-secondary transition-colors hover:border-[rgb(244_241_238/0.28)] md:grid-cols-[439px_1fr] lg:h-[423.5px]">
       <div className="flex items-center justify-center border-b border-line bg-brown px-[32px] py-10 md:border-r md:border-b-0">
         <ClinideskThumb />
       </div>

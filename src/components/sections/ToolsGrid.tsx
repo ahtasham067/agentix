@@ -14,7 +14,7 @@ export function ToolsGrid() {
           key={group.title}
           className="rounded-card border border-line bg-secondary p-[28px] pb-[28px]"
         >
-          <h3 className="text-[19px] leading-[1.3] font-semibold">{group.title}</h3>
+          <h3 className="text-[20.4px] leading-[25px] font-semibold">{group.title}</h3>
           <ChipList
             items={group.tools}
             className="mt-[16px] gap-[8px]"

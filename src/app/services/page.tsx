@@ -24,6 +24,7 @@ export default function ServicesPage() {
             business
           </>
         }
+        titleClassName="md:leading-[63px]!"
         intro="Three services that work together: smart agents, connected workflows and the web apps around them."
       />
 

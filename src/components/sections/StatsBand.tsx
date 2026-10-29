@@ -13,7 +13,7 @@ export function StatsBand({ productCount }: { productCount: number }) {
           } ${i % 2 === 1 ? "border-l border-line" : ""} ${i > 1 ? "border-t border-line lg:border-t-0" : ""}`}
         >
           <dt className="mt-[10px] text-[16px] leading-[24px] text-muted">{stat.label}</dt>
-          <dd className="m-0 font-heading text-[56px] leading-[1] font-bold tracking-[-0.02em] text-primary">
+          <dd className="m-0 font-heading text-[56.6px] leading-[56px] font-bold tracking-[-0.02em] text-primary">
             {stat.value}
           </dd>
         </div>

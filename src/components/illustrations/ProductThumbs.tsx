@@ -49,17 +49,17 @@ export function ClinideskThumb({ compact = false }: { compact?: boolean }) {
       <p className="mt-[13px] flex h-[42px] items-center self-end rounded-[12px] bg-primary px-[18px] text-[16px] text-on-primary">
         Tomorrow, 5:00 pm is open
       </p>
-      <div className="mt-[21px] flex h-[100px] items-center rounded-card border border-line bg-secondary pr-[17px] pl-[20px]">
+      <div className="mt-[21px] flex h-[100px] items-center rounded-card border border-line bg-secondary pr-[17px] pl-[19px]">
         <span className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full bg-accent text-[16px] font-semibold text-on-primary">
           K
         </span>
-        <span className="ml-[15px] min-w-0 flex-1">
+        <span className="ml-[14px] min-w-0 flex-1">
           <span className="block text-[17px] leading-[22px] font-semibold">Dr. Khan, 5:00 pm</span>
           <span className="mt-[3px] block text-[16px] leading-[22px] text-muted">
             General check-up
           </span>
         </span>
-        <span className="flex h-[32px] items-center rounded-full border-[1.5px] border-accent px-[14px] text-[15px] font-semibold text-accent">
+        <span className="flex h-[32px] items-center rounded-full border-[1.5px] border-primary px-[11px] text-[15px] font-semibold text-accent">
           Booked
         </span>
       </div>
@@ -70,7 +70,7 @@ export function ClinideskThumb({ compact = false }: { compact?: boolean }) {
 export function NexaThumb() {
   return (
     <div className="relative h-[164px] w-[236px]">
-      <span className="absolute top-0 left-[61px] h-[114px] w-[114px] rounded-full border border-[rgb(255_107_44/0.45)]" />
+      <span className="absolute top-0 left-[61px] h-[114px] w-[114px] rounded-full border border-[rgb(244_241_238/0.25)]" />
       <span className="absolute top-[16px] left-[77px] h-[82px] w-[82px] rounded-full bg-[rgb(255_107_44/0.3)]" />
       <span className="absolute top-[30px] left-[91px] flex h-[54px] w-[54px] items-center justify-center rounded-full bg-primary">
         <svg width="26" height="26" viewBox="0 0 26 26" fill="var(--on-primary)">
@@ -98,9 +98,9 @@ export function AutobuffyThumb() {
       <div className="flex h-[25px] items-center rounded-full border border-line bg-secondary px-[14px] text-[11px] text-muted">
         Search parts
       </div>
-      <div className="mt-[8px] grid grid-cols-3 gap-[7px]">
+      <div className="mt-[9px] grid grid-cols-3 gap-[7px]">
         {items.map((item) => (
-          <Panel key={item.price} className="flex h-[127px] flex-col px-[10px] pt-[10px] pb-[8px]">
+          <Panel key={item.price} className="flex h-[128px] flex-col px-[10px] pt-[10px] pb-[8px]">
             <span className="flex h-[48px] items-center justify-center">
               {item.icon === "ring" && (
                 <span className="flex h-[48px] w-[48px] items-center justify-center rounded-full border-[5px] border-primary">
@@ -174,17 +174,20 @@ export function ResearchBuddyThumb() {
   ];
   return (
     <Panel className="flex h-[163px] w-[272px] overflow-hidden">
-      <div className="flex w-[75px] flex-col gap-[20px] border-r border-line px-[11px] pt-[16px]">
-        <Bar className="w-[47px] bg-primary" />
-        <Bar className="w-[40px] bg-[rgb(244_241_238/0.25)]" />
-        <Bar className="w-[52px] bg-[rgb(244_241_238/0.25)]" />
+      <div className="flex w-[75px] flex-col gap-[19px] border-r border-line px-[11px] pt-[17px]">
+        <Bar className="h-[7px] w-[47px] bg-primary" />
+        <Bar className="h-[7px] w-[40px] bg-[rgb(244_241_238/0.25)]" />
+        <Bar className="h-[7px] w-[52px] bg-[rgb(244_241_238/0.25)]" />
       </div>
-      <div className="flex-1 px-[11px] pt-[13px]">
+      <div className="flex-1 px-[12px] pt-[13px]">
         {rows.map((row) => (
-          <div key={row.title} className="mb-[9px] flex flex-col items-start">
-            <Bar className="h-[7px] bg-[rgb(244_241_238/0.85)]" style={{ width: row.title }} />
-            <Bar className="mt-[4px] bg-[rgb(244_241_238/0.25)]" style={{ width: row.meta }} />
-            <span className="mt-[5px] inline-flex h-[12px] items-center rounded-full border border-primary px-[6px] text-[7px] leading-none text-accent">
+          <div key={row.title} className="mb-[7px] flex flex-col items-start">
+            <Bar className="h-[8px] bg-[rgb(244_241_238/0.85)]" style={{ width: row.title }} />
+            <Bar
+              className="mt-[6px] h-[7px] bg-[rgb(244_241_238/0.25)]"
+              style={{ width: row.meta }}
+            />
+            <span className="mt-[5px] inline-flex h-[14px] items-center rounded-full border border-primary px-[7px] text-[8px] leading-none text-accent">
               APA
             </span>
           </div>
@@ -207,7 +210,7 @@ export function UphexThumb() {
     </span>
   );
   return (
-    <div className="relative h-[142px] w-[176px]">
+    <div className="relative h-[142px] w-[176px] translate-x-[8px] translate-y-[4px]">
       <span className="absolute top-0 left-0">{cell("bg-primary", "Up", "bg-primary")}</span>
       <span className="absolute top-0 left-[70px]">
         {cell("bg-secondary", undefined, "bg-primary")}
@@ -232,13 +235,13 @@ export function NizameThumb() {
     <Panel className="h-[164px] w-[272px] px-[14px] pt-[13px]">
       <p className="text-[11px] leading-[14px] text-muted">Attendance today</p>
       <p className="font-heading text-[19px] leading-[24px] font-bold">94%</p>
-      <ul className="m-0 mt-[8px] grid list-none gap-[11px] p-0">
+      <ul className="m-0 mt-[14px] grid list-none gap-[11px] p-0">
         {rows.map((row, i) => (
-          <li key={i} className="flex h-[18px] items-center gap-[9px]">
+          <li key={i} className="flex h-[20px] items-center gap-[9px]">
             <span className="h-[15px] w-[15px] rounded-full bg-[rgb(244_241_238/0.35)]" />
-            <Bar className="w-[91px] bg-[rgb(244_241_238/0.75)]" />
+            <Bar className="h-[7px] w-[90px] bg-[rgb(244_241_238/0.75)]" />
             <span
-              className={`ml-auto inline-flex h-[18px] items-center rounded-full border px-[10px] text-[9.5px] font-semibold ${row.tone}`}
+              className={`ml-auto inline-flex h-[20px] items-center rounded-full border px-[11px] text-[10.5px] font-semibold ${row.tone}`}
             >
               {row.label}
             </span>
