@@ -22,7 +22,7 @@
     "db:seed:gen": "tsx scripts/generate-seed.ts",
     "db:test": "supabase test db",
     "audit": "npm audit --audit-level=high",
-    "verify": "npm run audit && npm run lint && npm run typecheck && npm test && npm run db:reset && npm run db:test && npm run build && npm run test:e2e && npm run test:visual && npm run test:lighthouse",
+    "verify": "npm run audit && npm run lint && npm run typecheck && npm test && npm run db:reset && npm run db:test && npm run build && npm run test:e2e && npm run test:visual && npm run test:seo && npm run test:lighthouse",
     "db:types": "supabase gen types typescript --local > src/lib/supabase/database.types.ts && prettier --write src/lib/supabase/database.types.ts",
     "test:e2e": "playwright test --project=desktop --project=mobile",
     "test:visual": "playwright test --project=visual",
