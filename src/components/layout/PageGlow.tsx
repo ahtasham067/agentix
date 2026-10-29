@@ -1,12 +1,12 @@
-/** Warm radial glow behind the top of a page. Purely decorative. */
-export function PageGlow({ variant = "right" }: { variant?: "right" | "center" }) {
-  const position = variant === "center" ? "62% 30%" : "78% 30%";
+/** Warm radial glow behind the top right of every page. Purely decorative. */
+export function PageGlow() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 top-0 h-[900px] overflow-hidden"
+      className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[720px] overflow-hidden"
       style={{
-        background: `radial-gradient(ellipse 620px 520px at ${position}, rgb(255 107 44 / 0.2), rgb(255 107 44 / 0.06) 55%, transparent 80%)`,
+        background:
+          "radial-gradient(530px 345px at calc(50% + 360px) 180px, rgb(255 107 44 / 0.185), rgb(255 107 44 / 0) 100%)",
       }}
     />
   );
