@@ -3,6 +3,7 @@ import http from "node:http";
 import { projects } from "../../src/content/projects";
 import { pageSeo } from "../../src/content/seo";
 import { services } from "../../src/content/services";
+import { createClient } from "@supabase/supabase-js";
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/+$/, "");
 const PORT = Number(process.env.TEST_PORT ?? 3000);
@@ -16,6 +17,7 @@ const pages: Record<string, { keyword: string; minWords: number }> = {
   "/contact": { keyword: pageSeo.contact.keyword, minWords: 250 },
   "/privacy": { keyword: pageSeo.privacy.keyword, minWords: 0 },
   "/terms": { keyword: pageSeo.terms.keyword, minWords: 0 },
+  "/blog": { keyword: pageSeo.blog.keyword, minWords: 0 },
   ...Object.fromEntries(
     services.map((s) => [`/services/${s.slug}`, { keyword: s.seo.keyword, minWords: 600 }]),
   ),
@@ -322,4 +324,51 @@ test("www redirects to the apex domain with a 301", async () => {
   res.resume();
   expect(res.statusCode).toBe(301);
   expect(res.headers.location).toBe("https://agentix.website/products");
+});
+
+test.describe("a published blog article", () => {
+  const slug = "why-we-build-with-nextjs-and-supabase";
+  const admin = () =>
+    createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
+      auth: { persistSession: false },
+    });
+
+  test.beforeAll(async () => {
+    const { error } = await admin()
+      .from("posts")
+      .update({ published: true, published_at: new Date().toISOString() })
+      .eq("slug", slug);
+    if (error) throw error;
+  });
+
+  test.afterAll(async () => {
+    await admin().from("posts").update({ published: false, published_at: null }).eq("slug", slug);
+  });
+
+  test("has article metadata, BlogPosting and a clean outline", async ({ page }) => {
+    expect((await page.goto(`/blog/${slug}`))?.status()).toBe(200);
+    const r = await inspect(page);
+    expect(r.h1).toEqual(["Why we build web apps with Next.js and Supabase"]);
+    expect(r.title).toBe("Why We Build Web Apps with Next.js and Supabase | Agentix");
+    expect(r.description.length).toBeGreaterThanOrEqual(120);
+    expect(r.description.length).toBeLessThanOrEqual(155);
+    expect(r.canonical).toBe(`${SITE_URL}/blog/${slug}`);
+    expect(r.robots.join(" ")).not.toContain("noindex");
+    expect(r.ogImage).toMatch(/opengraph-image/);
+    expect(await page.locator('meta[property="og:type"]').getAttribute("content")).toBe("article");
+    expect(r.words).toBeGreaterThanOrEqual(900);
+    expect(r.headings[0]).toBe(1);
+    for (let i = 1; i < r.headings.length; i++) {
+      expect(r.headings[i]).toBeLessThanOrEqual(r.headings[i - 1] + 1);
+    }
+    const schemas = flattenSchemas(r.jsonLd);
+    const posting = schemas.find((s) => s["@type"] === "BlogPosting");
+    expect(posting).toBeTruthy();
+    for (const field of REQUIRED.BlogPosting) expect(posting![field], field).toBeTruthy();
+    expect(posting!.headline).toBe(r.h1[0]);
+    const crumbs = schemas.find((s) => s["@type"] === "BreadcrumbList") as {
+      itemListElement: { name: string }[];
+    };
+    expect(crumbs.itemListElement.map((c) => c.name)).toEqual(r.crumbs);
+  });
 });
