@@ -30,7 +30,11 @@ export function PageHero({
     <section className={`relative pt-[84px] ${className}`}>
       <PageGlow />
       <div className={`container-site relative ${innerClassName}`}>
-        <div className={aside ? "grid items-start gap-12 lg:grid-cols-[1fr_auto]" : undefined}>
+        <div
+          className={
+            aside ? "grid items-start gap-12 lg:grid-cols-[1fr_auto] lg:gap-[16px]" : undefined
+          }
+        >
           <div>
             <Breadcrumbs items={crumbs} />
             {eyebrow}
