@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Inter } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
+import { NavigationProgress } from "@/components/layout/NavigationProgress";
 import { Navbar } from "@/components/layout/Navbar";
 import { Analytics } from "@/components/seo/Analytics";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        <NavigationProgress />
         <Navbar />
         <main id="main">{children}</main>
         <Footer />
