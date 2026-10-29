@@ -8,7 +8,9 @@ import lighthouse from "lighthouse";
 
 const PORT = Number(process.env.LH_PORT ?? 3000);
 const BASE = process.env.LH_BASE_URL ?? `http://localhost:${PORT}`;
-const PAGES = ["/", "/products", "/services", "/products/clinidesk", "/contact"];
+const PAGES = process.env.LH_PAGES
+  ? process.env.LH_PAGES.split(",")
+  : ["/", "/products", "/services", "/products/clinidesk", "/contact"];
 const THRESHOLDS = {
   performance: Number(process.env.LH_MIN_PERFORMANCE ?? 0.9),
   accessibility: Number(process.env.LH_MIN_ACCESSIBILITY ?? 0.95),
@@ -56,6 +58,13 @@ try {
     // Warm the route so the measured run reflects a cached production response.
     await fetch(url);
     const runs = [];
+    // One discarded warm-up run: the first loads after a server or browser start are slower.
+    await lighthouse(url, {
+      port: chrome.port,
+      output: "json",
+      logLevel: "error",
+      onlyCategories: ["performance"],
+    });
     for (let i = 0; i < RUNS; i++) {
       const { lhr: run } = await lighthouse(url, {
         port: chrome.port,
@@ -77,6 +86,7 @@ try {
     rows.push({
       path,
       ...scores,
+      runs: runs.map((r) => Math.round(r.categories.performance.score * 100)).join("/"),
       lcp: lhr.audits["largest-contentful-paint"].displayValue,
       cls: lhr.audits["cumulative-layout-shift"].displayValue,
       tbt: lhr.audits["total-blocking-time"].displayValue,
