@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { matchesFilter } from "./product-filters";
 import type { Database } from "@/lib/supabase/database.types";
 import {
   PRODUCT_CATEGORIES,
@@ -112,23 +113,7 @@ export function rowToProduct(row: ProductRow): Product {
   };
 }
 
-export const PRODUCT_FILTERS = [
-  { key: "all", label: "All" },
-  { key: "ai-agents", label: "AI Agents" },
-  { key: "web-apps", label: "Web Apps" },
-  { key: "automation", label: "Automation" },
-] as const;
-
-export type ProductFilter = (typeof PRODUCT_FILTERS)[number]["key"];
-
-/** Automation also covers products that run on n8n workflows. */
-export function matchesFilter(product: Pick<Product, "category" | "tags">, filter: ProductFilter) {
-  if (filter === "all") return true;
-  if (filter === "automation") {
-    return product.category === "automation" || product.tags.some((t) => t.toLowerCase() === "n8n");
-  }
-  return product.category === filter;
-}
+export { matchesFilter, PRODUCT_FILTERS, type ProductFilter } from "./product-filters";
 
 /** Products that belong on a service page. */
 export function matchesService(product: Product, service: ServiceSlug) {

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { AppLink as Link } from "@/components/ui/AppLink";
 import { ProductThumb, ClinideskThumb } from "@/components/illustrations/ProductThumbs";
 import { Chip } from "@/components/ui/Chip";
 import type { Product } from "@/lib/product-model";

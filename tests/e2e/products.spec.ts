@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("filter chips show the matching products", async ({ page }) => {
   await page.goto("/products");
   const filters = page.getByRole("group", { name: "Filter products" });
-  const names = () => page.locator("[data-product] h3").allTextContents();
+  const names = () => page.locator("[data-product]:visible h3").allTextContents();
 
   await expect(filters.getByRole("button", { name: "All 7" })).toHaveAttribute(
     "aria-pressed",
