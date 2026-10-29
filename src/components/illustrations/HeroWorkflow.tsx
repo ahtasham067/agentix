@@ -19,34 +19,43 @@ export function WorkflowNode({
   title,
   text,
   active,
+  compact = false,
 }: {
   title: string;
   text: string;
   active?: boolean;
+  compact?: boolean;
 }) {
   return (
     <div
-      className={`flex h-[85px] w-[134px] shrink-0 flex-col justify-center rounded-[12px] bg-bg pl-[15px] ${
-        active ? "border-2 border-primary" : "border border-[rgb(244_241_238/0.2)]"
-      }`}
+      className={`flex shrink-0 flex-col justify-center rounded-[12px] bg-bg ${
+        compact ? "h-[72px] w-[116px] pl-[12px]" : "h-[85px] w-[134px] pl-[15px]"
+      } ${active ? "border-2 border-primary" : "border border-[rgb(244_241_238/0.2)]"}`}
     >
-      <span className="flex items-center gap-[10px] text-[15px] leading-[18px] font-semibold">
+      <span
+        className={`flex items-center font-semibold ${compact ? "gap-[8px] text-[13px] leading-[16px]" : "gap-[10px] text-[15px] leading-[18px]"}`}
+      >
         <span
           className={`h-[12px] w-[12px] rounded-full ${active ? "bg-primary" : "bg-accent"}`}
           aria-hidden="true"
         />
         {title}
       </span>
-      <span className="mt-[12px] text-[13.5px] leading-[16px] whitespace-nowrap text-muted">
+      <span
+        className={`whitespace-nowrap text-muted ${compact ? "mt-[10px] text-[11.5px] leading-[14px]" : "mt-[12px] text-[13.5px] leading-[16px]"}`}
+      >
         {text}
       </span>
     </div>
   );
 }
 
-export function NodeConnector() {
+export function NodeConnector({ compact = false }: { compact?: boolean }) {
   return (
-    <span className="relative flex w-[31px] shrink-0 items-center" aria-hidden="true">
+    <span
+      className={`relative flex shrink-0 items-center ${compact ? "w-[29px]" : "w-[31px]"}`}
+      aria-hidden="true"
+    >
       <span className="h-0 w-full border-t-2 border-dotted border-[rgb(255_107_44/0.75)]" />
       <span className="absolute left-1/2 h-[8px] w-[8px] -translate-x-1/2 rounded-full bg-primary" />
     </span>
@@ -54,7 +63,14 @@ export function NodeConnector() {
 }
 
 /** "Lead follow-up agent" window: workflow canvas plus run log. */
-export function HeroWorkflow({ className = "" }: { className?: string }) {
+export function HeroWorkflow({
+  className = "",
+  compact = false,
+}: {
+  className?: string;
+  /** Stacked layout for half-width columns. */
+  compact?: boolean;
+}) {
   return (
     <WindowFrame
       title="Lead follow-up agent"
@@ -62,16 +78,24 @@ export function HeroWorkflow({ className = "" }: { className?: string }) {
       className={className}
       label="Example AI agent workflow: a new WhatsApp lead is qualified by the AI agent, added to the CRM and the sales team is notified on Slack."
     >
-      <div className="grid lg:grid-cols-[684px_1fr]">
-        <div className="dot-grid flex items-start overflow-x-auto px-[26px] pt-[41px] pb-[41px] lg:border-r lg:border-line">
+      <div className={compact ? "grid" : "grid lg:grid-cols-[684px_1fr]"}>
+        <div
+          className={`dot-grid flex overflow-x-auto ${
+            compact
+              ? "h-[138px] items-start border-b border-line px-[25px] pt-[38px]"
+              : "items-start px-[26px] pt-[41px] pb-[41px] lg:border-r lg:border-line"
+          }`}
+        >
           {nodes.map((node, i) => (
             <div key={node.title} className="flex items-stretch">
-              {i > 0 && <NodeConnector />}
-              <WorkflowNode {...node} />
+              {i > 0 && <NodeConnector compact={compact} />}
+              <WorkflowNode {...node} compact={compact} />
             </div>
           ))}
         </div>
-        <ol className="m-0 list-none px-[20px] pt-[5px] pb-[10px]">
+        <ol
+          className={`m-0 list-none px-[20px] ${compact ? "pt-[6px] pb-[10px]" : "pt-[5px] pb-[10px]"}`}
+        >
           {log.map((row, i) => (
             <li
               key={row.text}

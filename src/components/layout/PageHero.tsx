@@ -12,6 +12,7 @@ export function PageHero({
   className = "",
   innerClassName = "pt-[46px]",
   titleClassName = "",
+  introClassName = "max-w-[690px]",
 }: {
   crumbs: Crumb[];
   title: React.ReactNode;
@@ -23,6 +24,7 @@ export function PageHero({
   className?: string;
   innerClassName?: string;
   titleClassName?: string;
+  introClassName?: string;
 }) {
   return (
     <section className={`relative pt-[84px] ${className}`}>
@@ -38,7 +40,9 @@ export function PageHero({
               {title}
             </h1>
             {intro && (
-              <p className="mt-[16px] max-w-[690px] text-[18px] leading-[1.55] text-muted md:text-[19.5px] md:leading-[31px]">
+              <p
+                className={`mt-[16px] text-[18px] leading-[1.55] text-muted md:text-[19.5px] md:leading-[31px] ${introClassName}`}
+              >
                 {intro}
               </p>
             )}

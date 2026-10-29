@@ -15,19 +15,26 @@ function Bar({ className = "", style }: { className?: string; style?: React.CSSP
 export function ClinideskThumb({ compact = false }: { compact?: boolean }) {
   if (compact) {
     return (
-      <div className="flex w-full max-w-[200px] flex-col gap-[7px]">
-        <p className="self-start rounded-[8px] border border-line bg-secondary px-[9px] py-[5px] text-[9px]">
+      <div className="flex w-[265px] flex-col">
+        <p className="flex h-[32px] items-center self-start rounded-[10px] border border-line bg-secondary px-[12px] text-[11.5px]">
           I need an appointment
         </p>
-        <p className="self-end rounded-[8px] bg-primary px-[9px] py-[5px] text-[9px] text-on-primary">
+        <p className="mt-[8px] flex h-[32px] items-center self-end rounded-[10px] bg-primary px-[13px] text-[11.5px] text-on-primary">
           Tomorrow, 5:00 pm is open
         </p>
-        <div className="flex items-center gap-[8px] rounded-[8px] border border-line bg-secondary p-[9px]">
-          <span className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-accent text-[9px] font-semibold text-on-primary">
+        <div className="mt-[13px] flex h-[72px] items-center rounded-[11px] border border-line bg-secondary pr-[12px] pl-[14px]">
+          <span className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full bg-accent text-[12px] font-semibold text-on-primary">
             K
           </span>
-          <span className="flex-1 text-[9px] font-semibold">Dr. Khan, 5:00 pm</span>
-          <span className="rounded-full border border-accent px-[6px] text-[8px] font-semibold text-accent">
+          <span className="ml-[10px] min-w-0 flex-1">
+            <span className="block text-[13px] leading-[17px] font-semibold">
+              Dr. Khan, 5:00 pm
+            </span>
+            <span className="mt-[1px] block text-[12px] leading-[17px] text-muted">
+              General check-up
+            </span>
+          </span>
+          <span className="flex h-[23px] items-center rounded-full border border-primary px-[10px] text-[11.5px] font-semibold text-accent">
             Booked
           </span>
         </div>
@@ -63,7 +70,7 @@ export function ClinideskThumb({ compact = false }: { compact?: boolean }) {
 export function NexaThumb() {
   return (
     <div className="relative h-[164px] w-[236px]">
-      <span className="absolute top-0 left-[61px] h-[114px] w-[114px] rounded-full border-2 border-[rgb(255_107_44/0.3)]" />
+      <span className="absolute top-0 left-[61px] h-[114px] w-[114px] rounded-full border border-[rgb(255_107_44/0.45)]" />
       <span className="absolute top-[16px] left-[77px] h-[82px] w-[82px] rounded-full bg-[rgb(255_107_44/0.3)]" />
       <span className="absolute top-[30px] left-[91px] flex h-[54px] w-[54px] items-center justify-center rounded-full bg-primary">
         <svg width="26" height="26" viewBox="0 0 26 26" fill="var(--on-primary)">

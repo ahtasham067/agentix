@@ -26,7 +26,7 @@ function CardFooter({ product }: { product: CardProduct }) {
       <span className="text-muted">{product.stack}</span>
       <Link
         href={`/products/${product.slug}`}
-        className="text-[15px] font-semibold text-accent after:absolute after:inset-0 after:rounded-card after:content-[''] hover:underline"
+        className="text-[14px] font-semibold text-accent after:absolute after:inset-0 after:rounded-card after:content-[''] hover:underline"
       >
         View details<span className="sr-only"> about {product.name}</span>
       </Link>
