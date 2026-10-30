@@ -14,6 +14,7 @@ import { FeatureCards } from "@/components/sections/FeatureCards";
 import { SeoSection } from "@/components/sections/SeoSection";
 import { Steps } from "@/components/sections/Steps";
 import { ButtonLink } from "@/components/ui/Button";
+import { CheckList } from "@/components/ui/CheckList";
 import { ChipList } from "@/components/ui/Chip";
 import { SectionHead } from "@/components/ui/SectionHead";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -187,7 +188,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
                 </p>
               ))}
               {section.bullets && (
-                <ChipList items={section.bullets} className="mt-[16px] gap-[10px]" />
+                <CheckList items={section.bullets} className="mt-[16px] max-w-[760px]" />
               )}
             </div>
           ))}
