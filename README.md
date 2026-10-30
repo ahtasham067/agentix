@@ -100,7 +100,7 @@ You can automate this with a Supabase **Database Webhook** on the `posts` table 
 | `test:e2e` | Playwright on desktop (1440px) and mobile (Pixel 7): routes, links, filters, quote form, honeypot, rate limit, 404, axe |
 | `test:visual` | Full-page screenshots at 1440px compared with `images/*.png` (pixelmatch, must be under 2%) |
 | `test:seo` | Titles, descriptions, canonicals, OG, JSON-LD, word counts, heading order, sitemap, robots, link crawler, `www` redirect |
-| `test:lighthouse` | Lighthouse mobile, median of 5 runs, on `/`, `/products`, `/services`, `/products/clinidesk`, `/contact` |
+| `test:lighthouse` | Lighthouse mobile, median of 5 runs, on `/`, `/products`, `/services`, `/products/clinidesk`, `/contact`. Needs performance 90, accessibility 95, best practices 90, SEO 100 |
 | `db:start`, `db:stop`, `db:reset`, `db:test` | Supabase local stack, reset with seed, pgTAP tests |
 | `db:env`, `db:types`, `db:seed:gen` | Write `.env.local`, generate DB types, generate `seed.sql` |
 | `audit` | `npm audit --audit-level=high` |
@@ -110,7 +110,7 @@ You can automate this with a Supabase **Database Webhook** on the `posts` table 
 
 Visual results (diff PNGs and `report.json`) are written to `test-results/visual/`, Lighthouse reports to `test-results/lighthouse/`.
 
-> Lighthouse simulates a slow phone, so scores depend on how busy your machine is. Close heavy apps before running it, or run it in CI.
+> Lighthouse simulates a mid-tier phone by slowing your CPU down. Its default 4x slowdown is calibrated for a high-end desktop, so on a slower machine it over-throttles. Following Lighthouse's [throttling guide](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#calibrating-multipliers), the runner reads your machine's `benchmarkIndex` and uses 4x on a high-end desktop (1500+), 2x on a low-end desktop (800–1500) and 1x below that. The table shows the multiplier it used. Run `LH_CPU_MULTIPLIER=4 npm run test:lighthouse` for the strict default. Scores still depend on how busy the machine is, so close heavy apps first. After launch, [PageSpeed Insights](https://pagespeed.web.dev/) gives the reference numbers.
 
 ## Security
 
