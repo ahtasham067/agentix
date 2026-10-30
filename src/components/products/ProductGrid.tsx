@@ -29,7 +29,7 @@ export function ProductGrid({
   headingLevel?: 2 | 3;
 }) {
   const grid = (
-    <ul className="m-0 grid list-none gap-[24px] p-0 md:grid-cols-2 lg:grid-cols-3">
+    <ul className="m-0 grid list-none grid-cols-1 gap-[24px] p-0 md:grid-cols-2 lg:grid-cols-3">
       {products.map((product) =>
         product.featured ? (
           <li

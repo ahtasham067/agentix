@@ -1,4 +1,7 @@
-/** Small n8n run preview: five nodes, the second one active. */
+/**
+ * Small n8n run preview: five nodes, the second one active. Nodes keep their
+ * design size and shrink with the container (cqw) on narrow screens.
+ */
 export function WorkflowMini({
   className = "",
   size = "sm",
@@ -10,7 +13,7 @@ export function WorkflowMini({
   return (
     <div
       aria-hidden="true"
-      className={`rounded-[12px] border border-line bg-bg ${
+      className={`@container rounded-[12px] border border-line bg-bg ${
         lg ? "px-[24px] pt-[34px] pb-[8px]" : "p-[20px] pb-[14px]"
       } ${className}`}
     >
@@ -24,7 +27,9 @@ export function WorkflowMini({
             )}
             <span
               className={`flex items-center justify-center ${
-                lg ? "h-[81px] w-[84px] rounded-[14px]" : "h-[50px] w-[50px] rounded-[10px]"
+                lg
+                  ? "aspect-[84/81] w-[min(84px,calc((100cqw_-_76px)/5))] rounded-[14px]"
+                  : "aspect-square w-[min(50px,calc((100cqw_-_48px)/5))] rounded-[10px]"
               } ${i === 1 ? "border-2 border-primary" : "border border-[rgb(244_241_238/0.18)]"}`}
             >
               <span

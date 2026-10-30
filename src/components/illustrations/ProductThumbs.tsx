@@ -42,7 +42,7 @@ export function ClinideskThumb({ compact = false }: { compact?: boolean }) {
     );
   }
   return (
-    <div className="flex w-[374px] flex-col">
+    <div className="flex w-full max-w-[374px] flex-col">
       <p className="flex h-[44px] items-center self-start rounded-[12px] border border-line bg-secondary px-[18px] text-[16px]">
         I need an appointment
       </p>

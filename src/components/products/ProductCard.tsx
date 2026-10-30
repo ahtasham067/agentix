@@ -70,8 +70,8 @@ export function FeaturedProductCard({
 }) {
   const Heading = `h${headingLevel}` as "h2" | "h3";
   return (
-    <article className="relative grid h-full overflow-hidden rounded-card border border-line bg-secondary transition-colors hover:border-[rgb(244_241_238/0.28)] md:grid-cols-[439px_1fr] lg:h-[423.5px]">
-      <div className="flex items-center justify-center border-b border-line bg-brown px-[32px] py-10 md:border-r md:border-b-0">
+    <article className="relative grid h-full grid-cols-1 overflow-hidden rounded-card border border-line bg-secondary transition-colors hover:border-[rgb(244_241_238/0.28)] md:grid-cols-[439px_1fr] lg:h-[423.5px]">
+      <div className="flex items-center justify-center border-b border-line bg-brown px-[20px] py-10 md:border-r md:border-b-0 md:px-[32px]">
         <ClinideskThumb />
       </div>
       <div className="flex flex-col px-[28px] pt-[25px] pb-[22px]">

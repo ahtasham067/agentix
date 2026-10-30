@@ -10,7 +10,7 @@ export function ServiceRow({ service, reverse = false }: { service: Service; rev
   return (
     <section
       aria-labelledby={`${service.slug}-title`}
-      className="grid items-center gap-10 lg:grid-cols-2 lg:gap-x-[64px]"
+      className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-x-[64px]"
     >
       <div className={reverse ? "lg:order-2" : undefined}>
         <IconTile name={service.icon} />

@@ -78,7 +78,7 @@ export function HeroWorkflow({
       className={className}
       label="Example AI agent workflow: a new WhatsApp lead is qualified by the AI agent, added to the CRM and the sales team is notified on Slack."
     >
-      <div className={compact ? "grid" : "grid lg:grid-cols-[684px_1fr]"}>
+      <div className={compact ? "grid grid-cols-1" : "grid grid-cols-1 lg:grid-cols-[684px_1fr]"}>
         <div
           className={`dot-grid grid grid-cols-2 gap-[12px] p-[16px] sm:flex sm:gap-0 ${
             compact

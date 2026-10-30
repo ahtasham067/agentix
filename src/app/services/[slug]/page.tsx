@@ -100,7 +100,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
 
       <section
         aria-labelledby="get-title"
-        className="container-site mt-[104px] grid items-center gap-10 lg:grid-cols-2 lg:gap-x-[64px]"
+        className="container-site mt-[104px] grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-x-[64px]"
       >
         <div>
           <h2
