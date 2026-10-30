@@ -21,6 +21,18 @@ const OUT = "test-results/lighthouse";
 // Lighthouse scores vary between runs; use the median of several (Lighthouse's own advice).
 const RUNS = Number(process.env.LH_RUNS ?? 5);
 
+// Lighthouse slows the CPU 4x by default, which is calibrated for a high-end
+// desktop. Its throttling docs (docs/throttling.md, "Calibrating multipliers")
+// ask you to calibrate on other hosts: to emulate a mid-tier phone, use 4x on a
+// high-end desktop (benchmarkIndex 1500+), 2x on a low-end desktop (1000-1500)
+// or high-end mobile (800-1200), and 1x below that. LH_CPU_MULTIPLIER overrides it.
+function cpuMultiplier(benchmarkIndex) {
+  if (process.env.LH_CPU_MULTIPLIER) return Number(process.env.LH_CPU_MULTIPLIER);
+  if (benchmarkIndex >= 1500) return 4;
+  if (benchmarkIndex >= 800) return 2;
+  return 1;
+}
+
 async function waitForServer(url, ms = 120_000) {
   const start = Date.now();
   while (Date.now() - start < ms) {
@@ -58,20 +70,35 @@ try {
     // Warm the route so the measured run reflects a cached production response.
     await fetch(url);
     const runs = [];
-    // One discarded warm-up run: the first loads after a server or browser start are slower.
-    await lighthouse(url, {
+    // One discarded warm-up run: the first loads after a server or browser start are
+    // slower. It also measures the host CPU (benchmarkIndex) for the calibration.
+    const { lhr: warmUp } = await lighthouse(url, {
       port: chrome.port,
       output: "json",
       logLevel: "error",
       onlyCategories: ["performance"],
     });
+    const benchmarkIndex = Math.round(warmUp.environment.benchmarkIndex);
+    const multiplier = cpuMultiplier(benchmarkIndex);
     for (let i = 0; i < RUNS; i++) {
-      const { lhr: run } = await lighthouse(url, {
-        port: chrome.port,
-        output: "json",
-        logLevel: "error",
-        onlyCategories: Object.keys(THRESHOLDS),
-      });
+      const { lhr: run } = await lighthouse(
+        url,
+        {
+          port: chrome.port,
+          output: "json",
+          logLevel: "error",
+          onlyCategories: Object.keys(THRESHOLDS),
+        },
+        {
+          extends: "lighthouse:default",
+          settings: {
+            throttling: {
+              ...warmUp.configSettings.throttling,
+              cpuSlowdownMultiplier: multiplier,
+            },
+          },
+        },
+      );
       runs.push(run);
       // Let the machine settle so one busy moment does not skew the next run.
       await new Promise((r) => setTimeout(r, 1500));
@@ -87,6 +114,7 @@ try {
       path,
       ...scores,
       runs: runs.map((r) => Math.round(r.categories.performance.score * 100)).join("/"),
+      cpu: `${multiplier}x (index ${benchmarkIndex})`,
       lcp: lhr.audits["largest-contentful-paint"].displayValue,
       cls: lhr.audits["cumulative-layout-shift"].displayValue,
       tbt: lhr.audits["total-blocking-time"].displayValue,
