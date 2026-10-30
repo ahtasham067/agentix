@@ -110,6 +110,18 @@
     display: none;
   }
 
+  /* Phones and tablets: below-the-fold sections skip style, layout and paint
+     until they near the viewport, which keeps the first render short on long
+     pages. The clip margin leaves room for the window glow. Desktop is left
+     as designed. */
+  @media (width < 64rem) {
+    main > :is(section, div):not(:first-child) {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 600px;
+      overflow-clip-margin: 80px;
+    }
+  }
+
   .dot-grid {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Crect width='2' height='2' fill='%23f4f1ee' fill-opacity='0.1'/%3E%3C/svg%3E");
     background-size: 22px 22px;
