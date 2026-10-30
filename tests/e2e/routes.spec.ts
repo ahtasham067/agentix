@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import { projects } from "../../src/content/projects";
 import { seriousA11yViolations, staticRoutes, trackErrors } from "./helpers";
 
@@ -15,8 +15,26 @@ for (const route of routes) {
     await page.waitForLoadState("networkidle");
     expect(errors, "console errors").toEqual([]);
     expect(await seriousA11yViolations(page), "serious or critical axe violations").toEqual([]);
+    expect(await horizontalOverflow(page), "horizontal overflow (px)").toBe(0);
   });
 }
+
+async function horizontalOverflow(page: Page) {
+  return page.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
+}
+
+test("no page scrolls sideways at 360, 390 and 768px", async ({ page, isMobile }) => {
+  test.skip(isMobile, "the mobile project checks its own width above");
+  for (const width of [360, 390, 768]) {
+    await page.setViewportSize({ width, height: 800 });
+    for (const route of routes) {
+      await page.goto(route);
+      expect(await horizontalOverflow(page), `${route} at ${width}px`).toBe(0);
+    }
+  }
+});
 
 test("unknown pages return the custom 404", async ({ page }) => {
   const response = await page.goto("/this-page-does-not-exist");
