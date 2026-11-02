@@ -1,12 +1,45 @@
+import Image from "next/image";
 import { AppLink as Link } from "@/components/ui/AppLink";
 import { ProductThumb, ClinideskThumb } from "@/components/illustrations/ProductThumbs";
 import { Chip } from "@/components/ui/Chip";
+import type { Screenshot } from "@/content/types";
 import type { Product } from "@/lib/product-model";
 
 type CardProduct = Pick<
   Product,
-  "slug" | "name" | "summary" | "tags" | "stack" | "thumbnail" | "featured"
+  "slug" | "name" | "summary" | "tags" | "stack" | "thumbnail" | "featured" | "screenshots"
 >;
+
+/**
+ * The project's best real picture, filling the designed preview slot. The
+ * visual test masks it ([data-visual-mask]) because the design shows a drawing.
+ */
+function CardPicture({
+  shot,
+  sizes,
+  eager,
+  position = "object-left-top",
+}: {
+  shot: Screenshot;
+  sizes: string;
+  eager: boolean;
+  /** Tailwind object-position class for the crop. */
+  position?: string;
+}) {
+  return (
+    <Image
+      src={shot.src}
+      alt={shot.alt}
+      fill
+      sizes={sizes}
+      placeholder="blur"
+      blurDataURL={shot.blurDataURL}
+      loading={eager ? "eager" : "lazy"}
+      fetchPriority={eager ? "high" : "auto"}
+      className={`object-cover ${position}`}
+    />
+  );
+}
 
 function Tags({ tags }: { tags: string[] }) {
   return (
@@ -38,15 +71,30 @@ function CardFooter({ product }: { product: CardProduct }) {
 export function ProductCard({
   product,
   headingLevel = 3,
+  eager = false,
 }: {
   product: CardProduct;
   headingLevel?: 2 | 3;
+  /** Load the picture at once: only for the first card above the fold. */
+  eager?: boolean;
 }) {
   const Heading = `h${headingLevel}` as "h2" | "h3";
+  const shot = product.screenshots[0];
   return (
     <article className="relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-secondary transition-colors hover:border-[rgb(244_241_238/0.28)] lg:h-[423.5px]">
-      <div className="flex h-[209px] shrink-0 items-center justify-center border-b border-line bg-brown">
-        <ProductThumb thumbnail={product.thumbnail} />
+      <div
+        className="relative flex h-[209px] shrink-0 items-center justify-center border-b border-line bg-brown"
+        data-visual-mask={shot ? "" : undefined}
+      >
+        {shot ? (
+          <CardPicture
+            shot={shot}
+            sizes="(min-width: 1024px) 411px, (min-width: 768px) 50vw, 100vw"
+            eager={eager}
+          />
+        ) : (
+          <ProductThumb thumbnail={product.thumbnail} />
+        )}
       </div>
       <div className="flex flex-1 flex-col px-[28px] pt-[24px] pb-[26px]">
         <Tags tags={product.tags} />
@@ -64,16 +112,33 @@ export function ProductCard({
 export function FeaturedProductCard({
   product,
   headingLevel = 3,
+  eager = false,
 }: {
   product: CardProduct;
   headingLevel?: 2 | 3;
+  eager?: boolean;
 }) {
   const Heading = `h${headingLevel}` as "h2" | "h3";
+  const shot = product.screenshots[0];
   return (
     <article className="relative grid h-full grid-cols-1 overflow-hidden rounded-card border border-line bg-secondary transition-colors hover:border-[rgb(244_241_238/0.28)] md:grid-cols-[439px_1fr] lg:h-[423.5px]">
-      <div className="flex items-center justify-center border-b border-line bg-brown px-[20px] py-10 md:border-r md:border-b-0 md:px-[32px]">
-        <ClinideskThumb />
-      </div>
+      {shot ? (
+        <div
+          className="relative h-[240px] border-b border-line bg-brown md:h-auto md:min-h-[300px] md:border-r md:border-b-0"
+          data-visual-mask=""
+        >
+          <CardPicture
+            shot={shot}
+            sizes="(min-width: 768px) 439px, 100vw"
+            eager={eager}
+            position="object-[75%_50%]"
+          />
+        </div>
+      ) : (
+        <div className="flex items-center justify-center border-b border-line bg-brown px-[20px] py-10 md:border-r md:border-b-0 md:px-[32px]">
+          <ClinideskThumb />
+        </div>
+      )}
       <div className="flex flex-col px-[28px] pt-[25px] pb-[22px]">
         <span>
           <Chip variant="featured">Featured</Chip>

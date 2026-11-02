@@ -33,7 +33,7 @@ export default async function ProductsPage() {
         <h2 id="all-products" className="sr-only">
           All products
         </h2>
-        <ProductGrid products={products} showFilters />
+        <ProductGrid products={products} showFilters eagerFirst />
       </section>
 
       <TrustStrip className="mt-[104px]" />
