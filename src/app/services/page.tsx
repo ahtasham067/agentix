@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/PageHero";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { FAQ } from "@/components/sections/FAQ";
+import { LastUpdated } from "@/components/sections/LastUpdated";
+import { Pricing } from "@/components/sections/Pricing";
 import { SeoSection } from "@/components/sections/SeoSection";
 import { ServiceRow } from "@/components/sections/ServiceRow";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -13,7 +15,8 @@ import { SectionHead } from "@/components/ui/SectionHead";
 import { faq } from "@/content/faq";
 import { howWeWork } from "@/content/home";
 import { pageSeo } from "@/content/seo";
-import { services } from "@/content/services";
+import { getPricingGroup, pricingGroups, pricingSentence } from "@/content/pricing";
+import { serviceLinks, services } from "@/content/services";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { serviceSchema } from "@/lib/seo/schema";
 
@@ -21,31 +24,43 @@ export const metadata: Metadata = buildMetadata(pageSeo.services);
 
 const link = "text-accent underline underline-offset-[3px]";
 
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
 const fits = [
   {
     icon: "chat" as const,
     problem: "Customers wait for replies",
-    text: "Questions, bookings and follow-ups pile up. An AI agent answers in seconds and books in your tools.",
-    href: "/services/ai-agents",
-    anchor: "Custom AI agent development",
+    text: "Questions, bookings and follow-ups pile up. A chatbot or AI agent answers in seconds and books in your tools.",
+    service: serviceLinks["chatbots-ai-agents"],
   },
   {
     icon: "workflow" as const,
     problem: "Your team copies data between apps",
-    text: "The same steps repeat every day. An n8n workflow runs them for you and alerts you if something fails.",
-    href: "/services/n8n-automation",
-    anchor: "n8n automation services",
+    text: "The same steps repeat every day. An n8n, Make.com or Zapier workflow runs them and alerts you if something fails.",
+    service: serviceLinks.automation,
   },
   {
     icon: "browser" as const,
-    problem: "You need a dashboard or a portal",
-    text: "Spreadsheets no longer cope. A web app gives your team and customers one secure place to work.",
-    href: "/services/web-apps",
-    anchor: "Next.js web app development",
+    problem: "You need a website or a portal",
+    text: "Spreadsheets no longer cope, or you have no site of your own. A custom website or web app fixes both.",
+    service: serviceLinks["web-development"],
+  },
+  {
+    icon: "search" as const,
+    problem: "Customers cannot find you",
+    text: "You do not show up on Google or in ChatGPT answers. SEO and GEO make your site easy to find and cite.",
+    service: serviceLinks["seo-geo"],
   },
 ];
 
-const servicesFaq = [faq.whatIsAgent, faq.whichTools, faq.howLong, faq.customWebApps];
+const servicesFaq = [
+  faq.whatIsAgent,
+  faq.whichTools,
+  faq.howLong,
+  faq.customWebApps,
+  faq.websiteCost,
+  faq.chatbotCost,
+];
 
 export default function ServicesPage() {
   return (
@@ -62,12 +77,12 @@ export default function ServicesPage() {
           </>
         }
         titleClassName="md:leading-[63px]!"
-        intro="Three services that work together: smart agents, connected workflows and the web apps around them."
+        intro="Four services that work together: smart agents, connected workflows, web apps and search."
       />
 
       <div className="container-site mt-[96px] grid gap-[96px]">
         {services.map((service, i) => (
-          <ServiceRow key={service.slug} service={service} reverse={i % 2 === 1} />
+          <ServiceRow key={service.slug} service={service} reverse={i % 2 === 1} extra={i >= 3} />
         ))}
       </div>
 
@@ -82,17 +97,20 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      <Pricing className="mt-[104px]" />
+
       <SeoSection
         id="together-title"
-        title="How our AI agent, n8n and web app services work together"
-        intro="Our AI agent, n8n and web app development services are designed to fit together, so one team owns the whole system."
+        title="How do our chatbot, automation, web and SEO services work together?"
+        intro="Our AI chatbot, automation, web and SEO services are designed to fit together, so one team owns the whole system."
         className="mt-[104px]"
       >
         <div className="grid max-w-[880px] gap-[14px] text-[17px] leading-[1.6] text-muted">
           <p>
-            Most projects use more than one of our AI agent development, n8n automation and web app
-            development services. The agent talks to people, the workflow moves data between your
-            tools, and the web app gives your team a place to see and control it all.
+            Most projects use more than one of our services. The chatbot or AI agent talks to
+            people, the automation moves data between your tools, the website or web app gives your
+            team a place to see and control it all, and SEO and GEO make sure customers can find you
+            on Google and in AI answers.
           </p>
           <p>
             CliniDesk is a good example. Patients book on WhatsApp with an AI agent, an n8n workflow
@@ -104,7 +122,7 @@ export default function ServicesPage() {
             case to see how the parts fit.
           </p>
           <p>
-            You do not have to start with all three. Many clients begin with one workflow or one
+            You do not have to start with all four. Many clients begin with one workflow or one
             agent for a single job, see it working with real data, and then add the next piece. We
             build each part so it can grow without being rewritten.
           </p>
@@ -118,18 +136,17 @@ export default function ServicesPage() {
             fixes and changes.
           </p>
           <h3 className="mt-[14px] text-[24px] leading-[1.25] tracking-[-0.01em] text-text">
-            How pricing works
+            How much do our services cost?
           </h3>
           <p>
-            Every project is quoted on its scope. The main factors are how many tasks or screens are
-            involved, which tools need to be connected, how much AI usage the work needs, and the
-            hosting and support you want afterwards. Send us a short description through the quote
-            form and we reply with a plan, a timeline and a clear price. There are no hidden hourly
-            charges: if the scope changes, we agree the change and its price with you before we
-            build it.
+            {pricingGroups.map((g) => pricingSentence(g)).join(" ")} Automation and SEO and GEO work
+            are quoted on their scope: how many workflows or pages are involved and which tools need
+            to be connected. Send us a short description through the quote form and we reply with a
+            plan, a timeline and a clear price. If the scope changes, we agree the change and its
+            price with you before we build it.
           </p>
           <h3 className="mt-[14px] text-[24px] leading-[1.25] tracking-[-0.01em] text-text">
-            Who we build for
+            Who do we build for?
           </h3>
           <p>
             Our work so far has covered clinics, online stores, cross-border fintech, schools and
@@ -139,20 +156,20 @@ export default function ServicesPage() {
         </div>
       </SeoSection>
 
-      <SeoSection id="fit-title" title="Which service fits your problem" className="mt-[96px]">
-        <ul className="m-0 grid list-none gap-[20px] p-0 md:grid-cols-3">
+      <SeoSection id="fit-title" title="Which service fits your problem?" className="mt-[96px]">
+        <ul className="m-0 grid list-none gap-[20px] p-0 md:grid-cols-2 lg:grid-cols-4">
           {fits.map((fit) => (
-            <Card as="li" key={fit.href} className="p-[28px]">
+            <Card as="li" key={fit.service.href} className="p-[28px]">
               <IconTile name={fit.icon} size={48} iconSize={20} />
               <h3 className="mt-[19px] text-[21.5px] leading-[26px] tracking-[-0.01em]">
                 {fit.problem}
               </h3>
               <p className="mt-[10px] text-[15.5px] leading-[24px] text-muted">{fit.text}</p>
               <Link
-                href={fit.href}
-                className={`mt-[14px] inline-block text-[15px] font-semibold ${link}`}
+                href={fit.service.href}
+                className={`mt-[14px] inline-flex min-h-[24px] items-center text-[15px] font-semibold ${link}`}
               >
-                {fit.anchor}
+                {capitalize(fit.service.anchor)}
               </Link>
             </Card>
           ))}
@@ -169,13 +186,18 @@ export default function ServicesPage() {
         <FAQ items={servicesFaq} />
       </section>
 
+      <div className="container-site mt-[40px]" data-seo-extra>
+        <LastUpdated date={pageSeo.services.lastModified} />
+      </div>
+
       <JsonLd
         data={services.map((s) =>
           serviceSchema({
-            name: s.anchor.charAt(0).toUpperCase() + s.anchor.slice(1),
+            name: s.name,
             serviceType: s.seo.keyword,
             description: s.seo.description,
             path: `/services/${s.slug}`,
+            pricing: getPricingGroup(s.slug),
           }),
         )}
       />

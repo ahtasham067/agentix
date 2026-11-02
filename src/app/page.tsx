@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import { ServiceLinks } from "@/components/sections/ServiceLinks";
 import { HeroWorkflow } from "@/components/illustrations/HeroWorkflow";
 import { PageGlow } from "@/components/layout/PageGlow";
 import { ProductGrid } from "@/components/products/ProductGrid";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { FAQ } from "@/components/sections/FAQ";
 import { FeatureCards } from "@/components/sections/FeatureCards";
+import { LastUpdated } from "@/components/sections/LastUpdated";
+import { Pricing } from "@/components/sections/Pricing";
 import { SeoSection } from "@/components/sections/SeoSection";
 import { ServiceBento } from "@/components/sections/ServiceBento";
 import { StatsBand } from "@/components/sections/StatsBand";
@@ -54,7 +57,7 @@ export default async function HomePage() {
         <SectionHead
           id="build-title"
           title="What we build for you"
-          intro="Three ways we put AI to work in your business."
+          intro="Four ways we put AI to work in your business."
           link={{ href: "/services", label: "All services" }}
           className="[&_p]:mt-[12px]!"
         />
@@ -62,6 +65,8 @@ export default async function HomePage() {
           <ServiceBento />
         </div>
       </section>
+
+      <Pricing className="mt-[104px]" />
 
       <section aria-labelledby="products-title" className="container-site mt-[104px]">
         <SectionHead
@@ -108,22 +113,7 @@ export default async function HomePage() {
       >
         <FeatureCards features={homeUseCases.items} />
         <p className="mt-[28px] max-w-[760px] text-[17px] leading-[1.6] text-muted">
-          Explore our{" "}
-          <Link href="/services/ai-agents" className="text-accent underline underline-offset-[3px]">
-            custom AI agent development
-          </Link>
-          ,{" "}
-          <Link
-            href="/services/n8n-automation"
-            className="text-accent underline underline-offset-[3px]"
-          >
-            n8n automation services
-          </Link>{" "}
-          and{" "}
-          <Link href="/services/web-apps" className="text-accent underline underline-offset-[3px]">
-            Next.js web app development
-          </Link>
-          , or read{" "}
+          Explore our <ServiceLinks />, or read{" "}
           <Link href="/about" className="text-accent underline underline-offset-[3px]">
             how Agentix works
           </Link>
@@ -151,6 +141,10 @@ export default async function HomePage() {
         </div>
         <FAQ items={homeFaq} />
       </section>
+
+      <div className="container-site mt-[40px]" data-seo-extra>
+        <LastUpdated date={pageSeo.home.lastModified} />
+      </div>
 
       <div className="mt-[104px] mb-[104px]">
         <CtaBand

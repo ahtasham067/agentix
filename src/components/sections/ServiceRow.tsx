@@ -6,10 +6,20 @@ import { IconTile } from "@/components/ui/IconTile";
 import type { Service } from "@/content/services";
 
 /** One service on /services: copy and bullets beside an illustration. */
-export function ServiceRow({ service, reverse = false }: { service: Service; reverse?: boolean }) {
+export function ServiceRow({
+  service,
+  reverse = false,
+  extra = false,
+}: {
+  service: Service;
+  reverse?: boolean;
+  /** Not in the approved design: hidden in visual tests. */
+  extra?: boolean;
+}) {
   return (
     <section
       aria-labelledby={`${service.slug}-title`}
+      data-seo-extra={extra || undefined}
       className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-x-[64px]"
     >
       <div className={reverse ? "lg:order-2" : undefined}>
@@ -27,7 +37,7 @@ export function ServiceRow({ service, reverse = false }: { service: Service; rev
           items={service.bullets}
           className="mt-[24px] gap-[14.67px] [&_li]:text-[16.8px]"
         />
-        <ButtonLink href="/contact" className="mt-[31px]">
+        <ButtonLink href={`/contact?service=${service.slug}#quote`} className="mt-[31px]">
           Get a quote for this
         </ButtonLink>
       </div>

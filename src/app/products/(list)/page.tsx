@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ServiceLinks } from "@/components/sections/ServiceLinks";
 import { PageHero } from "@/components/layout/PageHero";
 import { ProductGrid } from "@/components/products/ProductGrid";
 import { CtaBand } from "@/components/sections/CtaBand";
@@ -75,19 +76,7 @@ export default async function ProductsPage() {
           </p>
           <p>
             Newer work runs on Next.js, Supabase and n8n. Larger back ends use Ruby on Rails with
-            React or Vue.js. Looking for something similar? See our{" "}
-            <Link href="/services/ai-agents" className={link}>
-              custom AI agent development
-            </Link>
-            ,{" "}
-            <Link href="/services/n8n-automation" className={link}>
-              n8n automation services
-            </Link>{" "}
-            and{" "}
-            <Link href="/services/web-apps" className={link}>
-              Next.js web app development
-            </Link>
-            , or{" "}
+            React or Vue.js. Looking for something similar? See our <ServiceLinks />, or{" "}
             <Link href="/contact" className={link}>
               get a quote for your project
             </Link>

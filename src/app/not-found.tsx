@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AppLink as Link } from "@/components/ui/AppLink";
 import { PageGlow } from "@/components/layout/PageGlow";
 import { ButtonLink } from "@/components/ui/Button";
+import { services } from "@/content/services";
 
 export const metadata: Metadata = {
   title: "Page not found",
@@ -9,9 +10,10 @@ export const metadata: Metadata = {
 };
 
 const links = [
-  { href: "/services/ai-agents", label: "Custom AI agent development" },
-  { href: "/services/n8n-automation", label: "n8n automation services" },
-  { href: "/services/web-apps", label: "Next.js web app development" },
+  ...services.map((s) => ({
+    href: `/services/${s.slug}`,
+    label: s.anchor.charAt(0).toUpperCase() + s.anchor.slice(1),
+  })),
   { href: "/products", label: "AI agents and web apps we have built" },
   { href: "/about", label: "About Agentix" },
 ];

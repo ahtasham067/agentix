@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ServiceLinks } from "@/components/sections/ServiceLinks";
 import { PageHero } from "@/components/layout/PageHero";
 import { QuoteForm } from "@/components/quote/QuoteForm";
 import { ContactDetails, NextSteps } from "@/components/sections/ContactInfo";
@@ -66,19 +67,7 @@ export default function ContactPage() {
         <p className="mt-[20px] max-w-[760px] text-[17px] leading-[1.6] text-muted">
           You do not need a full specification. A few honest sentences are enough for a first reply,
           and we will ask about anything that is missing. Not sure which service you need? Read
-          about{" "}
-          <Link href="/services/ai-agents" className={link}>
-            custom AI agent development
-          </Link>
-          ,{" "}
-          <Link href="/services/n8n-automation" className={link}>
-            n8n automation services
-          </Link>{" "}
-          and{" "}
-          <Link href="/services/web-apps" className={link}>
-            Next.js web app development
-          </Link>
-          , or see{" "}
+          about <ServiceLinks />, or see{" "}
           <Link href="/products" className={link}>
             the products we have built
           </Link>

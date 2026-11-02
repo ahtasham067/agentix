@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ServiceLinks } from "@/components/sections/ServiceLinks";
 import { PostCard } from "@/components/blog/PostCard";
 import { PageHero } from "@/components/layout/PageHero";
 import { CtaBand } from "@/components/sections/CtaBand";
@@ -46,19 +47,7 @@ export default async function BlogPage() {
               Our first articles are being reviewed and will appear here soon.
             </p>
             <p className="mt-[12px] text-[17px] leading-[1.6] text-muted">
-              Until then, read about our{" "}
-              <Link href="/services/ai-agents" className={link}>
-                custom AI agent development
-              </Link>
-              ,{" "}
-              <Link href="/services/n8n-automation" className={link}>
-                n8n automation services
-              </Link>{" "}
-              and{" "}
-              <Link href="/services/web-apps" className={link}>
-                Next.js web app development
-              </Link>
-              , or see{" "}
+              Until then, read about our <ServiceLinks />, or see{" "}
               <Link href="/products" className={link}>
                 the products we have built
               </Link>
