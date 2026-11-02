@@ -62,6 +62,7 @@ export async function submitQuote(_prev: QuoteState, formData: FormData): Promis
       email: quote.email,
       whatsapp: quote.whatsapp || null,
       service: quote.service,
+      plan: quote.plan,
       budget: quote.budget,
       details: quote.details,
       ip_hash: ipHash,

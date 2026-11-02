@@ -1,10 +1,11 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { submitQuote, type QuoteState } from "@/app/contact/actions";
 import { Icon } from "@/components/icons";
 import {
   BUDGET_OPTIONS,
+  PLAN_OPTIONS,
   QUOTE_FIELDS,
   SERVICE_OPTIONS,
   validateQuote,
@@ -94,11 +95,34 @@ function Select({
   );
 }
 
+/** Fields the pricing buttons can preselect through the URL (?service=…&plan=…). */
+const PREFILL = { service: SERVICE_OPTIONS, plan: PLAN_OPTIONS } as const;
+
+/**
+ * Applies allow-listed ?service= and ?plan= values to the selects. Runs in the
+ * browser, so the page itself stays static; unknown values are ignored.
+ */
+export function applyPrefill(form: HTMLFormElement, search: string) {
+  const params = new URLSearchParams(search);
+  for (const [field, options] of Object.entries(PREFILL)) {
+    const value = params.get(field);
+    const select = form.elements.namedItem(field);
+    if (value && select instanceof HTMLSelectElement && options.some((o) => o.value === value)) {
+      select.value = value;
+    }
+  }
+}
+
 /** Quote request form. Works without JavaScript; validates on the client too. */
 export function QuoteForm() {
   const [state, formAction, pending] = useActionState(submitQuote, initialState);
   const [clientErrors, setClientErrors] = useState<FieldErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (formRef.current) applyPrefill(formRef.current, window.location.search);
+  }, []);
 
   const serverErrors = state.status === "error" ? (state.fieldErrors ?? {}) : {};
   const errors: FieldErrors = { ...serverErrors, ...clientErrors };
@@ -163,11 +187,13 @@ export function QuoteForm() {
 
   return (
     <form
+      ref={formRef}
+      id="quote"
       action={formAction}
       onSubmit={onSubmit}
       noValidate
       aria-labelledby="quote-form-title"
-      className="relative rounded-card border border-line bg-secondary p-[40px]"
+      className="relative scroll-mt-[96px] rounded-card border border-line bg-secondary p-[24px] sm:p-[40px]"
     >
       <h2 id="quote-form-title" className="text-[25.5px] leading-[32px] tracking-[-0.01em]">
         Tell us about your project
@@ -228,7 +254,7 @@ export function QuoteForm() {
             type="tel"
             autoComplete="tel"
             maxLength={20}
-            placeholder="+92 300 0000000"
+            placeholder="+92 3XX XXXXXXX"
             defaultValue={values.whatsapp}
             aria-invalid={errors.whatsapp ? true : undefined}
             aria-describedby={describedBy("whatsapp")}
@@ -246,7 +272,17 @@ export function QuoteForm() {
             onBlur={onBlur}
           />
         </Field>
-        <Field id="budget" label="Budget range" error={errors.budget} className="sm:col-span-2">
+        <Field id="plan" label="Plan" error={errors.plan}>
+          <Select
+            id="plan"
+            placeholder="Choose a plan"
+            options={PLAN_OPTIONS}
+            defaultValue={values.plan}
+            error={errors.plan}
+            onBlur={onBlur}
+          />
+        </Field>
+        <Field id="budget" label="Budget range" error={errors.budget}>
           <Select
             id="budget"
             placeholder="Select a range"

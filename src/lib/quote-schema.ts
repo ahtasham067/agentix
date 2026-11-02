@@ -1,11 +1,25 @@
 // zod/mini keeps the client bundle small; the same schema runs on the server.
 import * as z from "zod/mini";
 
+import { SERVICE_SLUGS } from "@/content/types";
+
+/** Labels match the service names in src/content/services.ts (checked by a unit test). */
+const SERVICE_LABELS: Record<(typeof SERVICE_SLUGS)[number], string> = {
+  "chatbots-ai-agents": "Chatbots and AI Agents",
+  automation: "Automation",
+  "web-development": "Web Development",
+  "seo-geo": "SEO and GEO",
+};
+
 export const SERVICE_OPTIONS = [
-  { value: "ai-agents", label: "AI Agents" },
-  { value: "n8n-automation", label: "n8n Automation" },
-  { value: "web-apps", label: "Web Apps" },
+  ...SERVICE_SLUGS.map((value) => ({ value, label: SERVICE_LABELS[value] })),
   { value: "not-sure", label: "Not sure" },
+] as const;
+
+export const PLAN_OPTIONS = [
+  { value: "one-time", label: "One-time plan" },
+  { value: "subscription", label: "Subscription plan" },
+  { value: "not-sure", label: "Not sure yet" },
 ] as const;
 
 export const BUDGET_OPTIONS = [
@@ -17,6 +31,7 @@ export const BUDGET_OPTIONS = [
 ] as const;
 
 const serviceValues = SERVICE_OPTIONS.map((o) => o.value) as [string, ...string[]];
+const planValues = PLAN_OPTIONS.map((o) => o.value) as [string, ...string[]];
 const budgetValues = BUDGET_OPTIONS.map((o) => o.value) as [string, ...string[]];
 
 /** Same rules as the `quotes` table checks, so the database never rejects valid input. */
@@ -41,12 +56,13 @@ export const quoteSchema = z.object({
     ),
   whatsapp: z.string().check(
     z.trim(),
-    z.maxLength(20, "Please enter a valid phone number, for example +92 300 0000000."),
+    z.maxLength(20, "Please enter a valid phone number, for example +92 3XX XXXXXXX."),
     z.refine((v) => v === "" || PHONE_RE.test(v), {
-      message: "Please enter a valid phone number, for example +92 300 0000000.",
+      message: "Please enter a valid phone number, for example +92 3XX XXXXXXX.",
     }),
   ),
   service: z.enum(serviceValues, { error: "Please choose a service." }),
+  plan: z.enum(planValues, { error: "Please choose a plan." }),
   budget: z.enum(budgetValues, { error: "Please select a budget range." }),
   details: z
     .string()
