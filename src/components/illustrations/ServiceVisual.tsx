@@ -1,5 +1,6 @@
 import type { ServiceVisual as Visual } from "@/content/services";
 import { ChatBubbles } from "./ChatBubbles";
+import { SearchMini } from "./SearchMini";
 import { StatsMini } from "./StatsMini";
 import { WorkflowMini } from "./WorkflowMini";
 
@@ -28,6 +29,16 @@ export function ServiceVisual({ visual }: { visual: Visual }) {
       >
         <WorkflowMini size="lg" />
         <WorkflowMini size="lg" />
+      </div>
+    );
+  }
+  if (visual === "search") {
+    return (
+      <div
+        aria-hidden="true"
+        className="grid gap-[15px] rounded-card border border-line bg-secondary p-[30px]"
+      >
+        <SearchMini size="lg" />
       </div>
     );
   }
