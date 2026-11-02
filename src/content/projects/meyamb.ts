@@ -9,6 +9,8 @@ export const meyamb: Project = {
   tagline: "Cross-border finance for the Central African diaspora.",
   description:
     "A cross-border fintech platform for the Central African diaspora, with a virtual Visa card, bill payments, money transfers and savings vaults.",
+  answer:
+    "Meyamb is a cross-border fintech platform for the Central African diaspora. Users get a virtual Visa card, pay bills, send money, save in vaults and see every transaction in real time, after KYC verification. It is client work, built with Ruby on Rails, Vue.js and Redis and shipped through AWS CodePipeline.",
   tags: ["Fintech", "Rails", "Vue.js"],
   stack: "Rails, Vue.js",
   category: "web-apps",

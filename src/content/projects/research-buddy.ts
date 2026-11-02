@@ -1,7 +1,7 @@
 import type { Project } from "../types";
 
-// Facts and results from the owner's CV.
-// TODO: confirm who owns Research Buddy.
+// Facts and results from the owner's CV. The owner's notes (intro.md) confirm it
+// was built at a previous employer, so it is client work and the employer is not named.
 export const researchBuddy: Project = {
   slug: "research-buddy",
   name: "Research Buddy",
@@ -9,6 +9,8 @@ export const researchBuddy: Project = {
   tagline: "References and citations without the busywork.",
   description:
     "A reference and citation manager with tags, folders, DOI and ISBN lookup, and automatic APA, MLA and Chicago citations.",
+  answer:
+    "Research Buddy is a reference and citation manager for researchers and students. It looks up sources by DOI or ISBN, organizes them with tags, folders and filters, and writes APA, MLA and Chicago citations automatically. It is client work built with React and Ruby on Rails, and it cut citation and search time by 50%.",
   tags: ["Web app", "React", "Rails"],
   stack: "React, Rails",
   category: "web-apps",

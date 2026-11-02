@@ -1,7 +1,8 @@
 import type { Project } from "../types";
 
-// Facts and results from the owner's CV.
-// TODO: confirm who owns Nizame-Taleem and our exact role.
+// Facts and results from the owner's CV. The owner's notes (intro.md) confirm it
+// was built at a previous employer, so it is client work and the employer is not named.
+// TODO: confirm the UI library. The CV says Bootstrap; intro.md says Ant Design.
 export const nizameTaleem: Project = {
   slug: "nizame-taleem",
   name: "Nizame-Taleem",
@@ -9,6 +10,8 @@ export const nizameTaleem: Project = {
   tagline: "One system for school admin.",
   description:
     "A school management system that brings admissions, staff, classes, fees, attendance, exams and reports into one place.",
+  answer:
+    "Nizame-Taleem is a school management system that brings admissions, staff, classes, fees, attendance, exams and reports into one place for school administrators and staff. It is client work built with Ruby on Rails and React, and because every area shares one database, a change in one place, such as a new admission, shows up everywhere.",
   tags: ["Web app", "Rails", "React"],
   stack: "Rails, React",
   category: "web-apps",

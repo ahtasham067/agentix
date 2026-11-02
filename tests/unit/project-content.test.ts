@@ -31,6 +31,16 @@ describe("project content", () => {
     },
   );
 
+  it.each(projects.map((p) => [p.slug, p] as const))(
+    "%s opens with a 40 to 60 word answer",
+    (_, p) => {
+      const words = p.answer.split(/\s+/).length;
+      expect(words).toBeGreaterThanOrEqual(40);
+      expect(words).toBeLessThanOrEqual(60);
+      expect(p.answer.startsWith(p.name)).toBe(true);
+    },
+  );
+
   it("keeps projects without real details out of the index", () => {
     const hidden = projects.filter((p) => !p.indexable).map((p) => p.slug);
     expect(hidden.sort()).toEqual(["nexa-ai", "uphex"]);

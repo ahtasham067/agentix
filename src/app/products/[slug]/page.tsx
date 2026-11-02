@@ -7,6 +7,9 @@ import { CalendarScreen, PatientHistoryScreen } from "@/components/illustrations
 import { WindowFrame } from "@/components/illustrations/WindowFrame";
 import { PageHero } from "@/components/layout/PageHero";
 import { ProductCard } from "@/components/products/ProductCard";
+import { AuthorBox } from "@/components/blog/AuthorBox";
+import { ScreenshotGallery } from "@/components/products/ScreenshotGallery";
+import { AnswerFirst } from "@/components/sections/AnswerFirst";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { FactsStrip } from "@/components/sections/FactsStrip";
 import { FAQ } from "@/components/sections/FAQ";
@@ -71,6 +74,9 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
     .slice(0, 3);
   const services = product.relatedServices.map((s) => serviceLinks[s]);
   const featureColumns = product.features.length % 3 === 0 ? 3 : 4;
+  const quote = product.relatedServices[0]
+    ? `/contact?service=${product.relatedServices[0]}#quote`
+    : "/contact";
 
   return (
     <>
@@ -101,17 +107,21 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
             <a
               href={product.websiteUrl}
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="inline-flex h-[52px] items-center rounded-[12px] bg-primary px-[29px] text-[16px] font-semibold text-on-primary hover:bg-[#ff7d45]"
             >
               Visit {new URL(product.websiteUrl).host}
             </a>
           ) : null}
-          <ButtonLink href="/contact" variant={product.websiteUrl ? "secondary" : "primary"}>
+          <ButtonLink href={quote} variant={product.websiteUrl ? "secondary" : "primary"}>
             Get a Quote
           </ButtonLink>
         </div>
       </PageHero>
+
+      {product.answer && (
+        <AnswerFirst answer={product.answer} updated={product.updatedAt} className="mt-[48px]" />
+      )}
 
       {product.facts.length > 0 && (
         <div className="container-site mt-[48px]">
@@ -150,6 +160,8 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
           </div>
         </section>
       )}
+
+      <ScreenshotGallery name={product.name} screenshots={product.screenshots} />
 
       {product.builtWith.length > 0 && (
         <section aria-labelledby="built-title" className="container-site mt-[104px]">
@@ -207,7 +219,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
             ))}{" "}
             work. Want something similar?{" "}
             <Link
-              href="/contact"
+              href={quote}
               className="text-accent underline underline-offset-[3px] hover:text-text"
             >
               Get a quote for your project
@@ -224,6 +236,10 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
           </div>
         </SeoSection>
       )}
+
+      <div className="container-site">
+        <AuthorBox title="Who built this" id="builder-title" className="mt-[96px]" />
+      </div>
 
       <JsonLd data={productSchema(product)} />
 

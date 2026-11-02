@@ -9,6 +9,8 @@ export const autobuffy: Project = {
   tagline: "Auto parts e-commerce with vehicle-fitment search.",
   description:
     "An online auto parts store with secure payments and a Rails API backend. Shoppers search a catalog of more than 1.2 million parts by vehicle fitment.",
+  answer:
+    "AutoBuffy is an online auto parts store where shoppers search more than 1.2 million parts by vehicle fitment. It runs on a Ruby on Rails API backend with PayPal, Apple Pay, Afterpay and Klarna at checkout. On this client project, Agentix founder Ahtasham Naeem built RESTful APIs, payments, analytics, database tuning and deployments.",
   tags: ["Web app", "Rails", "Payments"],
   stack: "Ruby on Rails",
   category: "web-apps",

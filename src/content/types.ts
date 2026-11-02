@@ -92,6 +92,8 @@ export interface Project {
   summary: string;
   /** Hero paragraph on the detail page. */
   description: string;
+  /** 40 to 60 word direct answer that opens the detail page (GEO). */
+  answer: string;
   tagline?: string;
   tags: string[];
   /** Stack line shown on cards. */

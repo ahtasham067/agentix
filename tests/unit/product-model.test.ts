@@ -9,6 +9,7 @@ function toRow(p: (typeof projects)[number]): ProductRow {
     name: p.name,
     summary: p.summary,
     description: p.description,
+    answer: p.answer,
     tagline: p.tagline ?? null,
     tags: p.tags,
     stack: p.stack,

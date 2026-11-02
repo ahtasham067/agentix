@@ -9,6 +9,8 @@ export const clinidesk: Project = {
   tagline: "Doctor appointments on WhatsApp.",
   description:
     "Patients book in a WhatsApp chat. Doctors manage appointments and patient history from one dashboard.",
+  answer:
+    "CliniDesk is a WhatsApp doctor appointment system for clinics, hospitals and doctors. An AI receptionist books, reschedules and cancels appointments in Urdu, Roman Urdu or English, checks each doctor's real availability first, and syncs every booking to a Next.js and Supabase dashboard. Agentix built the agent, the n8n workflows and the dashboard.",
   tags: ["AI agent", "n8n", "Next.js", "Supabase"],
   stack: "Next.js, Supabase, n8n",
   category: "ai-agents",
