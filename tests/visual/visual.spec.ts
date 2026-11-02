@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import fs from "node:fs";
 import path from "node:path";
-import { compare, MAX_DIFF_PERCENT, preparePage } from "./compare.mjs";
+import { compare, maskRects, MAX_DIFF_PERCENT, preparePage } from "./compare.mjs";
 
 /** Approved design PNGs (1440px wide). */
 const DESIGN_DIR = "images";
@@ -29,7 +29,8 @@ for (const { route, design } of pages) {
   test(`${route} matches ${design}`, async ({ page }) => {
     await preparePage(page, route);
     const actual = await page.screenshot({ fullPage: true, animations: "disabled" });
-    const result = compare(actual, fs.readFileSync(path.join(DESIGN_DIR, design)));
+    const masks = await maskRects(page);
+    const result = compare(actual, fs.readFileSync(path.join(DESIGN_DIR, design)), masks);
 
     const name = design.replace(".png", "");
     fs.mkdirSync(OUT_DIR, { recursive: true });

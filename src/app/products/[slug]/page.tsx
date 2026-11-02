@@ -151,17 +151,22 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
         </section>
       )}
 
-      {product.screens.length > 0 && (
+      {product.screenshots.length > 0 ? (
         <section aria-labelledby="screens-title" className="container-site mt-[104px]">
           <SectionHead id="screens-title" title="Screens" />
-          <div className="mt-[34px] grid gap-[24px] md:grid-cols-2">
-            {product.screens.includes("calendar") && <CalendarScreen />}
-            {product.screens.includes("patient-history") && <PatientHistoryScreen />}
-          </div>
+          <ScreenshotGallery name={product.name} screenshots={product.screenshots} />
         </section>
+      ) : (
+        product.screens.length > 0 && (
+          <section aria-labelledby="screens-title" className="container-site mt-[104px]">
+            <SectionHead id="screens-title" title="Screens" />
+            <div className="mt-[34px] grid gap-[24px] md:grid-cols-2">
+              {product.screens.includes("calendar") && <CalendarScreen />}
+              {product.screens.includes("patient-history") && <PatientHistoryScreen />}
+            </div>
+          </section>
+        )
       )}
-
-      <ScreenshotGallery name={product.name} screenshots={product.screenshots} />
 
       {product.builtWith.length > 0 && (
         <section aria-labelledby="built-title" className="container-site mt-[104px]">

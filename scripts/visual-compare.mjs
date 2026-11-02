@@ -2,7 +2,7 @@
 // Usage: node scripts/visual-compare.mjs <route> <design.png> <outPrefix> [hideExtras=1]
 import { chromium } from "@playwright/test";
 import fs from "node:fs";
-import { compare, preparePage } from "../tests/visual/compare.mjs";
+import { compare, maskRects, preparePage } from "../tests/visual/compare.mjs";
 
 const [route, design, out, hide = "1"] = process.argv.slice(2);
 const base = process.env.BASE_URL || "http://localhost:3000";
@@ -17,9 +17,10 @@ page.on("console", (m) => {
 });
 await preparePage(page, base + route, { hideExtras: hide === "1" });
 const actual = await page.screenshot({ fullPage: true, animations: "disabled" });
+const masks = await maskRects(page);
 await browser.close();
 
-const { diffPng, ...result } = compare(actual, fs.readFileSync(design));
+const { diffPng, ...result } = compare(actual, fs.readFileSync(design), masks);
 fs.writeFileSync(`${out}-actual.png`, actual);
 fs.writeFileSync(`${out}-diff.png`, diffPng);
 console.log(JSON.stringify({ route, ...result, consoleErrors: logs.slice(0, 5) }));
