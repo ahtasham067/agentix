@@ -1,6 +1,19 @@
 "use client";
 
-export default function GlobalError({ reset }: { error: Error; reset: () => void }) {
+import { useEffect } from "react";
+
+export default function GlobalError({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  // Log for the browser console and error monitoring; never show the message to the visitor.
+  useEffect(() => {
+    console.error(error);
+  }, [error]);
+
   return (
     <html lang="en">
       <body
