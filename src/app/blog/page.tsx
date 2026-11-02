@@ -3,6 +3,7 @@ import { ServiceLinks } from "@/components/sections/ServiceLinks";
 import { PostCard } from "@/components/blog/PostCard";
 import { PageHero } from "@/components/layout/PageHero";
 import { CtaBand } from "@/components/sections/CtaBand";
+import { PageUpdated } from "@/components/sections/LastUpdated";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { AppLink as Link } from "@/components/ui/AppLink";
 import { pageSeo } from "@/content/seo";
@@ -56,6 +57,8 @@ export default async function BlogPage() {
           </div>
         )}
       </section>
+
+      <PageUpdated date={pageSeo.blog.lastModified} />
 
       <JsonLd data={blogSchema(posts)} />
 

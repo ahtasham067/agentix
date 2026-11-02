@@ -4,6 +4,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { QuoteForm } from "@/components/quote/QuoteForm";
 import { ContactDetails, NextSteps } from "@/components/sections/ContactInfo";
 import { FAQ } from "@/components/sections/FAQ";
+import { LastUpdated } from "@/components/sections/LastUpdated";
 import { SeoSection } from "@/components/sections/SeoSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { AppLink as Link } from "@/components/ui/AppLink";
@@ -73,6 +74,7 @@ export default function ContactPage() {
           </Link>
           .
         </p>
+        <LastUpdated date={pageSeo.contact.lastModified} className="mt-[24px]" />
       </SeoSection>
 
       <JsonLd data={contactPageSchema(pageSeo.contact)} />

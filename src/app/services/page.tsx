@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/PageHero";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { FAQ } from "@/components/sections/FAQ";
-import { LastUpdated } from "@/components/sections/LastUpdated";
+import { PageUpdated } from "@/components/sections/LastUpdated";
 import { Pricing } from "@/components/sections/Pricing";
 import { SeoSection } from "@/components/sections/SeoSection";
 import { ServiceRow } from "@/components/sections/ServiceRow";
@@ -186,9 +186,7 @@ export default function ServicesPage() {
         <FAQ items={servicesFaq} />
       </section>
 
-      <div className="container-site mt-[40px]" data-seo-extra>
-        <LastUpdated date={pageSeo.services.lastModified} />
-      </div>
+      <PageUpdated date={pageSeo.services.lastModified} />
 
       <JsonLd
         data={services.map((s) =>

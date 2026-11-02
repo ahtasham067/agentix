@@ -1,3 +1,5 @@
+import { legalUpdated } from "./legal";
+
 /** Search metadata for fixed pages. Products and posts take theirs from the database. */
 export interface PageSeo {
   path: string;
@@ -71,7 +73,7 @@ export const pageSeo = {
     description:
       "How Agentix collects, uses and protects the details you send through the quote form, where the data is stored, and how to ask us to delete it.",
     keyword: "privacy policy",
-    lastModified: "2026-10-29",
+    lastModified: legalUpdated,
     ogLabel: "Privacy",
   },
   terms: {
@@ -80,7 +82,7 @@ export const pageSeo = {
     description:
       "The terms for using the Agentix website and requesting a quote: what a quote request means, how proposals work, and who owns the names shown.",
     keyword: "terms of use",
-    lastModified: "2026-10-29",
+    lastModified: legalUpdated,
     ogLabel: "Terms",
   },
 } satisfies Record<string, PageSeo>;

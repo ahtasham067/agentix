@@ -19,7 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     ...services.map((s) => ({
       url: absoluteUrl(`/services/${s.slug}`),
-      lastModified: new Date(pageSeo.services.lastModified),
+      lastModified: new Date(s.updated),
       changeFrequency: "monthly" as const,
       priority: 0.9,
     })),

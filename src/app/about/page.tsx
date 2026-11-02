@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/PageHero";
 import { CtaBand } from "@/components/sections/CtaBand";
+import { PageUpdated } from "@/components/sections/LastUpdated";
 import { FeatureCards } from "@/components/sections/FeatureCards";
 import { FounderCard } from "@/components/sections/FounderCard";
 import { StatsBand } from "@/components/sections/StatsBand";
@@ -14,7 +15,7 @@ import { aboutIntro, principles, story } from "@/content/about";
 import { pageSeo } from "@/content/seo";
 import { getPublishedProductCount } from "@/lib/products";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { aboutPageSchema, founderPageSchema } from "@/lib/seo/schema";
+import { aboutPageSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = buildMetadata(pageSeo.about);
 
@@ -149,7 +150,9 @@ export default async function AboutPage() {
         </div>
       </SeoSection>
 
-      <JsonLd data={[aboutPageSchema(pageSeo.about), founderPageSchema()]} />
+      <PageUpdated date={pageSeo.about.lastModified} />
+
+      <JsonLd data={aboutPageSchema(pageSeo.about)} />
 
       <div className="mt-[103px] mb-[103px]">
         <CtaBand title="Let's work together" text="Tell us what you want to build or automate." />

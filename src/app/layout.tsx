@@ -7,7 +7,7 @@ import { Analytics } from "@/components/seo/Analytics";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pageSeo } from "@/content/seo";
 import { SITE_NAME, siteUrl } from "@/content/site";
-import { organizationSchema, websiteSchema } from "@/lib/seo/schema";
+import { founderPageSchema, organizationSchema, websiteSchema } from "@/lib/seo/schema";
 import "./globals.css";
 
 const bricolage = Bricolage_Grotesque({
@@ -60,7 +60,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar />
         <main id="main">{children}</main>
         <Footer />
-        <JsonLd data={[organizationSchema(), websiteSchema()]} />
+        <JsonLd data={[organizationSchema(), websiteSchema(), founderPageSchema()]} />
         <Analytics />
       </body>
     </html>

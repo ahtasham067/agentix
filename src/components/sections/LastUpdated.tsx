@@ -27,3 +27,18 @@ export function LastUpdated({ date, className = "" }: { date: string; className?
     </p>
   );
 }
+
+/** Page-level "Last updated" line, added below the designed content. */
+export function PageUpdated({
+  date,
+  className = "mt-[40px]",
+}: {
+  date: string;
+  className?: string;
+}) {
+  return (
+    <div className={`container-site ${className}`} data-seo-extra>
+      <LastUpdated date={date} />
+    </div>
+  );
+}

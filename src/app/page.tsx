@@ -6,7 +6,7 @@ import { ProductGrid } from "@/components/products/ProductGrid";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { FAQ } from "@/components/sections/FAQ";
 import { FeatureCards } from "@/components/sections/FeatureCards";
-import { LastUpdated } from "@/components/sections/LastUpdated";
+import { PageUpdated } from "@/components/sections/LastUpdated";
 import { Pricing } from "@/components/sections/Pricing";
 import { SeoSection } from "@/components/sections/SeoSection";
 import { ServiceBento } from "@/components/sections/ServiceBento";
@@ -142,9 +142,7 @@ export default async function HomePage() {
         <FAQ items={homeFaq} />
       </section>
 
-      <div className="container-site mt-[40px]" data-seo-extra>
-        <LastUpdated date={pageSeo.home.lastModified} />
-      </div>
+      <PageUpdated date={pageSeo.home.lastModified} />
 
       <div className="mt-[104px] mb-[104px]">
         <CtaBand

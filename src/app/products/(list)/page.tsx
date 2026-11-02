@@ -3,6 +3,7 @@ import { ServiceLinks } from "@/components/sections/ServiceLinks";
 import { PageHero } from "@/components/layout/PageHero";
 import { ProductGrid } from "@/components/products/ProductGrid";
 import { CtaBand } from "@/components/sections/CtaBand";
+import { PageUpdated } from "@/components/sections/LastUpdated";
 import { SeoSection } from "@/components/sections/SeoSection";
 import { TrustStrip } from "@/components/sections/TrustStrip";
 import { AppLink as Link } from "@/components/ui/AppLink";
@@ -84,6 +85,8 @@ export default async function ProductsPage() {
           </p>
         </div>
       </SeoSection>
+
+      <PageUpdated date={pageSeo.products.lastModified} />
 
       <div className="mt-[104px] mb-[104px]">
         <CtaBand

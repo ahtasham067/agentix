@@ -1,4 +1,5 @@
 import { AppLink as Link } from "@/components/ui/AppLink";
+import { LastUpdated } from "@/components/sections/LastUpdated";
 import { PageHero } from "./PageHero";
 
 export function LegalPage({
@@ -20,9 +21,9 @@ export function LegalPage({
           { name: title, href },
         ]}
         title={title}
-        intro={`Last updated ${new Date(updated).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}.`}
       />
-      <div className="container-site mt-[56px] mb-[120px] max-w-[760px]">
+      <div className="container-site mt-[32px] mb-[120px] max-w-[760px]">
+        <LastUpdated date={updated} className="mb-[40px] text-[16px]!" />
         {sections.map((s) => (
           <section key={s.heading} className="mt-[36px] first:mt-0">
             <h2 className="text-[26px] leading-[1.25] tracking-[-0.01em]">{s.heading}</h2>

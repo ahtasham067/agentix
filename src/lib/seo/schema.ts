@@ -32,7 +32,7 @@ const FOUNDER_ID = `${siteUrl}/about#founder`;
 
 const ctx = "https://schema.org" as const;
 
-/** The founder, on every page (site-wide entity data). */
+/** The founder, in the site-wide graph on every page (entity data for search and AI). */
 export function founderPageSchema(): WithContext<Person> {
   return {
     "@context": ctx,
