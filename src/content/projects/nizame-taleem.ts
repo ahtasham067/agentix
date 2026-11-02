@@ -1,4 +1,5 @@
 import type { Project } from "../types";
+import { screenshots } from "./screenshots.generated";
 
 // Facts and results from the owner's CV. The owner's notes (intro.md) confirm it
 // was built at a previous employer, so it is client work and the employer is not named.
@@ -83,7 +84,7 @@ export const nizameTaleem: Project = {
         "Yes. Tell us how your school runs today and which areas you want in one place, and we will reply with a plan and a timeline.",
     },
   ],
-  screenshots: [],
+  screenshots: screenshots["nizame-taleem"],
   screens: [],
   builtWith: ["Ruby on Rails", "React.js", "Bootstrap"],
   relatedServices: ["web-development"],

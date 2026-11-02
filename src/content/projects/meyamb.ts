@@ -1,4 +1,5 @@
 import type { Project } from "../types";
+import { screenshots } from "./screenshots.generated";
 
 // Client work. Facts from the owner's CV.
 // TODO: confirm the exact scope of our work on Meyamb.
@@ -86,7 +87,7 @@ export const meyamb: Project = {
         "Yes. We build secure web apps with Ruby on Rails, Vue.js, React and Next.js, including payment integrations such as Stripe and PayPal. See our web app development service.",
     },
   ],
-  screenshots: [],
+  screenshots: screenshots["meyamb"],
   screens: [],
   builtWith: ["Ruby on Rails", "Vue.js", "Redis", "AWS CodePipeline"],
   relatedServices: ["web-development"],

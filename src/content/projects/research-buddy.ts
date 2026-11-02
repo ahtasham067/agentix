@@ -1,4 +1,5 @@
 import type { Project } from "../types";
+import { screenshots } from "./screenshots.generated";
 
 // Facts and results from the owner's CV. The owner's notes (intro.md) confirm it
 // was built at a previous employer, so it is client work and the employer is not named.
@@ -89,7 +90,7 @@ export const researchBuddy: Project = {
       answer: "Time spent searching documents and writing citations dropped by 50%.",
     },
   ],
-  screenshots: [],
+  screenshots: screenshots["research-buddy"],
   screens: [],
   builtWith: ["React.js", "Ruby on Rails"],
   relatedServices: ["web-development"],

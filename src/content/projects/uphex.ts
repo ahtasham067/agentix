@@ -1,4 +1,5 @@
 import type { Project } from "../types";
+import { screenshots } from "./screenshots.generated";
 
 // Facts only from the owner's notes (projects/intro.md).
 // TODO: confirm whether UpHex was client or employer work, the owner's role,
@@ -43,7 +44,7 @@ export const uphex: Project = {
   steps: [],
   sections: [],
   faqs: [],
-  screenshots: [],
+  screenshots: screenshots["uphex"],
   screens: [],
   builtWith: ["Ruby on Rails"],
   relatedServices: ["web-development"],

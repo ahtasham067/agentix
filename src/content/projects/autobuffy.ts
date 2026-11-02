@@ -1,4 +1,5 @@
 import type { Project } from "../types";
+import { screenshots } from "./screenshots.generated";
 
 // Client work. Facts from the owner's CV. The store has vehicle-fitment search;
 // the CV does not say we built that search, so the copy never claims it.
@@ -103,7 +104,7 @@ export const autobuffy: Project = {
         "Yes. We build e-commerce web apps with Ruby on Rails or Next.js, including payment integrations. See our web app development service or ask for a quote.",
     },
   ],
-  screenshots: [],
+  screenshots: screenshots["autobuffy"],
   screens: [],
   builtWith: ["Ruby on Rails", "RESTful APIs", "PayPal", "Apple Pay", "Afterpay", "Klarna"],
   relatedServices: ["web-development"],

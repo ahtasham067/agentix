@@ -1,4 +1,5 @@
 import type { Project } from "../types";
+import { screenshots } from "./screenshots.generated";
 
 // Facts only from the Nexa AI repository README (projects/nexa-ai/README.md).
 // TODO: confirm with the owner whether Nexa AI is their own project or client
@@ -84,7 +85,7 @@ export const nexaAi: Project = {
         "The assistant falls back to the same retrieval and grounded product cards without generated text, and it shows a notice.",
     },
   ],
-  screenshots: [],
+  screenshots: screenshots["nexa-ai"],
   screens: [],
   builtWith: [
     "Next.js",

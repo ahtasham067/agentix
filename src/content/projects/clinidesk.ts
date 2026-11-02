@@ -1,4 +1,5 @@
 import type { Project } from "../types";
+import { screenshots } from "./screenshots.generated";
 
 // Facts from the owner's CV and the approved design.
 export const clinidesk: Project = {
@@ -112,7 +113,7 @@ export const clinidesk: Project = {
         "CliniDesk is offered as a monthly subscription. See clinidesk.online for details, or ask us for a quote if you need a booking agent built for your own business.",
     },
   ],
-  screenshots: [],
+  screenshots: screenshots["clinidesk"],
   screens: ["calendar", "patient-history"],
   builtWith: ["Next.js", "Supabase", "n8n", "WhatsApp Cloud API", "OpenAI"],
   relatedServices: ["chatbots-ai-agents", "automation", "web-development"],

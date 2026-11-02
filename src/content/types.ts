@@ -72,10 +72,16 @@ export interface ContentSection {
 }
 
 export interface Screenshot {
+  /** Path under public/, e.g. /projects/clinidesk/clinidesk-landing-hero.webp */
   src: string;
+  /** What the picture really shows. Never empty. */
   alt: string;
+  /** One short line shown under the picture. */
+  caption: string;
   width: number;
   height: number;
+  /** Tiny WebP data URL for placeholder="blur". */
+  blurDataURL: string;
 }
 
 export interface ProjectSeo {

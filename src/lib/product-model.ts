@@ -63,7 +63,14 @@ const rowSchema = z.object({
   ),
   faqs: z.array(z.object({ question: z.string(), answer: z.string() })),
   screenshots: z.array(
-    z.object({ src: z.string(), alt: z.string(), width: z.number(), height: z.number() }),
+    z.object({
+      src: z.string().startsWith("/projects/"),
+      alt: z.string().min(1),
+      caption: z.string().min(1),
+      width: z.number().int().positive(),
+      height: z.number().int().positive(),
+      blurDataURL: z.string().startsWith("data:image/"),
+    }),
   ),
   screens: z.array(z.enum(["calendar", "patient-history"])),
   built_with: z.array(z.string()),

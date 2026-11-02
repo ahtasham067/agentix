@@ -1,0 +1,194 @@
+{
+  "$comment": "Real project pictures. Sources are read from --src and never changed. Rectangles are in source pixels. trim crops edge artifacts only; redact blurs private data; patch paints over dev-tool badges with a colour sampled at `from`.",
+  "projects": {
+    "clinidesk": [
+      {
+        "source": "cliniDesk/Screenshot from 2026-10-23 23-20-38.png",
+        "name": "clinidesk-dashboard-whatsapp-booking",
+        "alt": "CliniDesk dashboard listing today's appointments next to a WhatsApp chat where a patient books a slot",
+        "caption": "Today's appointments next to the WhatsApp booking chat.",
+        "trim": { "top": 0, "right": 0, "bottom": 0, "left": 0 },
+        "redact": [
+          { "x": 545, "y": 455, "w": 115, "h": 192 },
+          { "x": 1110, "y": 503, "w": 105, "h": 20 },
+          { "x": 1080, "y": 555, "w": 140, "h": 18 }
+        ]
+      },
+      {
+        "source": "cliniDesk/Screenshot from 2026-10-23 23-19-14.png",
+        "name": "clinidesk-landing-hero",
+        "alt": "CliniDesk landing page with the headline Never miss an appointment again and buttons to book a demo or try it on WhatsApp",
+        "caption": "The CliniDesk landing page."
+      },
+      {
+        "source": "cliniDesk/clinidesk3.png",
+        "name": "clinidesk-how-it-works",
+        "alt": "CliniDesk how-it-works section: the patient messages on WhatsApp, CliniDesk books the slot, the doctor sees it on the dashboard",
+        "caption": "How a WhatsApp message becomes a booking.",
+        "trim": { "top": 0, "right": 0, "bottom": 0, "left": 6 }
+      }
+    ],
+    "nexa-ai": [
+      {
+        "source": "Nexa Ai/Screenshot from 2026-11-02 11-02-23.png",
+        "name": "nexa-ai-home-search",
+        "alt": "Nexa AI home page with natural-language product search, search by photo and example queries",
+        "caption": "Search by description or by photo.",
+        "trim": { "top": 3, "right": 0, "bottom": 0, "left": 0 },
+        "patch": [{ "x": 14, "y": 686, "w": 54, "h": 54, "from": { "x": 40, "y": 682 } }]
+      },
+      {
+        "source": "Nexa Ai/Screenshot from 2026-11-02 11-15-26.png",
+        "name": "nexa-ai-shopping-assistant",
+        "alt": "Nexa AI shopping assistant answering a request for a floor lamp for reading with matching catalog products",
+        "caption": "The assistant answers from catalog records only.",
+        "trim": { "top": 3, "right": 0, "bottom": 0, "left": 0 },
+        "patch": [{ "x": 14, "y": 686, "w": 54, "h": 54, "from": { "x": 40, "y": 682 } }]
+      },
+      {
+        "source": "Nexa Ai/Screenshot from 2026-11-02 11-02-48.png",
+        "name": "nexa-ai-in-stock-products",
+        "alt": "Nexa AI product grid with suitcases and a handbag, prices in PKR, stock levels and compare checkboxes",
+        "caption": "Product cards with stock levels and compare.",
+        "trim": { "top": 3, "right": 0, "bottom": 0, "left": 0 },
+        "patch": [{ "x": 14, "y": 686, "w": 54, "h": 54, "from": { "x": 40, "y": 682 } }]
+      }
+    ],
+    "autobuffy": [
+      {
+        "source": "autobuffy/Screenshot from 2026-10-23 21-18-07.png",
+        "name": "autobuffy-vehicle-search-home",
+        "alt": "AutoBuffy home page with a year-by-year vehicle selector and the headline Know it fits your car, before you buy",
+        "caption": "Pick the vehicle first, then shop parts that fit.",
+        "trim": { "top": 0, "right": 0, "bottom": 0, "left": 0 }
+      },
+      {
+        "source": "autobuffy/Screenshot from 2026-10-23 21-18-34.png",
+        "name": "autobuffy-trending-parts",
+        "alt": "AutoBuffy Trending Parts section showing brake kits, pads, rotors, calipers and drums",
+        "caption": "Parts grouped by job, such as brake jobs.",
+        "trim": { "top": 3, "right": 6, "bottom": 0, "left": 0 }
+      },
+      {
+        "source": "autobuffy/Screenshot from 2026-10-23 21-21-47.png",
+        "name": "autobuffy-part-detail",
+        "alt": "AutoBuffy part page for a GM battery cable with a fitment warning, key specifications and the price",
+        "caption": "Part page with a fitment check for the chosen vehicle.",
+        "trim": { "top": 0, "right": 6, "bottom": 0, "left": 0 }
+      }
+    ],
+    "meyamb": [
+      {
+        "source": "meyamb/meyamb2.png",
+        "name": "meyamb-landing-hero",
+        "alt": "MeyaMB landing page with the headline Closer to your family, exchange rates, an account balance and a Join the waitlist button",
+        "caption": "The MeyaMB landing page.",
+        "trim": { "top": 3, "right": 0, "bottom": 0, "left": 0 }
+      },
+      {
+        "source": "meyamb/meyamb3.png",
+        "name": "meyamb-account-dashboard",
+        "alt": "MeyaMB account home with an identity check prompt and live USD, EUR and GHS exchange rates in FCFA",
+        "caption": "Account home with live exchange rates.",
+        "trim": { "top": 3, "right": 0, "bottom": 0, "left": 0 }
+      },
+      {
+        "source": "meyamb/meyamb1.png",
+        "name": "meyamb-virtual-card-history",
+        "alt": "MeyaMB virtual Visa card next to a transaction history list in FCFA",
+        "caption": "Virtual card and transaction history.",
+        "trim": { "top": 3, "right": 0, "bottom": 0, "left": 0 },
+        "redact": [
+          { "x": 860, "y": 497, "w": 85, "h": 22 },
+          { "x": 860, "y": 553, "w": 85, "h": 22 }
+        ]
+      }
+    ],
+    "research-buddy": [
+      {
+        "source": "research buddy/researchbuddy2.png",
+        "name": "research-buddy-reference-details",
+        "alt": "Research Buddy reference library with a favourite report open in a details panel listing author, year and abstract fields",
+        "caption": "A saved reference with its details panel.",
+        "trim": { "top": 3, "right": 0, "bottom": 0, "left": 0 }
+      },
+      {
+        "source": "research buddy/researchbuddy1.png",
+        "name": "research-buddy-add-reference",
+        "alt": "Research Buddy form to add a reference manually, with lookup by ArXiv ID, DOI, PMID or ISBN",
+        "caption": "Add a reference by identifier or by hand.",
+        "trim": { "top": 3, "right": 0, "bottom": 0, "left": 0 }
+      }
+    ],
+    "uphex": [
+      {
+        "source": "Uphex/u1.png",
+        "name": "uphex-template-library",
+        "alt": "UpHex template library with Google ad templates, each showing results and cost per result",
+        "caption": "Ad template library for client campaigns.",
+        "trim": { "top": 2, "right": 0, "bottom": 0, "left": 0 },
+        "redact": [{ "x": 22, "y": 724, "w": 200, "h": 42 }]
+      },
+      {
+        "source": "Uphex/u2.png",
+        "name": "uphex-rebilling-dashboard",
+        "alt": "UpHex rebilling dashboard with client totals, balances and a table of clients with their rebilling settings",
+        "caption": "Rebilling settings across clients.",
+        "trim": { "top": 2, "right": 0, "bottom": 0, "left": 0 },
+        "redact": [
+          { "x": 22, "y": 724, "w": 200, "h": 42 },
+          { "x": 288, "y": 466, "w": 235, "h": 176 }
+        ]
+      }
+    ],
+    "nizame-taleem": [
+      {
+        "source": "Nizame-taleem/admissionform.png",
+        "name": "nizame-taleem-admission-form",
+        "alt": "Nizame-Taleem student admission form with student information fields beside the school admin menu",
+        "caption": "Student admission form."
+      },
+      {
+        "source": "Nizame-taleem/employee.png",
+        "name": "nizame-taleem-employee-form",
+        "alt": "Nizame-Taleem employee form with basic and other information fields",
+        "caption": "Staff registration form."
+      },
+      {
+        "source": "Nizame-taleem/Student Attendance.jpeg",
+        "name": "nizame-taleem-student-attendance",
+        "alt": "Nizame-Taleem screen to add or update student attendance, with date and class pickers and a card scanning tab",
+        "caption": "Marking student attendance."
+      }
+    ],
+    "naeem-stationery-store": [
+      {
+        "source": "naeem stationary/Screenshot from 2026-10-23 23-00-15.png",
+        "name": "naeem-stationery-home",
+        "alt": "Naeem Stationery home page with shop categories, the headline Your stationery shop in Sahiwal and a WhatsApp orders panel",
+        "caption": "Home page with categories and WhatsApp ordering."
+      },
+      {
+        "source": "naeem stationary/Screenshot from 2026-10-23 23-01-32.png",
+        "name": "naeem-stationery-product-page",
+        "alt": "Naeem Stationery product page for a highlighter with single-piece and pack-of-12 options and an Add to cart button",
+        "caption": "Product page with single-piece and pack options."
+      },
+      {
+        "source": "naeem stationary/Screenshot from 2026-10-23 23-02-59.png",
+        "name": "naeem-stationery-admin-dashboard",
+        "alt": "Naeem Stationery admin dashboard with totals for products, pending orders and sales, and a list of recent orders",
+        "caption": "Admin dashboard for the shop owner.",
+        "redact": [
+          { "x": 380, "y": 86, "w": 115, "h": 22 },
+          { "x": 98, "y": 634, "w": 104, "h": 20 },
+          { "x": 356, "y": 478, "w": 192, "h": 22 },
+          { "x": 356, "y": 539, "w": 192, "h": 22 },
+          { "x": 356, "y": 600, "w": 192, "h": 22 },
+          { "x": 356, "y": 661, "w": 192, "h": 22 },
+          { "x": 356, "y": 722, "w": 192, "h": 22 }
+        ]
+      }
+    ]
+  }
+}
