@@ -1,35 +1,26 @@
 import "server-only";
 import { createHash } from "node:crypto";
-import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Database } from "@/lib/supabase/database.types";
 
 /**
- * Client IP from proxy headers. On Vercel the first x-forwarded-for entry is
- * set by the platform. Self-hosted deployments must strip client-sent values.
+ * Client IP from the one header the hosting platform controls. Vercel sets
+ * `x-real-ip` itself, so a visitor cannot spoof it. Client-sent headers such as
+ * the first `x-forwarded-for` hop are never trusted. Behind another proxy, set
+ * TRUSTED_IP_HEADER to the header it overwrites; for `x-forwarded-for` the
+ * last hop (added by that proxy) is used.
  */
-export function clientIp(headers: Headers): string {
-  const forwarded = headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  return forwarded || headers.get("x-real-ip")?.trim() || "unknown";
+export function clientIp(headers: Headers, trustedHeader = "x-real-ip"): string {
+  const name = trustedHeader.toLowerCase();
+  const raw = headers.get(name);
+  if (!raw) return "unknown";
+  const hops = raw
+    .split(",")
+    .map((h) => h.trim())
+    .filter(Boolean);
+  const ip = name === "x-forwarded-for" ? hops.at(-1) : hops[0];
+  return ip && /^[0-9a-fA-F.:]{3,45}$/.test(ip) ? ip : "unknown";
 }
 
 /** Salted SHA-256, so raw IP addresses are never stored. */
 export function hashIp(ip: string, salt: string): string {
   return createHash("sha256").update(`${salt}:${ip}`).digest("hex");
-}
-
-/** True when this IP hash already sent `max` quotes inside the window. */
-export async function isRateLimited(
-  supabase: SupabaseClient<Database>,
-  ipHash: string,
-  max: number,
-  windowMinutes: number,
-): Promise<boolean> {
-  const since = new Date(Date.now() - windowMinutes * 60_000).toISOString();
-  const { count, error } = await supabase
-    .from("quotes")
-    .select("id", { count: "exact", head: true })
-    .eq("ip_hash", ipHash)
-    .gte("created_at", since);
-  if (error) throw new Error(`Rate limit check failed: ${error.message}`);
-  return (count ?? 0) >= max;
 }

@@ -35,7 +35,7 @@ test("shows validation errors for an empty or invalid form", async ({ page }) =>
 });
 
 test("submits a valid quote and stores it", async ({ page }, testInfo) => {
-  await page.setExtraHTTPHeaders({ "x-forwarded-for": randomIp() });
+  await page.setExtraHTTPHeaders({ "x-real-ip": randomIp() });
   const email = `e2e-${testInfo.project.name}-${Date.now()}@example.com`;
   await page.goto("/contact");
   await fillForm(page, email);
@@ -55,7 +55,7 @@ test("submits a valid quote and stores it", async ({ page }, testInfo) => {
 });
 
 test("the honeypot silently drops bot submissions", async ({ page }, testInfo) => {
-  await page.setExtraHTTPHeaders({ "x-forwarded-for": randomIp() });
+  await page.setExtraHTTPHeaders({ "x-real-ip": randomIp() });
   const email = `bot-${testInfo.project.name}-${Date.now()}@example.com`;
   await page.goto("/contact");
   await fillForm(page, email);
@@ -68,7 +68,7 @@ test("the honeypot silently drops bot submissions", async ({ page }, testInfo) =
 });
 
 test("rate limits repeated submissions from one IP", async ({ page }, testInfo) => {
-  await page.setExtraHTTPHeaders({ "x-forwarded-for": randomIp() });
+  await page.setExtraHTTPHeaders({ "x-real-ip": randomIp() });
   const stamp = `${testInfo.project.name}-${Date.now()}`;
   for (let i = 0; i < 3; i++) {
     await page.goto("/contact");

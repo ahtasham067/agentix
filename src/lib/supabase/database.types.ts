@@ -75,6 +75,7 @@ export type Database = {
       };
       products: {
         Row: {
+          answer: string;
           audience: string | null;
           built_with: string[];
           category: string;
@@ -110,6 +111,7 @@ export type Database = {
           website_url: string | null;
         };
         Insert: {
+          answer?: string;
           audience?: string | null;
           built_with?: string[];
           category: string;
@@ -145,6 +147,7 @@ export type Database = {
           website_url?: string | null;
         };
         Update: {
+          answer?: string;
           audience?: string | null;
           built_with?: string[];
           category?: string;
@@ -228,7 +231,21 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      submit_quote: {
+        Args: {
+          p_budget: string;
+          p_details: string;
+          p_email: string;
+          p_full_name: string;
+          p_ip_hash: string;
+          p_max: number;
+          p_plan: string;
+          p_service: string;
+          p_whatsapp: string;
+          p_window_minutes: number;
+        };
+        Returns: string;
+      };
     };
     Enums: {
       [_ in never]: never;

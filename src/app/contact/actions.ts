@@ -2,10 +2,12 @@
 
 import { headers } from "next/headers";
 import { after } from "next/server";
+import { emailFailedNotice } from "@/content/contact";
+import { contact } from "@/content/site";
+import { sendOwnerNotification, sendVisitorConfirmation } from "@/lib/email/send";
 import { getAdminEnv } from "@/lib/env";
-import { notifyNewQuote } from "@/lib/notify";
 import { QUOTE_FIELDS, validateQuote, type FieldErrors, type QuoteField } from "@/lib/quote-schema";
-import { clientIp, hashIp, isRateLimited } from "@/lib/rate-limit";
+import { clientIp, hashIp } from "@/lib/rate-limit";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export interface QuoteState {
@@ -15,6 +17,8 @@ export interface QuoteState {
   values?: Partial<Record<QuoteField, string>>;
   /** First name for the thank-you message. */
   name?: string;
+  /** Shown with a success when the quote was saved but the owner email failed. */
+  notice?: string;
 }
 
 const MAX_FIELD_LENGTH = 5000;
@@ -42,12 +46,29 @@ export async function submitQuote(_prev: QuoteState, formData: FormData): Promis
     };
   }
 
+  const quote = result.data;
+  let id: string;
+  let supabase: ReturnType<typeof createAdminClient>;
   try {
     const env = getAdminEnv();
-    const supabase = createAdminClient();
-    const ipHash = hashIp(clientIp(await headers()), env.IP_HASH_SALT);
+    supabase = createAdminClient();
+    const ipHash = hashIp(clientIp(await headers(), env.TRUSTED_IP_HEADER), env.IP_HASH_SALT);
 
-    if (await isRateLimited(supabase, ipHash, env.RATE_LIMIT_MAX, env.RATE_LIMIT_WINDOW_MINUTES)) {
+    // One database call checks the rate limit and inserts atomically (see submit_quote).
+    const { data, error } = await supabase.rpc("submit_quote", {
+      p_full_name: quote.fullName,
+      p_email: quote.email,
+      p_whatsapp: quote.whatsapp,
+      p_service: quote.service,
+      p_plan: quote.plan,
+      p_budget: quote.budget,
+      p_details: quote.details,
+      p_ip_hash: ipHash,
+      p_max: env.RATE_LIMIT_MAX,
+      p_window_minutes: env.RATE_LIMIT_WINDOW_MINUTES,
+    });
+    if (error) throw new Error(error.message);
+    if (!data) {
       return {
         status: "error",
         message:
@@ -55,28 +76,29 @@ export async function submitQuote(_prev: QuoteState, formData: FormData): Promis
         values,
       };
     }
-
-    const quote = result.data;
-    const { error } = await supabase.from("quotes").insert({
-      full_name: quote.fullName,
-      email: quote.email,
-      whatsapp: quote.whatsapp || null,
-      service: quote.service,
-      plan: quote.plan,
-      budget: quote.budget,
-      details: quote.details,
-      ip_hash: ipHash,
-    });
-    if (error) throw new Error(error.message);
-
-    after(() => notifyNewQuote(quote));
-    return { status: "success", name: quote.fullName.split(/\s+/)[0] };
+    id = data;
   } catch (error) {
-    console.error("[quote] submission failed", error);
+    console.error("[quote] submission failed", error instanceof Error ? error.message : error);
     return {
       status: "error",
-      message: "Something went wrong on our side. Please try again, or email us directly.",
+      message: `Something went wrong on our side. Please try again, or email us at ${contact.email}.`,
       values,
     };
   }
+
+  const name = quote.fullName.split(/\s+/)[0];
+  // The quote is saved. Now tell the owner; if that fails, keep the quote and say so.
+  const notified = await sendOwnerNotification(quote, id);
+  if (notified) {
+    const { error } = await supabase
+      .from("quotes")
+      .update({ notified_at: new Date().toISOString() })
+      .eq("id", id);
+    if (error) console.error("[quote] could not record notified_at", error.message);
+  }
+  after(() => sendVisitorConfirmation(quote));
+
+  return notified
+    ? { status: "success", name }
+    : { status: "success", name, notice: emailFailedNotice };
 }
