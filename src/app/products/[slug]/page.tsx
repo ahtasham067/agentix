@@ -1,5 +1,6 @@
 import { AppLink as Link } from "@/components/ui/AppLink";
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ClinideskDashboard } from "@/components/illustrations/ClinideskDashboard";
 import { ProductThumb } from "@/components/illustrations/ProductThumbs";
@@ -53,11 +54,30 @@ function HeroVisual({ product }: { product: Product }) {
   if (product.thumbnail === "clinidesk") {
     return <ClinideskDashboard className="window-glow" />;
   }
+  // The project's best real picture; the drawing is only a fallback. It is the
+  // page's largest above-the-fold image, so it loads at once.
+  const shot = product.screenshots[0];
   return (
     <WindowFrame title={`${product.name} · Preview`} className="window-glow">
-      <div className="flex h-[294px] items-center justify-center bg-brown">
-        <ProductThumb thumbnail={product.thumbnail} />
-      </div>
+      {shot ? (
+        <div className="relative h-[294px] bg-brown" data-visual-mask="">
+          <Image
+            src={shot.src}
+            alt={shot.alt}
+            fill
+            sizes="(min-width: 1024px) 672px, 100vw"
+            placeholder="blur"
+            blurDataURL={shot.blurDataURL}
+            loading="eager"
+            fetchPriority="high"
+            className="object-cover object-left-top"
+          />
+        </div>
+      ) : (
+        <div className="flex h-[294px] items-center justify-center bg-brown">
+          <ProductThumb thumbnail={product.thumbnail} />
+        </div>
+      )}
     </WindowFrame>
   );
 }
@@ -99,9 +119,14 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
         {product.tagline && (
           <p className="mt-[14px] text-[20px] leading-[28px] md:text-[21.5px]">{product.tagline}</p>
         )}
-        <p className="mt-[16px] max-w-[500px] text-[18px] leading-[1.55] text-muted md:text-[19.5px] md:leading-[30px]">
-          {product.description}
-        </p>
+        {product.description.split("\n\n").map((paragraph, i) => (
+          <p
+            key={i}
+            className={`${i === 0 ? "mt-[16px]" : "mt-[12px]"} max-w-[500px] text-[18px] leading-[1.55] text-muted md:text-[19.5px] md:leading-[30px]`}
+          >
+            {paragraph}
+          </p>
+        ))}
         <div className="mt-[34px] flex flex-wrap gap-[14px]">
           {product.websiteUrl ? (
             <a
