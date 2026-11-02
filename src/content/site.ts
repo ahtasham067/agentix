@@ -21,7 +21,7 @@ export function formatPhone(e164: string): string {
 }
 
 export const contact = {
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "ahtashamm067@gmail.com",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "ahtasham067@gmail.com",
   /** E.164, for tel: links and JSON-LD. */
   phone: phoneE164,
   /** Human-readable form for the page. */

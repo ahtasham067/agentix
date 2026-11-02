@@ -71,7 +71,7 @@ describe("visitor confirmation", () => {
 
   it("goes to the visitor and replies reach the owner", () => {
     expect(mail.to).toBe("ada@example.com");
-    expect(mail.replyTo).toBe("ahtashamm067@gmail.com");
+    expect(mail.replyTo).toBe("ahtasham067@gmail.com");
   });
 
   it("echoes only the escaped first name, never the project details", () => {

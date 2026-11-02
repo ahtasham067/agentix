@@ -49,7 +49,7 @@ Every variable is listed in [`.env.example`](.env.example). `.env*` files are gi
 | `MAILPIT_URL` | tests | Local Mailpit API for the e2e email tests (`npm run db:env` sets it). |
 | `INDEXNOW_KEY` | server | IndexNow key, served at `/indexnow-key.txt` (see below). |
 | `REVALIDATE_SECRET` | server | Secret for `POST /api/revalidate` (refresh cached posts/products after editing in Supabase). |
-| `NEXT_PUBLIC_CONTACT_EMAIL`, `NEXT_PUBLIC_CONTACT_PHONE` | build | Contact details for the footer, contact page, JSON-LD, llms.txt and the WhatsApp link. Defaults: `ahtashamm067@gmail.com`, `+923025889452`. |
+| `NEXT_PUBLIC_CONTACT_EMAIL`, `NEXT_PUBLIC_CONTACT_PHONE` | build | Contact details for the footer, contact page, JSON-LD, llms.txt and the WhatsApp link. Defaults: `ahtasham067@gmail.com`, `+923025889452`. |
 | `NEXT_PUBLIC_LINKEDIN_URL`, `NEXT_PUBLIC_GITHUB_URL`, `NEXT_PUBLIC_UPWORK_URL` | build | Footer links and JSON-LD `sameAs`. |
 | `NEXT_PUBLIC_ANALYTICS` | build | `off` (default), `plausible` or `ga4`. |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`, `NEXT_PUBLIC_GA_ID` | build | Analytics settings. The CSP only allows the provider you turn on. |
@@ -226,7 +226,7 @@ The site is set up so ChatGPT, Perplexity, Gemini, Claude and Google AI Overview
 - Exact scope on Meyamb; UI library on Nizame-Taleem (Bootstrap or Ant Design).
 - What each pricing plan includes (`TODO: confirm inclusions` in `src/content/pricing.ts`) and the chatbot pricing message.
 - Project screenshots: add files to `public/images/projects/` and list them in each project's `screenshots`.
-- The contact email `ahtashamm067@gmail.com` (double m), exactly as given.
+- The contact email `ahtasham067@gmail.com` (double m), exactly as given.
 - Upwork profile URL.
 - Privacy and terms pages are placeholders for legal review.
 - Six blog posts are drafts awaiting review.

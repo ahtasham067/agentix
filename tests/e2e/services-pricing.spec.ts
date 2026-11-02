@@ -116,9 +116,9 @@ for (const [from, to] of Object.entries(OLD_SLUGS)) {
 test("contact details are the real ones, with no placeholders left", async ({ page }) => {
   await page.goto("/contact");
   const main = page.locator("main");
-  await expect(main.getByRole("link", { name: "ahtashamm067@gmail.com" })).toHaveAttribute(
+  await expect(main.getByRole("link", { name: "ahtasham067@gmail.com" })).toHaveAttribute(
     "href",
-    "mailto:ahtashamm067@gmail.com",
+    "mailto:ahtasham067@gmail.com",
   );
   await expect(main.getByRole("link", { name: "+92 302 5889452" })).toHaveAttribute(
     "href",
@@ -137,6 +137,7 @@ test("contact details are the real ones, with no placeholders left", async ({ pa
     const html = await (await page.request.get(route)).text();
     expect(html).not.toContain("hello@agentix.website");
     expect(html).not.toContain("0000000");
+    expect(html).not.toContain("ahtashamm067");
   }
 });
 

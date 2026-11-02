@@ -102,7 +102,7 @@ describe("services", () => {
 
 describe("contact details", () => {
   it("defaults to the owner's email and phone", () => {
-    expect(contact.email).toBe("ahtashamm067@gmail.com");
+    expect(contact.email).toBe("ahtasham067@gmail.com");
     expect(contact.phone).toBe("+923025889452");
     expect(contact.phoneDisplay).toBe("+92 302 5889452");
     expect(telUrl).toBe("tel:+923025889452");

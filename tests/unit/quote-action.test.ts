@@ -100,7 +100,7 @@ describe("submitQuote", () => {
     expect(update).not.toHaveBeenCalled();
     expect(state).toEqual({ status: "success", name: "Ada", notice: emailFailedNotice });
     expect(emailFailedNotice).toContain("+92 302 5889452");
-    expect(emailFailedNotice).toContain("ahtashamm067@gmail.com");
+    expect(emailFailedNotice).toContain("ahtasham067@gmail.com");
   });
 
   it("drops honeypot submissions without saving or emailing", async () => {

@@ -2,7 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 import { adminClient, randomIp } from "./helpers";
 import { countMail, waitForMail } from "./mailpit";
 
-const OWNER = "ahtashamm067@gmail.com";
+const OWNER = "ahtasham067@gmail.com";
 
 function token(prefix: string, project: string) {
   return `${prefix}${project}${Date.now()}${Math.floor(Math.random() * 1e6)}`;
