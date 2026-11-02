@@ -20,7 +20,7 @@ export const nexaAi: Project = {
   screenshots: [],
   screens: [],
   builtWith: [],
-  relatedServices: ["ai-agents"],
+  relatedServices: ["chatbots-ai-agents"],
   relatedProjects: ["clinidesk"],
   seo: {
     keyword: "in-house AI assistant",

@@ -2,7 +2,7 @@
 title: How to automate lead follow-up with n8n
 seoTitle: How to Automate Lead Follow-Up with n8n | Agentix
 description: A practical guide to automating lead follow-up with n8n: capture leads, reply in seconds, qualify with AI, update your CRM and alert sales on Slack.
-relatedServices: n8n-automation, ai-agents
+relatedServices: automation, chatbots-ai-agents
 ---
 
 A new lead is most interested in the first minutes after they reach out. If they wait hours for a reply, many will have moved on or contacted someone else. Automating the first steps of follow-up with n8n means every lead gets a fast, consistent reply, even at night or on a weekend.
@@ -93,7 +93,7 @@ After launch, track a few simple numbers: how fast leads get a first reply, how 
 
 A basic version of this workflow can be built in an afternoon. The work that takes longer is the detail: clean data from several sources, reliable CRM updates, good AI instructions and solid error handling.
 
-Our [n8n automation services](/services/n8n-automation) cover all of it, and when the follow-up needs real conversations, we combine the workflow with [custom AI agent development](/services/ai-agents). If you want a workflow like this for your own leads, [send us a short description](/contact) of where they come from today.
+Our [n8n automation services](/services/automation) cover all of it, and when the follow-up needs real conversations, we combine the workflow with [custom AI agent development](/services/chatbots-ai-agents). If you want a workflow like this for your own leads, [send us a short description](/contact) of where they come from today.
 
 ## Key points
 

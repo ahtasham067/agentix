@@ -113,7 +113,7 @@ export const clinidesk: Project = {
   screenshots: [],
   screens: ["calendar", "patient-history"],
   builtWith: ["Next.js", "Supabase", "n8n", "WhatsApp Cloud API", "OpenAI"],
-  relatedServices: ["ai-agents", "n8n-automation", "web-apps"],
+  relatedServices: ["chatbots-ai-agents", "automation", "web-development"],
   relatedProjects: ["nexa-ai", "nizame-taleem", "meyamb"],
   seo: {
     keyword: "WhatsApp doctor appointment system",

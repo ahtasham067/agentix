@@ -1,4 +1,9 @@
-export const SERVICE_SLUGS = ["ai-agents", "n8n-automation", "web-apps"] as const;
+export const SERVICE_SLUGS = [
+  "chatbots-ai-agents",
+  "automation",
+  "web-development",
+  "seo-geo",
+] as const;
 export type ServiceSlug = (typeof SERVICE_SLUGS)[number];
 
 export const PRODUCT_CATEGORIES = ["ai-agents", "web-apps", "automation"] as const;

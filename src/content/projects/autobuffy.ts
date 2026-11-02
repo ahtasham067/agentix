@@ -104,7 +104,7 @@ export const autobuffy: Project = {
   screenshots: [],
   screens: [],
   builtWith: ["Ruby on Rails", "RESTful APIs", "PayPal", "Apple Pay", "Afterpay", "Klarna"],
-  relatedServices: ["web-apps"],
+  relatedServices: ["web-development"],
   relatedProjects: ["meyamb", "research-buddy", "nizame-taleem"],
   seo: {
     keyword: "auto parts e-commerce platform",

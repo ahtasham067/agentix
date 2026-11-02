@@ -2,7 +2,7 @@
 title: "n8n vs Zapier vs Make: how to choose an automation tool"
 seoTitle: "n8n vs Zapier vs Make: How to Choose | Agentix"
 description: Compare n8n, Zapier and Make on hosting, data control, billing model, complexity, AI steps and team skills, and pick the right tool for your workflows.
-relatedServices: n8n-automation
+relatedServices: automation
 ---
 
 n8n, Zapier and Make all connect your apps and run steps automatically. On a simple task, any of them will do the job. The differences show up when workflows grow, data is sensitive, volume rises or a team without developers needs to maintain them.
@@ -45,7 +45,7 @@ Things change with branching, loops, error handling and data transformation:
 
 ## 4. Do you need AI steps?
 
-All three can call OpenAI and other AI services. n8n has gone furthest in building AI agents directly into workflows: an agent node can use other nodes as tools, keep memory and decide which step to take next. If you plan to build [AI agents](/services/ai-agents) that act in your systems, this is a strong reason to look at n8n.
+All three can call OpenAI and other AI services. n8n has gone furthest in building AI agents directly into workflows: an agent node can use other nodes as tools, keep memory and decide which step to take next. If you plan to build [AI agents](/services/chatbots-ai-agents) that act in your systems, this is a strong reason to look at n8n.
 
 ## 5. Who will maintain it?
 
@@ -88,7 +88,7 @@ At Agentix we use n8n for most client work, because many of our projects combine
 
 That said, it is not always the right answer. For a small team with a few simple automations and nobody technical, Zapier is often the better fit.
 
-If you want an outside view on your workflows, our [n8n automation services](/services/n8n-automation) include a short review of what you want to automate and which tool suits it. You can [ask for a quote](/contact) and we will reply with a plan.
+If you want an outside view on your workflows, our [n8n automation services](/services/automation) include a short review of what you want to automate and which tool suits it. You can [ask for a quote](/contact) and we will reply with a plan.
 
 ## Key points
 

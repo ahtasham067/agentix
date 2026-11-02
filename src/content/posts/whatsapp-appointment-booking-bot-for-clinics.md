@@ -2,7 +2,7 @@
 title: How a WhatsApp appointment booking bot works for clinics
 seoTitle: WhatsApp Appointment Booking Bot for Clinics | Agentix
 description: How a WhatsApp booking bot takes clinic appointments in chat, checks each doctor's real availability, avoids double bookings and updates a dashboard.
-relatedServices: ai-agents, n8n-automation, web-apps
+relatedServices: chatbots-ai-agents, automation, web-development
 ---
 
 Patients already use WhatsApp every day. Many would rather send a message than call a busy front desk, especially outside opening hours. A WhatsApp appointment booking bot lets them book in that chat, while the clinic keeps full control of its calendar.
@@ -59,7 +59,7 @@ The bot is only half of the system. The other half is the dashboard that the cli
 - Booking analytics
 - Staff roles, so each person sees the right tools
 
-If you are planning a similar system, the dashboard deserves as much attention as the chat. Our [web app development](/services/web-apps) work often focuses on exactly this part.
+If you are planning a similar system, the dashboard deserves as much attention as the chat. Our [web app development](/services/web-development) work often focuses on exactly this part.
 
 ## Reminders and no-shows
 
@@ -94,7 +94,7 @@ From there, the work is mostly testing with real conversations: different langua
 
 A WhatsApp booking bot pays off when a large share of your calls are routine bookings and changes, and when patients already message you on WhatsApp. It is less useful if most visits need a long phone conversation first.
 
-If you want to see the full system, read about [CliniDesk](/products/clinidesk). If you need a booking agent shaped around your own clinic or business, our [custom AI agent development](/services/ai-agents) service and [n8n automation services](/services/n8n-automation) cover the agent and the workflows behind it. [Tell us how your clinic books today](/contact) and we will suggest a plan.
+If you want to see the full system, read about [CliniDesk](/products/clinidesk). If you need a booking agent shaped around your own clinic or business, our [custom AI agent development](/services/chatbots-ai-agents) service and [n8n automation services](/services/automation) cover the agent and the workflows behind it. [Tell us how your clinic books today](/contact) and we will suggest a plan.
 
 ## Key points
 

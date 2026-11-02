@@ -2,7 +2,7 @@
 title: What is an AI agent and how can it help your business
 seoTitle: What Is an AI Agent? How It Helps Your Business | Agentix
 description: An AI agent understands a request, decides what to do and acts in your tools. Here is how agents work, where they help and how to start with one job.
-relatedServices: ai-agents, n8n-automation
+relatedServices: chatbots-ai-agents, automation
 ---
 
 Most businesses already use software that waits for instructions. You click a button and it does one thing. An AI agent is different. You give it a goal, and it works out the steps to reach it inside the tools you already use.
@@ -29,7 +29,7 @@ Under the hood, most business agents follow the same loop.
 4. **It uses a tool.** The action runs through an API or a workflow tool such as n8n.
 5. **It checks the result and replies.** If something is missing, it asks. If the case is unusual, it hands over to your team.
 
-At Agentix we usually build this loop with [n8n](/services/n8n-automation), which connects the model to your tools and keeps a log of every run. That log matters: you can see what the agent did and why.
+At Agentix we usually build this loop with [n8n](/services/automation), which connects the model to your tools and keeps a log of every run. That log matters: you can see what the agent did and why.
 
 ## Jobs AI agents do well
 
@@ -79,7 +79,7 @@ Start small and measure.
 4. **Build and test** with real examples before going live.
 5. **Review and adjust** for a few weeks, then add the next job.
 
-If you want help with the first step, our [custom AI agent development](/services/ai-agents) service covers the whole path, from planning the job to monitoring the agent after launch. You can also [send us a short description](/contact) of the task and we will reply with a plan, a timeline and a price.
+If you want help with the first step, our [custom AI agent development](/services/chatbots-ai-agents) service covers the whole path, from planning the job to monitoring the agent after launch. You can also [send us a short description](/contact) of the task and we will reply with a plan, a timeline and a price.
 
 ## Key points
 

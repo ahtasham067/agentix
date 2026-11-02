@@ -2,7 +2,7 @@
 title: "AI agent vs chatbot: what is the difference"
 seoTitle: "AI Agent vs Chatbot: What Is the Difference? | Agentix"
 description: A chatbot answers questions; an AI agent also takes action in your tools. Learn the difference, when each is enough and how they work together.
-relatedServices: ai-agents
+relatedServices: chatbots-ai-agents
 ---
 
 "Chatbot" and "AI agent" are often used as if they mean the same thing. They do not. The difference decides what the software can do for your business, how much setup it needs and what it costs to run.
@@ -71,7 +71,7 @@ In practice, many agents talk through a chat window, so from the outside they lo
 
 1. The chat interface receives the message, for example on WhatsApp.
 2. The agent decides whether it can answer from your information or needs to act.
-3. If it needs to act, it calls a workflow that does the work, often built in [n8n](/services/n8n-automation).
+3. If it needs to act, it calls a workflow that does the work, often built in [n8n](/services/automation).
 4. If the request is unusual, it hands the conversation to a person.
 
 This means you can start with a simple question-and-answer bot and add actions later, one at a time.
@@ -91,7 +91,7 @@ Ask one question: **at the end of the conversation, does something need to chang
 - If no, start with a chatbot.
 - If yes, you need an agent, even if it only does one action at first.
 
-If you are unsure, describe the job in a few sentences. Our [custom AI agent development](/services/ai-agents) team can tell you which approach fits, and you can [request a quote](/contact) with no commitment.
+If you are unsure, describe the job in a few sentences. Our [custom AI agent development](/services/chatbots-ai-agents) team can tell you which approach fits, and you can [request a quote](/contact) with no commitment.
 
 ## Key points
 

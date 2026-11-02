@@ -20,7 +20,7 @@ export const uphex: Project = {
   screenshots: [],
   screens: [],
   builtWith: [],
-  relatedServices: ["web-apps"],
+  relatedServices: ["web-development"],
   relatedProjects: ["autobuffy"],
   seo: {
     keyword: "UpHex web platform",

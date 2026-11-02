@@ -90,7 +90,7 @@ export const researchBuddy: Project = {
   screenshots: [],
   screens: [],
   builtWith: ["React.js", "Ruby on Rails"],
-  relatedServices: ["web-apps"],
+  relatedServices: ["web-development"],
   relatedProjects: ["nizame-taleem", "autobuffy", "meyamb"],
   seo: {
     keyword: "reference and citation manager",

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { matchesFilter } from "./product-filters";
 import type { Database } from "@/lib/supabase/database.types";
 import {
   PRODUCT_CATEGORIES,
@@ -117,10 +116,7 @@ export function rowToProduct(row: ProductRow): Product {
 
 export { matchesFilter, PRODUCT_FILTERS, type ProductFilter } from "./product-filters";
 
-/** Products that belong on a service page. */
+/** Products that belong on a service page: the ones that list the service. */
 export function matchesService(product: Product, service: ServiceSlug) {
-  if (product.relatedServices.includes(service)) return true;
-  if (service === "ai-agents") return matchesFilter(product, "ai-agents");
-  if (service === "n8n-automation") return matchesFilter(product, "automation");
-  return matchesFilter(product, "web-apps");
+  return product.relatedServices.includes(service);
 }

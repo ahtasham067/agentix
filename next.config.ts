@@ -53,6 +53,12 @@ const securityHeaders = [
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
 ];
 
+const RENAMED_SERVICES = {
+  "ai-agents": "chatbots-ai-agents",
+  "n8n-automation": "automation",
+  "web-apps": "web-development",
+};
+
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
@@ -71,6 +77,12 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Old service URLs (three services became four on 2026-11-02).
+      ...Object.entries(RENAMED_SERVICES).map(([from, to]) => ({
+        source: `/services/${from}`,
+        destination: `/services/${to}`,
+        statusCode: 301 as const,
+      })),
       {
         // One canonical host: www redirects to the apex domain with a 301.
         source: "/:path*",

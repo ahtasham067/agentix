@@ -15,14 +15,15 @@ export const homeFaq = [
   faq.customWebApps,
   faq.howQuote,
   faq.agentCost,
+  faq.websiteCost,
   faq.keepTools,
   faq.handOff,
 ];
 
 export const homeUseCases = {
-  heading: "Where AI agents and n8n automation help your business",
+  heading: "Where AI chatbots, automation and web development help your business",
   intro:
-    "AI agents and n8n automation for business work best on tasks that repeat every day. These are the four jobs we build most often, each connected to the tools you already use.",
+    "AI chatbots, automation and web development work best on tasks that repeat every day. These are the four jobs we build most often, each connected to the tools you already use.",
   items: [
     {
       icon: "chat",

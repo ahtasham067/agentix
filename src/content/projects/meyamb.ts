@@ -87,7 +87,7 @@ export const meyamb: Project = {
   screenshots: [],
   screens: [],
   builtWith: ["Ruby on Rails", "Vue.js", "Redis", "AWS CodePipeline"],
-  relatedServices: ["web-apps"],
+  relatedServices: ["web-development"],
   relatedProjects: ["autobuffy", "nizame-taleem", "research-buddy"],
   seo: {
     keyword: "cross-border fintech platform",

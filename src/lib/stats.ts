@@ -3,16 +3,19 @@ export interface Stat {
   label: string;
 }
 
+import { services } from "@/content/services";
+import { EXPERIENCE } from "@/content/site";
+
 /**
- * Site stats. 20+, 5+ and 3 are fixed facts from the brief; the product count
- * is the number of published products in the database.
- * TODO: confirm "20+ projects delivered" — the owner's CV says 12+.
+ * Site stats. Projects and years are confirmed facts; the product count is the
+ * number of published products in the database, and the service count comes
+ * from the services list.
  */
 export function getStats(productCount: number): Stat[] {
   return [
-    { value: "20+", label: "projects delivered" },
-    { value: "5+", label: "years of experience" },
+    { value: EXPERIENCE.projects, label: "projects delivered" },
+    { value: EXPERIENCE.years, label: "years of experience" },
     { value: String(productCount), label: "products in our portfolio" },
-    { value: "3", label: "core services" },
+    { value: String(services.length), label: "core services" },
   ];
 }

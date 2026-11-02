@@ -83,7 +83,7 @@ export const nizameTaleem: Project = {
   screenshots: [],
   screens: [],
   builtWith: ["Ruby on Rails", "React.js", "Bootstrap"],
-  relatedServices: ["web-apps"],
+  relatedServices: ["web-development"],
   relatedProjects: ["research-buddy", "clinidesk", "meyamb"],
   seo: {
     keyword: "school management system",

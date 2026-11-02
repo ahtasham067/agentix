@@ -1,4 +1,7 @@
 import type { FaqItem } from "@/components/sections/FAQ";
+import { formatPlanPrice, formatPrice, PRICING_DISCLAIMER, pricingGroups } from "./pricing";
+
+const [websitePlans, chatbotPlans] = pricingGroups.map((g) => g.plans);
 
 /** Shared answers. Questions shown in the designs come first on each page. */
 export const faq = {
@@ -10,7 +13,7 @@ export const faq = {
   whichTools: {
     question: "Which tools can you connect?",
     answer:
-      "WhatsApp, Gmail, Slack, Google Sheets, CRMs, databases and OpenAI, plus most tools that offer an API or webhooks. If your tool has an API, n8n can usually talk to it.",
+      "WhatsApp, Gmail, Slack, Google Sheets, Airtable, CRMs, databases and OpenAI, plus most tools that offer an API or webhooks. If your tool has an API, n8n can usually talk to it.",
   },
   howLong: {
     question: "How long does a project take?",
@@ -19,7 +22,7 @@ export const faq = {
   customWebApps: {
     question: "Do you build custom web apps too?",
     answer:
-      "Yes. We build web apps and dashboards with Next.js, Ruby on Rails and Supabase, often around the agents and workflows we set up for you.",
+      "Yes. We build websites, web apps and dashboards with React, Next.js, Vue.js, Ruby on Rails and Supabase, often around the agents and workflows we set up for you.",
   },
   howQuote: {
     question: "How do I get a quote?",
@@ -28,8 +31,17 @@ export const faq = {
   },
   agentCost: {
     question: "How much does an AI agent cost?",
-    answer:
-      "It depends on the scope: how many tasks the agent handles, which tools it connects to, how much AI usage it needs, and the hosting and support you want. Tell us the job and we will send a clear price.",
+    answer: `A chatbot starts at ${formatPrice(chatbotPlans[0].amount)} one-time or ${formatPlanPrice(chatbotPlans[1])}. An agent that takes more actions costs more, depending on how many tasks it handles, which tools it connects to and how much AI usage it needs. Tell us the job and we will confirm the price.`,
+    extra: true,
+  },
+  websiteCost: {
+    question: "How much does a custom website cost?",
+    answer: `A custom website costs ${formatPrice(websitePlans[0].amount)} on the one-time plan, or ${formatPlanPrice(websitePlans[1])} on the subscription plan. ${PRICING_DISCLAIMER}`,
+    extra: true,
+  },
+  chatbotCost: {
+    question: "How much does a chatbot cost?",
+    answer: `A chatbot costs ${formatPrice(chatbotPlans[0].amount)} on the one-time plan, or ${formatPlanPrice(chatbotPlans[1])} on the subscription plan. ${PRICING_DISCLAIMER}`,
     extra: true,
   },
   keepTools: {

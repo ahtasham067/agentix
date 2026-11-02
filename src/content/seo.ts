@@ -13,12 +13,12 @@ export interface PageSeo {
 export const pageSeo = {
   home: {
     path: "/",
-    title: "AI Agents & n8n Automation for Business | Agentix",
+    title: "AI Chatbots, Automation & Web Development | Agentix",
     description:
-      "Agentix builds AI agents and n8n automation for business: WhatsApp support, bookings and lead follow-up, plus the web apps around them.",
-    keyword: "AI agents and n8n automation for business",
-    lastModified: "2026-10-30",
-    ogLabel: "AI agents · n8n automation · web apps",
+      "Agentix builds AI chatbots, automation and web development for business, plus SEO and GEO, so customers find you on Google and in AI answers.",
+    keyword: "AI chatbots, automation and web development",
+    lastModified: "2026-11-02",
+    ogLabel: "Chatbots · automation · web · SEO and GEO",
   },
   products: {
     path: "/products",
@@ -26,25 +26,25 @@ export const pageSeo = {
     description:
       "Our software products portfolio of AI agents and web apps, from CliniDesk, a WhatsApp booking agent, to a school management system and citation manager.",
     keyword: "software products portfolio",
-    lastModified: "2026-10-30",
+    lastModified: "2026-11-02",
     ogLabel: "Products",
   },
   services: {
     path: "/services",
-    title: "AI Agent, n8n & Web App Development Services | Agentix",
+    title: "AI Chatbot, Automation, Web & SEO Services | Agentix",
     description:
-      "AI agent, n8n and web app development services from one team: we build the agent, the workflow and the app that ties them together, from plan to launch.",
-    keyword: "AI agent, n8n and web app development services",
-    lastModified: "2026-10-30",
+      "AI chatbot, automation, web and SEO services from one team: chatbots and agents, n8n workflows, custom websites, and SEO and GEO, with clear pricing.",
+    keyword: "AI chatbot, automation, web and SEO services",
+    lastModified: "2026-11-02",
     ogLabel: "Services",
   },
   about: {
     path: "/about",
-    title: "Agentix: Software House for AI Agents and Web Apps",
+    title: "Agentix Software House: AI, Automation, Web & SEO",
     description:
-      "The Agentix software house builds AI agents, n8n automation and web apps. Meet founder Ahtasham Naeem and see how we plan, build and support projects.",
+      "The Agentix software house builds chatbots, AI agents, automation, websites, and SEO and GEO. Meet founder Ahtasham Naeem and see how we work.",
     keyword: "Agentix software house",
-    lastModified: "2026-10-30",
+    lastModified: "2026-11-02",
     ogLabel: "About",
   },
   contact: {
@@ -53,7 +53,7 @@ export const pageSeo = {
     description:
       "Get a quote for AI automation and web development. Tell us what you want to build or automate and we reply with a plan, a timeline and a price.",
     keyword: "get a quote for AI automation and web development",
-    lastModified: "2026-10-30",
+    lastModified: "2026-11-02",
     ogLabel: "Get a quote",
   },
   blog: {
@@ -62,7 +62,7 @@ export const pageSeo = {
     description:
       "Practical guides on AI agents, n8n workflow automation, WhatsApp booking bots and Next.js web apps, written by the Agentix team for business owners.",
     keyword: "AI agents and automation blog",
-    lastModified: "2026-10-30",
+    lastModified: "2026-11-02",
     ogLabel: "Blog",
   },
   privacy: {

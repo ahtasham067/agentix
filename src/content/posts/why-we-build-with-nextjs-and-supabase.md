@@ -2,7 +2,7 @@
 title: Why we build web apps with Next.js and Supabase
 seoTitle: Why We Build Web Apps with Next.js and Supabase | Agentix
 description: Why Agentix builds most new web apps with Next.js and Supabase, how the two fit together securely, and when we choose Ruby on Rails instead.
-relatedServices: web-apps
+relatedServices: web-development
 ---
 
 Every web app needs the same basic parts: pages that load fast, a database, user accounts, and rules about who can see what. For most new projects, we build these with Next.js and Supabase. This article explains why, how the two fit together, and when we pick something else.
@@ -91,7 +91,7 @@ No stack is perfect. Supabase works best when you are comfortable with SQL and w
 
 ## Want a web app like this?
 
-Our [Next.js web app development](/services/web-apps) service covers the whole stack: database design, security rules, the interface, payments and deployment. If your app sits next to an AI agent or an automation, we can build those too, so you work with one team. [Tell us what your app should do](/contact) and we will reply with a plan, a timeline and a price.
+Our [Next.js web app development](/services/web-development) service covers the whole stack: database design, security rules, the interface, payments and deployment. If your app sits next to an AI agent or an automation, we can build those too, so you work with one team. [Tell us what your app should do](/contact) and we will reply with a plan, a timeline and a price.
 
 ## Key points
 
