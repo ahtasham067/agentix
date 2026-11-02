@@ -94,6 +94,7 @@ export type Database = {
           related_projects: string[];
           related_services: string[];
           role: string | null;
+          schema_kind: string;
           screens: string[];
           screenshots: Json;
           sections: Json;
@@ -130,6 +131,7 @@ export type Database = {
           related_projects?: string[];
           related_services?: string[];
           role?: string | null;
+          schema_kind?: string;
           screens?: string[];
           screenshots?: Json;
           sections?: Json;
@@ -166,6 +168,7 @@ export type Database = {
           related_projects?: string[];
           related_services?: string[];
           role?: string | null;
+          schema_kind?: string;
           screens?: string[];
           screenshots?: Json;
           sections?: Json;

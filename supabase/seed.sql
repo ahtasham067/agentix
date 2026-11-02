@@ -31,6 +31,7 @@ insert into public.products (
   seo_description,
   primary_keyword,
   indexable,
+  schema_kind,
   featured,
   sort_order,
   published
@@ -64,6 +65,7 @@ insert into public.products (
     'CliniDesk is a WhatsApp doctor appointment system: an AI receptionist books patients 24/7 in Urdu, Roman Urdu or English and syncs a clinic dashboard.',
     'WhatsApp doctor appointment system',
     true,
+    'software',
     true,
     1,
     true
@@ -97,6 +99,7 @@ insert into public.products (
     'Nexa AI is an AI shopping assistant prototype with natural-language search, catalog-grounded answers, comparison and image search on Next.js and FastAPI.',
     'AI shopping assistant prototype',
     false,
+    'software',
     false,
     2,
     true
@@ -130,6 +133,7 @@ insert into public.products (
     'AutoBuffy is an auto parts e-commerce platform with vehicle-fitment search across 1.2M+ parts, Rails APIs and PayPal, Apple Pay and Klarna checkout.',
     'auto parts e-commerce platform',
     true,
+    'software',
     false,
     3,
     true
@@ -163,6 +167,7 @@ insert into public.products (
     'Meyamb is a cross-border fintech platform for the Central African diaspora: virtual Visa card, bill payments, money transfers, savings vaults and KYC.',
     'cross-border fintech platform',
     true,
+    'software',
     false,
     4,
     true
@@ -196,6 +201,7 @@ insert into public.products (
     'Research Buddy is a reference and citation manager with tags, folders, DOI and ISBN lookup, and automatic APA, MLA and Chicago citations for researchers.',
     'reference and citation manager',
     true,
+    'software',
     false,
     5,
     true
@@ -229,6 +235,7 @@ insert into public.products (
     'UpHex helps agencies manage and launch ad campaigns for multiple clients, with an AI ad writer for Facebook and Google ads. Built with Ruby on Rails.',
     'ad campaign platform for agencies',
     false,
+    'software',
     false,
     6,
     true
@@ -262,6 +269,7 @@ insert into public.products (
     'Nizame-Taleem is a school management system for admissions, staff, classes, fees, attendance, exams and reports, built with Ruby on Rails and React.',
     'school management system',
     true,
+    'software',
     false,
     7,
     true
@@ -295,6 +303,7 @@ insert into public.products (
     'Unpublished test row used by the database and end-to-end tests to prove that draft products are never visible to anonymous visitors.',
     'internal draft',
     false,
+    'software',
     false,
     99,
     false

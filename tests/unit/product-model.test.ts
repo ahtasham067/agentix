@@ -33,6 +33,7 @@ function toRow(p: (typeof projects)[number]): ProductRow {
     seo_description: p.seo.description,
     primary_keyword: p.seo.keyword,
     indexable: p.indexable,
+    schema_kind: p.schemaKind,
     featured: p.featured,
     sort_order: p.sortOrder,
     published: p.published,

@@ -16,6 +16,7 @@ export const clinidesk: Project = {
   stack: "Next.js, Supabase, n8n",
   category: "ai-agents",
   thumbnail: "clinidesk",
+  schemaKind: "software",
   websiteUrl: "https://clinidesk.online",
   role: "Built the WhatsApp AI agent, the n8n workflows and the dashboard",
   audience: "Clinics, hospitals and doctors",

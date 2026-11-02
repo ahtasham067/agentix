@@ -16,6 +16,7 @@ export const researchBuddy: Project = {
   stack: "React, Rails",
   category: "web-apps",
   thumbnail: "research-buddy",
+  schemaKind: "software",
   role: "Built tagging, folders, filters, DOI/ISBN lookup and citations",
   audience: "Researchers and students",
   clientWork: true,

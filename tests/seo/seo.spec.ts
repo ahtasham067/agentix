@@ -42,6 +42,7 @@ const REQUIRED: Record<string, string[]> = {
   Service: ["name", "serviceType", "description", "url", "provider"],
   SoftwareApplication: ["name", "description", "url", "applicationCategory", "operatingSystem"],
   CreativeWork: ["name", "description", "url"],
+  WebPage: ["name", "description", "url", "about"],
   ContactPage: ["name", "url"],
   AboutPage: ["name", "url"],
   Person: ["name"],

@@ -252,6 +252,24 @@ export function NizameThumb() {
   );
 }
 
+/** Shop preview: three product tiles with a price bar and a cart button. */
+export function StationeryThumb() {
+  return (
+    <Panel className="h-[164px] w-[272px] px-[14px] pt-[13px]">
+      <p className="text-[11px] leading-[14px] text-muted">Stationery</p>
+      <ul className="m-0 mt-[12px] grid list-none grid-cols-3 gap-[9px] p-0">
+        {[0, 1, 2].map((i) => (
+          <li key={i} className="flex flex-col gap-[7px]">
+            <span className="block h-[56px] rounded-[8px] bg-[rgb(244_241_238/0.12)]" />
+            <Bar className="h-[6px] w-[48px] bg-[rgb(244_241_238/0.75)]" />
+            <Bar className="h-[6px] w-[30px] bg-primary" />
+          </li>
+        ))}
+      </ul>
+    </Panel>
+  );
+}
+
 /** Picks the preview for a product. */
 export function ProductThumb({ thumbnail }: { thumbnail: ThumbnailKey }) {
   switch (thumbnail) {
@@ -269,5 +287,7 @@ export function ProductThumb({ thumbnail }: { thumbnail: ThumbnailKey }) {
       return <UphexThumb />;
     case "nizame-taleem":
       return <NizameThumb />;
+    case "naeem-stationery-store":
+      return <StationeryThumb />;
   }
 }

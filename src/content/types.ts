@@ -17,6 +17,7 @@ export const THUMBNAILS = [
   "research-buddy",
   "uphex",
   "nizame-taleem",
+  "naeem-stationery-store",
 ] as const;
 export type ThumbnailKey = (typeof THUMBNAILS)[number];
 
@@ -107,6 +108,11 @@ export interface Project {
   category: ProductCategory;
   thumbnail: ThumbnailKey;
   websiteUrl?: string;
+  /**
+   * JSON-LD type for the detail page: "software" describes an app
+   * (SoftwareApplication), "website" a business website (WebPage about a WebSite).
+   */
+  schemaKind: "software" | "website";
   role?: string;
   audience?: string;
   clientWork: boolean;

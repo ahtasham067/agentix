@@ -18,6 +18,7 @@ export const nexaAi: Project = {
   stack: "AI",
   category: "ai-agents",
   thumbnail: "nexa-ai",
+  schemaKind: "software",
   clientWork: false,
   facts: [
     { label: "Type", value: "Shopping prototype (demo)" },

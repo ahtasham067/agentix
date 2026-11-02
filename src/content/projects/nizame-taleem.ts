@@ -17,6 +17,7 @@ export const nizameTaleem: Project = {
   stack: "Rails, React",
   category: "web-apps",
   thumbnail: "nizame-taleem",
+  schemaKind: "software",
   role: "Ruby on Rails and React development",
   audience: "School administrators and staff",
   clientWork: true,

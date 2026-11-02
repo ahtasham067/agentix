@@ -18,6 +18,7 @@ export const uphex: Project = {
   stack: "Web",
   category: "web-apps",
   thumbnail: "uphex",
+  schemaKind: "software",
   clientWork: true,
   facts: [
     { label: "Type", value: "Ad campaign platform" },

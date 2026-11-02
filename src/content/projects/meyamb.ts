@@ -16,6 +16,7 @@ export const meyamb: Project = {
   stack: "Rails, Vue.js",
   category: "web-apps",
   thumbnail: "meyamb",
+  schemaKind: "software",
   role: "Platform development with Ruby on Rails and Vue.js",
   audience: "The Central African diaspora",
   clientWork: true,

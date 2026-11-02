@@ -11,6 +11,7 @@ import type {
   Person,
   Service,
   SoftwareApplication,
+  WebPage,
   WebSite,
   WithContext,
 } from "schema-dts";
@@ -151,9 +152,17 @@ export function serviceSchema(service: {
 export function productSchema(
   product: Pick<
     Project,
-    "slug" | "name" | "description" | "tags" | "clientWork" | "websiteUrl" | "seo" | "category"
+    | "slug"
+    | "name"
+    | "description"
+    | "tags"
+    | "clientWork"
+    | "websiteUrl"
+    | "seo"
+    | "category"
+    | "schemaKind"
   >,
-): WithContext<SoftwareApplication> | WithContext<CreativeWork> {
+): WithContext<SoftwareApplication> | WithContext<CreativeWork> | WithContext<WebPage> {
   const url = absoluteUrl(`/products/${product.slug}`);
   const base = {
     name: product.name,
@@ -161,6 +170,17 @@ export function productSchema(
     url,
     keywords: [product.seo.keyword, ...product.tags].join(", "),
   };
+  if (product.schemaKind === "website" && product.websiteUrl) {
+    // A business website: this page is about that site. No ratings, reviews or prices.
+    return {
+      "@context": ctx,
+      "@type": "WebPage",
+      ...base,
+      about: { "@type": "WebSite", name: product.name, url: product.websiteUrl },
+      author: { "@id": FOUNDER_ID, "@type": "Person", name: founder.name },
+      isPartOf: { "@id": WEBSITE_ID },
+    };
+  }
   if (product.clientWork) {
     return {
       "@context": ctx,

@@ -16,6 +16,7 @@ export const autobuffy: Project = {
   stack: "Ruby on Rails",
   category: "web-apps",
   thumbnail: "autobuffy",
+  schemaKind: "software",
   role: "RESTful APIs, payments, analytics, database optimization and deployments",
   audience: "Online auto parts shoppers",
   clientWork: true,
