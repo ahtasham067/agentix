@@ -139,3 +139,14 @@ test("contact details are the real ones, with no placeholders left", async ({ pa
     expect(html).not.toContain("0000000");
   }
 });
+
+test("the pricing table fits small screens without scrolling sideways", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.goto("/services");
+  const table = page.locator("section#pricing [role=region]").first();
+  const { scroll, client } = await table.evaluate((el) => ({
+    scroll: el.scrollWidth,
+    client: el.clientWidth,
+  }));
+  expect(scroll).toBeLessThanOrEqual(client);
+});

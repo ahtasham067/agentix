@@ -95,19 +95,19 @@ export function Pricing({
         aria-labelledby={`${id}-table`}
         tabIndex={0}
       >
-        <table className="w-full min-w-[480px] border-collapse text-left text-[15.5px] leading-[22px]">
+        <table className="w-full border-collapse text-left text-[14.5px] leading-[21px] sm:text-[15.5px] sm:leading-[22px]">
           <caption id={`${id}-table`} className="sr-only">
             Prices at a glance
           </caption>
           <thead>
             <tr className="border-b border-line bg-secondary">
-              <th scope="col" className="px-[20px] py-[14px] font-semibold">
+              <th scope="col" className="px-[12px] py-[14px] sm:px-[20px] font-semibold">
                 Plan
               </th>
-              <th scope="col" className="px-[20px] py-[14px] font-semibold">
+              <th scope="col" className="px-[12px] py-[14px] sm:px-[20px] font-semibold">
                 One-time
               </th>
-              <th scope="col" className="px-[20px] py-[14px] font-semibold">
+              <th scope="col" className="px-[12px] py-[14px] sm:px-[20px] font-semibold">
                 Subscription
               </th>
             </tr>
@@ -115,13 +115,13 @@ export function Pricing({
           <tbody>
             {groups.map((group) => (
               <tr key={group.key} className="border-b border-line last:border-b-0">
-                <th scope="row" className="px-[20px] py-[14px] font-semibold">
+                <th scope="row" className="px-[12px] py-[14px] sm:px-[20px] font-semibold">
                   {group.title}
                 </th>
-                <td className="px-[20px] py-[14px] text-muted">
+                <td className="px-[12px] py-[14px] sm:px-[20px] text-muted">
                   {formatPlanPrice(group.plans[0])}
                 </td>
-                <td className="px-[20px] py-[14px] text-muted">
+                <td className="px-[12px] py-[14px] sm:px-[20px] text-muted">
                   {formatPlanPrice(group.plans[1])}
                 </td>
               </tr>
