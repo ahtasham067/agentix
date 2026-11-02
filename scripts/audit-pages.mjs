@@ -107,6 +107,9 @@ for (const width of WIDTHS) {
       await page.keyboard.press("Tab");
     }
 
+    // Small screens skip painting offscreen sections (content-visibility: auto);
+    // paint everything so the full-page screenshot shows the whole page.
+    await page.addStyleTag({ content: "main > *{content-visibility:visible!important}" });
     const name = `${route === "/" ? "home" : route.slice(1).replaceAll("/", "-")}-${width}`;
     await page.screenshot({ path: `${OUT}/${name}.png`, fullPage: true });
 
@@ -139,7 +142,11 @@ for (const width of WIDTHS) {
     if (entry.h1 !== 1) problems.push(`${route}@${width}: ${entry.h1} h1 elements`);
     if (entry.overflow > 0)
       problems.push(`${route}@${width}: overflow ${entry.overflow}px ${entry.wide}`);
-    for (const m of messages) problems.push(`${route}@${width}: ${m}`);
+    for (const m of messages) {
+      // The 404 page's own document request is expected to fail with 404.
+      if (expectedStatus === 404 && m.includes("status of 404")) continue;
+      problems.push(`${route}@${width}: ${m}`);
+    }
     for (const b of broken) problems.push(`${route}@${width}: broken link ${b}`);
     for (const b of facts.blank)
       problems.push(`${route}@${width}: target=_blank without noopener noreferrer ${b}`);
