@@ -5,7 +5,7 @@ export const aboutIntro =
 
 export const story = [
   "We began by building web apps in Ruby on Rails, React and Next.js for clients on Upwork and beyond. Over time, more of our work moved to AI agents and automation with n8n, because that is where businesses save the most time.",
-  "Today we build all three: the agent, the workflow and the app around it, so you deal with one team.",
+  "Today we build all four: the agent, the workflow, the app and its SEO, so you deal with one team.",
 ];
 
 export const principles: Feature[] = [
