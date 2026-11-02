@@ -175,6 +175,15 @@ export function QuoteForm() {
           We will read your details and reply within one working day with questions or a plan, a
           timeline and a price.
         </p>
+        {state.notice && (
+          <p
+            role="alert"
+            data-testid="quote-email-notice"
+            className="mt-[16px] max-w-[560px] rounded-[10px] border border-[rgb(255_107_44/0.5)] bg-[rgb(255_107_44/0.12)] px-[16px] py-[12px] text-[15px] leading-[22px]"
+          >
+            {state.notice}
+          </p>
+        )}
         <a
           href="/contact"
           className="mt-[28px] inline-flex h-[44px] items-center rounded-[12px] border border-[rgb(244_241_238/0.3)] px-[22px] text-[15px] font-semibold"

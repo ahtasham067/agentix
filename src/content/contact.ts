@@ -1,4 +1,8 @@
+import { contact } from "./site";
 import type { Step } from "./types";
+
+/** Shown after a submit when the quote was saved but the owner email failed. */
+export const emailFailedNotice = `Your request is saved, but our email notification failed. For a faster reply, message us on WhatsApp at ${contact.phoneDisplay} or email ${contact.email}.`;
 import { faq } from "./faq";
 
 export const nextSteps: Step[] = [

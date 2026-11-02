@@ -50,3 +50,25 @@ describe("quote schema", () => {
     expect(validateQuote({ ...valid, details: `   ${"x".repeat(19)}   ` }).success).toBe(false);
   });
 });
+
+describe("control characters", () => {
+  it.each([
+    ["fullName", "Ada\r\nBcc: victim@example.com"],
+    ["fullName", "Ada\u0000Lovelace"],
+    ["details", "We need a booking agent.\u0007 Please call us back soon."],
+  ])("rejects %s with control characters", (field, value) => {
+    const result = validateQuote({ ...valid, [field]: value });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.errors[field as keyof typeof result.errors]).toBe(
+        "Please remove special characters.",
+      );
+    }
+  });
+
+  it("allows line breaks and tabs in the project details", () => {
+    expect(
+      validateQuote({ ...valid, details: "Line one\r\nLine two\tTabbed text here." }).success,
+    ).toBe(true);
+  });
+});

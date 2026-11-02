@@ -103,11 +103,11 @@ openai_api_key = "env(OPENAI_API_KEY)"
 # Email testing server. Emails sent with the local dev setup are not actually sent - rather, they
 # are monitored, and you can view the emails that would have been sent from the web interface.
 [local_smtp]
-enabled = false
+enabled = true
 # Port to use for the email testing server web interface.
 port = 57324
-# Uncomment to expose additional ports for testing user applications that send emails.
-# smtp_port = 57325
+# SMTP port the app sends quote emails to in local development and tests.
+smtp_port = 57325
 # pop3_port = 57326
 # admin_email = "admin@email.com"
 # sender_name = "Admin"

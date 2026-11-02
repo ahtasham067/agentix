@@ -34,18 +34,22 @@ const serviceValues = SERVICE_OPTIONS.map((o) => o.value) as [string, ...string[
 const planValues = PLAN_OPTIONS.map((o) => o.value) as [string, ...string[]];
 const budgetValues = BUDGET_OPTIONS.map((o) => o.value) as [string, ...string[]];
 
+/** Control characters (CR, LF, NUL and friends) are never valid in one-line fields. */
+const CONTROL_RE = /[\u0000-\u001f\u007f]/;
+/** Multi-line text may contain line breaks and tabs, but no other control characters. */
+const CONTROL_EXCEPT_NEWLINES_RE = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/;
+
 /** Same rules as the `quotes` table checks, so the database never rejects valid input. */
 const EMAIL_RE = /^[a-z0-9._%+-]+@[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}$/i;
 const PHONE_RE = /^\+?[0-9][0-9 ()-]{6,19}$/;
 
 export const quoteSchema = z.object({
-  fullName: z
-    .string()
-    .check(
-      z.trim(),
-      z.minLength(2, "Please enter your full name."),
-      z.maxLength(100, "Please keep your name under 100 characters."),
-    ),
+  fullName: z.string().check(
+    z.trim(),
+    z.minLength(2, "Please enter your full name."),
+    z.maxLength(100, "Please keep your name under 100 characters."),
+    z.refine((v) => !CONTROL_RE.test(v), { message: "Please remove special characters." }),
+  ),
   email: z
     .string()
     .check(
@@ -64,13 +68,14 @@ export const quoteSchema = z.object({
   service: z.enum(serviceValues, { error: "Please choose a service." }),
   plan: z.enum(planValues, { error: "Please choose a plan." }),
   budget: z.enum(budgetValues, { error: "Please select a budget range." }),
-  details: z
-    .string()
-    .check(
-      z.trim(),
-      z.minLength(20, "Please tell us a bit more (at least 20 characters)."),
-      z.maxLength(4000, "Please keep it under 4,000 characters."),
-    ),
+  details: z.string().check(
+    z.trim(),
+    z.minLength(20, "Please tell us a bit more (at least 20 characters)."),
+    z.maxLength(4000, "Please keep it under 4,000 characters."),
+    z.refine((v) => !CONTROL_EXCEPT_NEWLINES_RE.test(v), {
+      message: "Please remove special characters.",
+    }),
+  ),
 });
 
 export type QuoteInput = z.infer<typeof quoteSchema>;
