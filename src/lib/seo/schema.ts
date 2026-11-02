@@ -6,6 +6,7 @@ import type {
   ContactPage,
   CreativeWork,
   FAQPage,
+  Offer,
   Organization,
   Person,
   Service,
@@ -13,7 +14,9 @@ import type {
   WebSite,
   WithContext,
 } from "schema-dts";
-import { contact, founder, sameAs, SITE_NAME, siteUrl } from "@/content/site";
+import { CURRENCY, quoteHref, type PricingGroup } from "@/content/pricing";
+import { services } from "@/content/services";
+import { contact, founder, sameAs, SITE_DESCRIPTION, SITE_NAME, siteUrl } from "@/content/site";
 import type { Faq, Project } from "@/content/types";
 
 /** JSON-LD builders. They only describe facts that are visible on the page. */
@@ -29,26 +32,17 @@ const FOUNDER_ID = `${siteUrl}/about#founder`;
 
 const ctx = "https://schema.org" as const;
 
-export function founderSchema(): Person {
-  return {
-    "@type": "Person",
-    "@id": FOUNDER_ID,
-    name: founder.name,
-    jobTitle: "Founder and full-stack developer",
-    worksFor: { "@id": ORG_ID },
-    ...(sameAs.length ? { sameAs } : {}),
-  };
-}
-
-/** The founder as a standalone JSON-LD document (About page, blog author). */
+/** The founder, on every page (site-wide entity data). */
 export function founderPageSchema(): WithContext<Person> {
   return {
     "@context": ctx,
     "@type": "Person",
     "@id": FOUNDER_ID,
     name: founder.name,
-    jobTitle: "Founder and full-stack developer",
+    jobTitle: founder.role,
+    url: absoluteUrl("/about"),
     worksFor: { "@id": ORG_ID },
+    knowsAbout: ["Ruby on Rails", "React", "Next.js", "Vue.js", "n8n", "AI agents", "SEO"],
     alumniOf: { "@type": "CollegeOrUniversity", name: "COMSATS University Islamabad" },
     ...(sameAs.length ? { sameAs } : {}),
   };
@@ -63,7 +57,16 @@ export function organizationSchema(): WithContext<Organization> {
     url: siteUrl,
     logo: absoluteUrl("/agentix-logo-512.png"),
     email: contact.email,
-    description: "A software house building AI agents, n8n automation and web apps.",
+    telephone: contact.phone,
+    description: SITE_DESCRIPTION,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      email: contact.email,
+      telephone: contact.phone,
+      url: absoluteUrl("/contact"),
+    },
+    knowsAbout: services.map((s) => s.name),
     founder: { "@id": FOUNDER_ID },
     ...(sameAs.length ? { sameAs } : {}),
   };
@@ -108,11 +111,29 @@ export function faqSchema(items: Faq[]): WithContext<FAQPage> {
   };
 }
 
+/** Offers for a pricing group: the owner's prices, stated as "starting from". */
+export function offersSchema(group: PricingGroup): Offer[] {
+  return group.plans.map((plan) => ({
+    "@type": "Offer",
+    name: `${group.title}: ${plan.name}`,
+    description: "Starting from this price. Final price depends on the project.",
+    url: absoluteUrl(quoteHref(group.service, plan.key)),
+    priceCurrency: CURRENCY,
+    priceSpecification: {
+      "@type": "UnitPriceSpecification",
+      minPrice: plan.amount,
+      priceCurrency: CURRENCY,
+      ...(plan.interval ? { unitCode: "MON", unitText: "per month" } : {}),
+    },
+  }));
+}
+
 export function serviceSchema(service: {
   name: string;
   serviceType: string;
   description: string;
   path: string;
+  pricing?: PricingGroup;
 }): WithContext<Service> {
   return {
     "@context": ctx,
@@ -122,6 +143,7 @@ export function serviceSchema(service: {
     description: service.description,
     url: absoluteUrl(service.path),
     provider: { "@id": ORG_ID },
+    ...(service.pricing ? { offers: offersSchema(service.pricing) } : {}),
   };
 }
 

@@ -7,14 +7,32 @@ export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:30
   "",
 );
 
+/** One-line description used in the footer, Organization JSON-LD and llms.txt. */
+export const SITE_DESCRIPTION =
+  "A software house building AI agents, n8n automation, web apps and SEO.";
+
+/** Phone in E.164 form (+923025889452), for tel: and wa.me links. */
+const phoneE164 = `+${(process.env.NEXT_PUBLIC_CONTACT_PHONE || "+923025889452").replace(/\D/g, "")}`;
+
+/** "+923025889452" -> "+92 302 5889452" (Pakistani mobile layout; other numbers stay as stored). */
+export function formatPhone(e164: string): string {
+  const m = e164.match(/^\+92(\d{3})(\d{7})$/);
+  return m ? `+92 ${m[1]} ${m[2]}` : e164;
+}
+
 export const contact = {
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@agentix.website",
-  phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "+92 300 0000000",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "ahtashamm067@gmail.com",
+  /** E.164, for tel: links and JSON-LD. */
+  phone: phoneE164,
+  /** Human-readable form for the page. */
+  phoneDisplay: formatPhone(phoneE164),
   location: "Pakistan",
 };
 
+export const telUrl = `tel:${contact.phone}`;
+
 /** WhatsApp click-to-chat link built from the contact phone. */
-export const whatsappUrl = `https://wa.me/${contact.phone.replace(/\D/g, "")}`;
+export const whatsappUrl = `https://wa.me/${contact.phone.slice(1)}`;
 
 // TODO: confirm. Upwork has no real URL yet; the default is a placeholder.
 const UPWORK_PLACEHOLDER = "https://www.upwork.com";
@@ -38,12 +56,8 @@ export const mainNav = [
   { href: "/contact", label: "Contact" },
 ] as const;
 
-export const footerServices = [
-  { href: "/services/ai-agents", label: "AI Agents" },
-  { href: "/services/n8n-automation", label: "n8n Automation" },
-  { href: "/services/web-apps", label: "Web Apps" },
-  { href: "/contact", label: "Get a Quote" },
-] as const;
+/** Confirmed by the owner. Shown in stats, author boxes and llms.txt. */
+export const EXPERIENCE = { projects: "20+", years: "5+" } as const;
 
 export const founder = {
   name: "Ahtasham Naeem",

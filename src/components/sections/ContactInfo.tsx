@@ -10,7 +10,12 @@ export function ContactDetails() {
       value: contact.email,
       href: `mailto:${contact.email}`,
     },
-    { icon: "phone" as const, label: "WhatsApp", value: contact.phone, href: whatsappUrl },
+    {
+      icon: "phone" as const,
+      label: "WhatsApp",
+      value: contact.phoneDisplay,
+      href: whatsappUrl,
+    },
     { icon: "clock" as const, label: "Reply time", value: "Within one working day" },
   ];
   return (
@@ -27,7 +32,9 @@ export function ContactDetails() {
               <a
                 href={row.href}
                 className="block font-heading text-[17.3px] leading-[22px] font-semibold hover:underline"
-                {...(row.href.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}
+                {...(row.href.startsWith("http")
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
               >
                 {row.value}
               </a>

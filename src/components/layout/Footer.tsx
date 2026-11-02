@@ -1,5 +1,6 @@
 import { AppLink as Link } from "@/components/ui/AppLink";
-import { contact, footerServices, mainNav, social } from "@/content/site";
+import { services } from "@/content/services";
+import { contact, mainNav, SITE_DESCRIPTION, social, telUrl, whatsappUrl } from "@/content/site";
 import { Logo } from "./Logo";
 
 export function Footer() {
@@ -10,7 +11,7 @@ export function Footer() {
           <div>
             <Logo />
             <p className="mt-[17px] max-w-[300px] text-[15px] leading-[23px] text-muted">
-              A software house building AI agents, n8n automation and web apps.
+              {SITE_DESCRIPTION}
             </p>
           </div>
           <FooterColumn title="Pages">
@@ -26,11 +27,12 @@ export function Footer() {
             </li>
           </FooterColumn>
           <FooterColumn title="Services">
-            {footerServices.map((item) => (
-              <FooterLink key={item.label} href={item.href}>
-                {item.label}
+            {services.map((s) => (
+              <FooterLink key={s.slug} href={`/services/${s.slug}`}>
+                {s.name}
               </FooterLink>
             ))}
+            <FooterLink href="/contact">Get a Quote</FooterLink>
           </FooterColumn>
           <FooterColumn title="Contact">
             <li>
@@ -42,19 +44,43 @@ export function Footer() {
             <li className="text-muted">
               <a
                 href={social.linkedin}
-                rel="me noopener"
+                rel="me noopener noreferrer"
                 target="_blank"
                 className="hover:text-text"
               >
                 LinkedIn
               </a>{" "}
               ·{" "}
-              <a href={social.github} rel="me noopener" target="_blank" className="hover:text-text">
+              <a
+                href={social.github}
+                rel="me noopener noreferrer"
+                target="_blank"
+                className="hover:text-text"
+              >
                 GitHub
               </a>{" "}
               ·{" "}
-              <a href={social.upwork} rel="me noopener" target="_blank" className="hover:text-text">
+              <a
+                href={social.upwork}
+                rel="me noopener noreferrer"
+                target="_blank"
+                className="hover:text-text"
+              >
                 Upwork
+              </a>
+            </li>
+            <li className="text-muted">
+              <a href={telUrl} className="hover:text-text">
+                {contact.phoneDisplay}
+              </a>{" "}
+              ·{" "}
+              <a
+                href={whatsappUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+                className="hover:text-text"
+              >
+                WhatsApp
               </a>
             </li>
           </FooterColumn>
