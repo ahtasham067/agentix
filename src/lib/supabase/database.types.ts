@@ -190,6 +190,8 @@ export type Database = {
           full_name: string;
           id: string;
           ip_hash: string | null;
+          notified_at: string | null;
+          plan: string | null;
           service: string;
           whatsapp: string | null;
         };
@@ -201,6 +203,8 @@ export type Database = {
           full_name: string;
           id?: string;
           ip_hash?: string | null;
+          notified_at?: string | null;
+          plan?: string | null;
           service: string;
           whatsapp?: string | null;
         };
@@ -212,6 +216,8 @@ export type Database = {
           full_name?: string;
           id?: string;
           ip_hash?: string | null;
+          notified_at?: string | null;
+          plan?: string | null;
           service?: string;
           whatsapp?: string | null;
         };

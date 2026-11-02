@@ -56,7 +56,7 @@ insert into public.products (
     '[]'::jsonb,
     array['calendar', 'patient-history']::text[],
     array['Next.js', 'Supabase', 'n8n', 'WhatsApp Cloud API', 'OpenAI']::text[],
-    array['ai-agents', 'n8n-automation', 'web-apps']::text[],
+    array['chatbots-ai-agents', 'automation', 'web-development']::text[],
     array['nexa-ai', 'nizame-taleem', 'meyamb']::text[],
     'WhatsApp Doctor Appointment System – CliniDesk | Agentix',
     'CliniDesk is a WhatsApp doctor appointment system: an AI receptionist books patients 24/7 in Urdu, Roman Urdu or English and syncs a clinic dashboard.',
@@ -88,7 +88,7 @@ insert into public.products (
     '[]'::jsonb,
     '{}'::text[],
     '{}'::text[],
-    array['ai-agents']::text[],
+    array['chatbots-ai-agents']::text[],
     array['clinidesk']::text[],
     'Nexa AI: AI Assistant Built In-House | Agentix',
     'Nexa AI is an AI assistant project built in-house by the Agentix team. Full details are coming soon; ask us about custom AI agents for your business.',
@@ -120,7 +120,7 @@ insert into public.products (
     '[]'::jsonb,
     '{}'::text[],
     array['Ruby on Rails', 'RESTful APIs', 'PayPal', 'Apple Pay', 'Afterpay', 'Klarna']::text[],
-    array['web-apps']::text[],
+    array['web-development']::text[],
     array['meyamb', 'research-buddy', 'nizame-taleem']::text[],
     'Auto Parts E-Commerce Platform – AutoBuffy | Agentix',
     'AutoBuffy is an auto parts e-commerce platform with vehicle-fitment search across 1.2M+ parts, Rails APIs and PayPal, Apple Pay and Klarna checkout.',
@@ -152,7 +152,7 @@ insert into public.products (
     '[]'::jsonb,
     '{}'::text[],
     array['Ruby on Rails', 'Vue.js', 'Redis', 'AWS CodePipeline']::text[],
-    array['web-apps']::text[],
+    array['web-development']::text[],
     array['autobuffy', 'nizame-taleem', 'research-buddy']::text[],
     'Cross-Border Fintech Platform – Meyamb | Agentix',
     'Meyamb is a cross-border fintech platform for the Central African diaspora: virtual Visa card, bill payments, money transfers, savings vaults and KYC.',
@@ -184,7 +184,7 @@ insert into public.products (
     '[]'::jsonb,
     '{}'::text[],
     array['React.js', 'Ruby on Rails']::text[],
-    array['web-apps']::text[],
+    array['web-development']::text[],
     array['nizame-taleem', 'autobuffy', 'meyamb']::text[],
     'Reference & Citation Manager – Research Buddy | Agentix',
     'Research Buddy is a reference and citation manager with tags, folders, DOI and ISBN lookup, and automatic APA, MLA and Chicago citations for researchers.',
@@ -216,7 +216,7 @@ insert into public.products (
     '[]'::jsonb,
     '{}'::text[],
     '{}'::text[],
-    array['web-apps']::text[],
+    array['web-development']::text[],
     array['autobuffy']::text[],
     'UpHex: A Web Platform Built In-House | Agentix',
     'UpHex is a web platform built in-house by the Agentix team. Full details are coming soon; ask us about Next.js and Supabase web app development.',
@@ -248,7 +248,7 @@ insert into public.products (
     '[]'::jsonb,
     '{}'::text[],
     array['Ruby on Rails', 'React.js', 'Bootstrap']::text[],
-    array['web-apps']::text[],
+    array['web-development']::text[],
     array['research-buddy', 'clinidesk', 'meyamb']::text[],
     'School Management System – Nizame-Taleem | Agentix',
     'Nizame-Taleem is a school management system for admissions, staff, classes, fees, attendance, exams and reports, built with Ruby on Rails and React.',
@@ -364,7 +364,7 @@ In practice, many agents talk through a chat window, so from the outside they lo
 
 1. The chat interface receives the message, for example on WhatsApp.
 2. The agent decides whether it can answer from your information or needs to act.
-3. If it needs to act, it calls a workflow that does the work, often built in [n8n](/services/n8n-automation).
+3. If it needs to act, it calls a workflow that does the work, often built in [n8n](/services/automation).
 4. If the request is unusual, it hands the conversation to a person.
 
 This means you can start with a simple question-and-answer bot and add actions later, one at a time.
@@ -384,7 +384,7 @@ Ask one question: **at the end of the conversation, does something need to chang
 - If no, start with a chatbot.
 - If yes, you need an agent, even if it only does one action at first.
 
-If you are unsure, describe the job in a few sentences. Our [custom AI agent development](/services/ai-agents) team can tell you which approach fits, and you can [request a quote](/contact) with no commitment.
+If you are unsure, describe the job in a few sentences. Our [custom AI agent development](/services/chatbots-ai-agents) team can tell you which approach fits, and you can [request a quote](/contact) with no commitment.
 
 ## Key points
 
@@ -393,7 +393,7 @@ If you are unsure, describe the job in a few sentences. Our [custom AI agent dev
 - Many agents use a chat window, so the difference is in what happens behind the reply.
 - Start with the simplest option that gets the job done, then add actions over time.
 ',
-    array['ai-agents']::text[],
+    array['chatbots-ai-agents']::text[],
     false
   ),
   (
@@ -489,7 +489,7 @@ After launch, track a few simple numbers: how fast leads get a first reply, how 
 
 A basic version of this workflow can be built in an afternoon. The work that takes longer is the detail: clean data from several sources, reliable CRM updates, good AI instructions and solid error handling.
 
-Our [n8n automation services](/services/n8n-automation) cover all of it, and when the follow-up needs real conversations, we combine the workflow with [custom AI agent development](/services/ai-agents). If you want a workflow like this for your own leads, [send us a short description](/contact) of where they come from today.
+Our [n8n automation services](/services/automation) cover all of it, and when the follow-up needs real conversations, we combine the workflow with [custom AI agent development](/services/chatbots-ai-agents). If you want a workflow like this for your own leads, [send us a short description](/contact) of where they come from today.
 
 ## Key points
 
@@ -498,7 +498,7 @@ Our [n8n automation services](/services/n8n-automation) cover all of it, and whe
 - Update the CRM without duplicates and alert sales on Slack.
 - Add reminders, error handling and monitoring before you launch.
 ',
-    array['n8n-automation', 'ai-agents']::text[],
+    array['automation', 'chatbots-ai-agents']::text[],
     false
   ),
   (
@@ -546,7 +546,7 @@ Things change with branching, loops, error handling and data transformation:
 
 ## 4. Do you need AI steps?
 
-All three can call OpenAI and other AI services. n8n has gone furthest in building AI agents directly into workflows: an agent node can use other nodes as tools, keep memory and decide which step to take next. If you plan to build [AI agents](/services/ai-agents) that act in your systems, this is a strong reason to look at n8n.
+All three can call OpenAI and other AI services. n8n has gone furthest in building AI agents directly into workflows: an agent node can use other nodes as tools, keep memory and decide which step to take next. If you plan to build [AI agents](/services/chatbots-ai-agents) that act in your systems, this is a strong reason to look at n8n.
 
 ## 5. Who will maintain it?
 
@@ -589,7 +589,7 @@ At Agentix we use n8n for most client work, because many of our projects combine
 
 That said, it is not always the right answer. For a small team with a few simple automations and nobody technical, Zapier is often the better fit.
 
-If you want an outside view on your workflows, our [n8n automation services](/services/n8n-automation) include a short review of what you want to automate and which tool suits it. You can [ask for a quote](/contact) and we will reply with a plan.
+If you want an outside view on your workflows, our [n8n automation services](/services/automation) include a short review of what you want to automate and which tool suits it. You can [ask for a quote](/contact) and we will reply with a plan.
 
 ## Key points
 
@@ -598,7 +598,7 @@ If you want an outside view on your workflows, our [n8n automation services](/se
 - Self-hosting n8n keeps data on your servers, but you take on the upkeep.
 - Choose based on complexity, data rules, AI needs and who maintains the workflows.
 ',
-    array['n8n-automation']::text[],
+    array['automation']::text[],
     false
   ),
   (
@@ -630,7 +630,7 @@ Under the hood, most business agents follow the same loop.
 4. **It uses a tool.** The action runs through an API or a workflow tool such as n8n.
 5. **It checks the result and replies.** If something is missing, it asks. If the case is unusual, it hands over to your team.
 
-At Agentix we usually build this loop with [n8n](/services/n8n-automation), which connects the model to your tools and keeps a log of every run. That log matters: you can see what the agent did and why.
+At Agentix we usually build this loop with [n8n](/services/automation), which connects the model to your tools and keeps a log of every run. That log matters: you can see what the agent did and why.
 
 ## Jobs AI agents do well
 
@@ -680,7 +680,7 @@ Start small and measure.
 4. **Build and test** with real examples before going live.
 5. **Review and adjust** for a few weeks, then add the next job.
 
-If you want help with the first step, our [custom AI agent development](/services/ai-agents) service covers the whole path, from planning the job to monitoring the agent after launch. You can also [send us a short description](/contact) of the task and we will reply with a plan, a timeline and a price.
+If you want help with the first step, our [custom AI agent development](/services/chatbots-ai-agents) service covers the whole path, from planning the job to monitoring the agent after launch. You can also [send us a short description](/contact) of the task and we will reply with a plan, a timeline and a price.
 
 ## Key points
 
@@ -689,7 +689,7 @@ If you want help with the first step, our [custom AI agent development](/service
 - The setup around it matters most: one clear job, the right tools, written rules, a human hand-off and monitoring.
 - Start with one job, measure the result, then grow.
 ',
-    array['ai-agents', 'n8n-automation']::text[],
+    array['chatbots-ai-agents', 'automation']::text[],
     false
   ),
   (
@@ -751,7 +751,7 @@ The bot is only half of the system. The other half is the dashboard that the cli
 - Booking analytics
 - Staff roles, so each person sees the right tools
 
-If you are planning a similar system, the dashboard deserves as much attention as the chat. Our [web app development](/services/web-apps) work often focuses on exactly this part.
+If you are planning a similar system, the dashboard deserves as much attention as the chat. Our [web app development](/services/web-development) work often focuses on exactly this part.
 
 ## Reminders and no-shows
 
@@ -786,7 +786,7 @@ From there, the work is mostly testing with real conversations: different langua
 
 A WhatsApp booking bot pays off when a large share of your calls are routine bookings and changes, and when patients already message you on WhatsApp. It is less useful if most visits need a long phone conversation first.
 
-If you want to see the full system, read about [CliniDesk](/products/clinidesk). If you need a booking agent shaped around your own clinic or business, our [custom AI agent development](/services/ai-agents) service and [n8n automation services](/services/n8n-automation) cover the agent and the workflows behind it. [Tell us how your clinic books today](/contact) and we will suggest a plan.
+If you want to see the full system, read about [CliniDesk](/products/clinidesk). If you need a booking agent shaped around your own clinic or business, our [custom AI agent development](/services/chatbots-ai-agents) service and [n8n automation services](/services/automation) cover the agent and the workflows behind it. [Tell us how your clinic books today](/contact) and we will suggest a plan.
 
 ## Key points
 
@@ -795,7 +795,7 @@ If you want to see the full system, read about [CliniDesk](/products/clinidesk).
 - The staff dashboard is as important as the chat.
 - Clear hand-off rules and careful handling of patient data are essential.
 ',
-    array['ai-agents', 'n8n-automation', 'web-apps']::text[],
+    array['chatbots-ai-agents', 'automation', 'web-development']::text[],
     false
   ),
   (
@@ -889,7 +889,7 @@ No stack is perfect. Supabase works best when you are comfortable with SQL and w
 
 ## Want a web app like this?
 
-Our [Next.js web app development](/services/web-apps) service covers the whole stack: database design, security rules, the interface, payments and deployment. If your app sits next to an AI agent or an automation, we can build those too, so you work with one team. [Tell us what your app should do](/contact) and we will reply with a plan, a timeline and a price.
+Our [Next.js web app development](/services/web-development) service covers the whole stack: database design, security rules, the interface, payments and deployment. If your app sits next to an AI agent or an automation, we can build those too, so you work with one team. [Tell us what your app should do](/contact) and we will reply with a plan, a timeline and a price.
 
 ## Key points
 
@@ -898,6 +898,6 @@ Our [Next.js web app development](/services/web-apps) service covers the whole s
 - Together they make apps that are fast, secure in layers and easy to change.
 - For large back ends with many background jobs, we still choose Ruby on Rails.
 ',
-    array['web-apps']::text[],
+    array['web-development']::text[],
     false
   );

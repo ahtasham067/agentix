@@ -63,13 +63,13 @@ select throws_ok(
 -- anon: quotes
 select lives_ok(
   $$insert into public.quotes (full_name, email, whatsapp, service, budget, details)
-    values ('Test Visitor', 'visitor@example.com', '+92 300 0000000', 'ai-agents', 'under-250k',
+    values ('Test Visitor', 'visitor@example.com', '+92 302 5889452', 'chatbots-ai-agents', 'under-250k',
       'We need a WhatsApp booking agent for our clinic.')$$,
   'anon can insert a valid quote'
 );
 select throws_ok(
   $$insert into public.quotes (full_name, email, service, budget, details)
-    values ('Test Visitor', 'not-an-email', 'web-apps', 'not-sure',
+    values ('Test Visitor', 'not-an-email', 'web-development', 'not-sure',
       'We need a dashboard for our team and customers.')$$,
   '23514',
   null,
@@ -77,7 +77,7 @@ select throws_ok(
 );
 select throws_ok(
   $$insert into public.quotes (full_name, email, service, budget, details)
-    values ('Test Visitor', 'visitor@example.com', 'web-apps', 'not-sure', 'Too short')$$,
+    values ('Test Visitor', 'visitor@example.com', 'web-development', 'not-sure', 'Too short')$$,
   '23514',
   null,
   'too-short project details are rejected'
@@ -92,7 +92,7 @@ select throws_ok(
 );
 select throws_ok(
   $$insert into public.quotes (full_name, email, service, budget, details, ip_hash)
-    values ('Test Visitor', 'visitor@example.com', 'web-apps', 'not-sure',
+    values ('Test Visitor', 'visitor@example.com', 'web-development', 'not-sure',
       'We need a dashboard for our team and customers.', repeat('a', 64))$$,
   '42501',
   null,
@@ -134,7 +134,7 @@ select throws_ok(
 );
 select throws_ok(
   $$insert into public.quotes (full_name, email, service, budget, details)
-    values ('Test Visitor', 'visitor@example.com', 'web-apps', 'not-sure',
+    values ('Test Visitor', 'visitor@example.com', 'web-development', 'not-sure',
       'We need a dashboard for our team and customers.')$$,
   '42501',
   null,
