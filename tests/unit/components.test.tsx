@@ -35,7 +35,7 @@ describe("ProductGrid", () => {
     const { container } = render(<ProductGrid products={projects} showFilters />);
     const filters = screen.getByRole("group", { name: "Filter products" });
     const wrapper = container.querySelector("[data-filter]")!;
-    expect(within(filters).getByRole("button", { name: "All 7" })).toHaveAttribute(
+    expect(within(filters).getByRole("button", { name: "All 8" })).toHaveAttribute(
       "aria-pressed",
       "true",
     );
@@ -47,7 +47,7 @@ describe("ProductGrid", () => {
       "aria-pressed",
       "true",
     );
-    expect(within(filters).getByRole("button", { name: "All 7" })).toHaveAttribute(
+    expect(within(filters).getByRole("button", { name: "All 8" })).toHaveAttribute(
       "aria-pressed",
       "false",
     );

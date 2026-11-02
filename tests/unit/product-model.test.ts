@@ -58,7 +58,7 @@ describe("matchesFilter", () => {
     projects.filter((p) => matchesFilter(p, filter)).map((p) => p.slug);
 
   it("returns every product for All", () => {
-    expect(count("all")).toHaveLength(7);
+    expect(count("all")).toHaveLength(8);
   });
 
   it("splits AI agents and web apps by category", () => {
@@ -69,6 +69,7 @@ describe("matchesFilter", () => {
       "research-buddy",
       "uphex",
       "nizame-taleem",
+      "naeem-stationery-store",
     ]);
   });
 
@@ -87,7 +88,7 @@ describe("matchesService", () => {
     expect(on("web-development")).toEqual(
       expect.arrayContaining(["clinidesk", "autobuffy", "meyamb", "research-buddy"]),
     );
-    expect(on("seo-geo")).toEqual([]);
+    expect(on("seo-geo")).toEqual(["naeem-stationery-store"]);
   });
 
   it("uses only relatedServices, not the product category", () => {

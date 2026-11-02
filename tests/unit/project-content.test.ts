@@ -2,9 +2,9 @@ import { describe, expect, it } from "vitest";
 import { projects } from "@/content/projects";
 
 describe("project content", () => {
-  it("has 7 published projects with unique slugs", () => {
+  it("has 8 published projects with unique slugs", () => {
     const published = projects.filter((p) => p.published);
-    expect(published).toHaveLength(7);
+    expect(published).toHaveLength(8);
     expect(new Set(projects.map((p) => p.slug)).size).toBe(projects.length);
   });
 

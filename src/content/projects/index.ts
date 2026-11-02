@@ -2,6 +2,7 @@ import type { Project } from "../types";
 import { autobuffy } from "./autobuffy";
 import { clinidesk } from "./clinidesk";
 import { meyamb } from "./meyamb";
+import { naeemStationeryStore } from "./naeem-stationery-store";
 import { nexaAi } from "./nexa-ai";
 import { nizameTaleem } from "./nizame-taleem";
 import { researchBuddy } from "./research-buddy";
@@ -16,4 +17,5 @@ export const projects: Project[] = [
   researchBuddy,
   uphex,
   nizameTaleem,
+  naeemStationeryStore,
 ].sort((a, b) => a.sortOrder - b.sortOrder);

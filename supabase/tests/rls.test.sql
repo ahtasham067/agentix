@@ -6,10 +6,10 @@ set search_path = public, extensions;
 
 select plan(22);
 
--- Setup sanity: the seed holds 7 published products and 1 draft.
+-- Setup sanity: the seed holds 8 published products and 1 draft.
 select results_eq(
   $$select count(*)::int from public.products$$,
-  array[8],
+  array[9],
   'postgres sees all seeded products'
 );
 select ok(
@@ -26,8 +26,8 @@ set local role anon;
 
 select results_eq(
   $$select count(*)::int from public.products$$,
-  array[7],
-  'anon reads the 7 published products'
+  array[8],
+  'anon reads the 8 published products'
 );
 select is_empty(
   $$select 1 from public.products where not published$$,
@@ -123,7 +123,7 @@ set local role authenticated;
 
 select results_eq(
   $$select count(*)::int from public.products$$,
-  array[7],
+  array[8],
   'authenticated reads only published products'
 );
 select throws_ok(
@@ -152,7 +152,7 @@ select results_eq(
 );
 select results_eq(
   $$select count(*)::int from public.products$$,
-  array[8],
+  array[9],
   'service role reads all products'
 );
 

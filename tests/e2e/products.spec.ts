@@ -5,11 +5,11 @@ test("filter chips show the matching products", async ({ page }) => {
   const filters = page.getByRole("group", { name: "Filter products" });
   const names = () => page.locator("[data-product]:visible h3").allTextContents();
 
-  await expect(filters.getByRole("button", { name: "All 7" })).toHaveAttribute(
+  await expect(filters.getByRole("button", { name: "All 8" })).toHaveAttribute(
     "aria-pressed",
     "true",
   );
-  expect(await names()).toHaveLength(7);
+  expect(await names()).toHaveLength(8);
 
   await filters.getByRole("button", { name: "AI Agents" }).click();
   await expect(filters.getByRole("button", { name: "AI Agents" })).toHaveAttribute(
@@ -25,20 +25,21 @@ test("filter chips show the matching products", async ({ page }) => {
     "Research Buddy",
     "UpHex",
     "Nizame-Taleem",
+    "Naeem Stationery & General Store",
   ]);
 
   await filters.getByRole("button", { name: "Automation" }).click();
   expect(await names()).toEqual(["CliniDesk"]);
 
-  await filters.getByRole("button", { name: "All 7" }).click();
-  expect(await names()).toHaveLength(7);
+  await filters.getByRole("button", { name: "All 8" }).click();
+  expect(await names()).toHaveLength(8);
 });
 
 test("product cards link to their detail pages", async ({ page }) => {
   await page.goto("/products");
   const cards = page.locator("[data-product]");
   const slugs = await cards.evaluateAll((els) => els.map((e) => e.getAttribute("data-product")!));
-  expect(slugs).toHaveLength(7);
+  expect(slugs).toHaveLength(8);
   for (const slug of slugs) {
     await page.goto("/products");
     const card = page.locator(`[data-product="${slug}"]`);
@@ -53,5 +54,5 @@ test("the stats band shows the published product count", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByText("products in our portfolio")).toBeVisible();
   const value = page.locator("dl div", { hasText: "products in our portfolio" }).locator("dd");
-  await expect(value).toHaveText("7");
+  await expect(value).toHaveText("8");
 });
