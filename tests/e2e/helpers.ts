@@ -35,6 +35,10 @@ export function trackErrors(page: Page) {
 }
 
 export async function seriousA11yViolations(page: Page) {
+  // On small screens, sections below the fold use content-visibility: auto and
+  // are not laid out until scrolled near. Axe would read their collapsed boxes
+  // (false target-size overlaps), so render everything as a visitor would see it.
+  await page.addStyleTag({ content: "main > *{content-visibility:visible!important}" });
   const results = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
     .analyze();
