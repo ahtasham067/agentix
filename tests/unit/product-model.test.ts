@@ -76,10 +76,20 @@ describe("matchesFilter", () => {
 });
 
 describe("matchesService", () => {
-  it("lists the AI agent products on the AI agents page", () => {
-    expect(projects.filter((p) => matchesService(p, "ai-agents")).map((p) => p.slug)).toEqual([
-      "clinidesk",
-      "nexa-ai",
-    ]);
+  const on = (service: Parameters<typeof matchesService>[1]) =>
+    projects.filter((p) => matchesService(p, service)).map((p) => p.slug);
+
+  it("lists the products that name the service", () => {
+    expect(on("chatbots-ai-agents")).toEqual(["clinidesk", "nexa-ai"]);
+    expect(on("automation")).toEqual(["clinidesk"]);
+    expect(on("web-development")).toEqual(
+      expect.arrayContaining(["clinidesk", "autobuffy", "meyamb", "research-buddy"]),
+    );
+    expect(on("seo-geo")).toEqual([]);
+  });
+
+  it("uses only relatedServices, not the product category", () => {
+    const product = { ...projects[0], category: "ai-agents" as const, relatedServices: [] };
+    expect(matchesService(product, "chatbots-ai-agents")).toBe(false);
   });
 });

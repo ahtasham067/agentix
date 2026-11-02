@@ -45,7 +45,7 @@ test.describe("a published article", () => {
     await expect(page.getByRole("heading", { name: "About the author" })).toBeVisible();
     await expect(
       page.getByRole("link", { name: "custom AI agent development" }).first(),
-    ).toHaveAttribute("href", "/services/ai-agents");
+    ).toHaveAttribute("href", "/services/chatbots-ai-agents");
     const jsonLd = await page.locator('script[type="application/ld+json"]').allTextContents();
     const types = jsonLd.flatMap((s) => {
       const parsed = JSON.parse(s);

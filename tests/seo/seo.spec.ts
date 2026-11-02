@@ -3,6 +3,7 @@ import http from "node:http";
 import { projects } from "../../src/content/projects";
 import { pageSeo } from "../../src/content/seo";
 import { services } from "../../src/content/services";
+import { pricingGroups } from "../../src/content/pricing";
 import { createClient } from "@supabase/supabase-js";
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/+$/, "");
@@ -32,7 +33,7 @@ const noindexPaths = projects
   .map((p) => `/products/${p.slug}`);
 const privatePaths = ["/design-system", "/products/internal-draft", ...noindexPaths];
 
-const FORBIDDEN_SCHEMA_KEYS = ["aggregateRating", "review", "offers", "award", "address"];
+const FORBIDDEN_SCHEMA_KEYS = ["aggregateRating", "review", "award", "address"];
 const REQUIRED: Record<string, string[]> = {
   Organization: ["name", "url", "logo"],
   WebSite: ["name", "url"],
@@ -55,6 +56,8 @@ const REQUIRED: Record<string, string[]> = {
     "mainEntityOfPage",
   ],
 };
+
+const allowedPrices = pricingGroups.flatMap((g) => g.plans.map((p) => p.amount));
 
 const normalize = (s: string) =>
   s
@@ -226,6 +229,24 @@ test.describe("every indexable page", () => {
         for (const field of REQUIRED[type] ?? []) expect(s[field], `${type}.${field}`).toBeTruthy();
       }
       expect(findKeys(schemas, FORBIDDEN_SCHEMA_KEYS)).toEqual([]);
+
+      // Offers only on Service, only with the configured PKR "starting from" prices.
+      for (const s of schemas) {
+        if (s["@type"] !== "Service") {
+          expect(findKeys(s, ["offers"]), `${s["@type"]} has no offers`).toEqual([]);
+          continue;
+        }
+        for (const offer of (s.offers ?? []) as {
+          priceCurrency: string;
+          description: string;
+          priceSpecification: { priceCurrency: string; minPrice: number };
+        }[]) {
+          expect(offer.priceCurrency).toBe("PKR");
+          expect(offer.priceSpecification.priceCurrency).toBe("PKR");
+          expect(offer.description).toMatch(/^Starting from/);
+          expect(allowedPrices).toContain(offer.priceSpecification.minPrice);
+        }
+      }
 
       // FAQPage mirrors the visible questions and answers.
       const faq = schemas.find((s) => s["@type"] === "FAQPage") as

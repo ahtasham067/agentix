@@ -91,7 +91,7 @@ describe("Navbar", () => {
     ["/", "Home"],
     ["/products", "Products"],
     ["/products/clinidesk", "Products"],
-    ["/services/ai-agents", "Services"],
+    ["/services/chatbots-ai-agents", "Services"],
     ["/about", "About"],
     ["/contact", "Contact"],
   ])("marks the active link on %s", (path, label) => {
@@ -130,7 +130,7 @@ describe("StatsBand", () => {
     expect(screen.getByText("7")).toBeInTheDocument();
     expect(screen.getByText("products in our portfolio")).toBeInTheDocument();
     expect(screen.getByText("20+")).toBeInTheDocument();
-    expect(screen.getByText("3")).toBeInTheDocument();
+    expect(screen.getByText("4")).toBeInTheDocument();
   });
 
   it("follows the count when products are unpublished", () => {

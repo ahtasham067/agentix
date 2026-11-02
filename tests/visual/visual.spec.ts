@@ -14,7 +14,7 @@ const pages = [
   { route: "/products", design: "agentix-02-products.png" },
   { route: "/products/clinidesk", design: "agentix-03-product-detail-clinidesk.png" },
   { route: "/services", design: "agentix-04-services.png" },
-  { route: "/services/ai-agents", design: "agentix-05-service-detail-ai-agents.png" },
+  { route: "/services/chatbots-ai-agents", design: "agentix-05-service-detail-ai-agents.png" },
   { route: "/about", design: "agentix-06-about.png" },
   { route: "/contact", design: "agentix-07-contact-get-a-quote.png" },
 ];

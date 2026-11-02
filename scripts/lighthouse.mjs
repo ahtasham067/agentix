@@ -10,7 +10,15 @@ const PORT = Number(process.env.LH_PORT ?? 3000);
 const BASE = process.env.LH_BASE_URL ?? `http://localhost:${PORT}`;
 const PAGES = process.env.LH_PAGES
   ? process.env.LH_PAGES.split(",")
-  : ["/", "/products", "/services", "/products/clinidesk", "/contact"];
+  : [
+      "/",
+      "/products",
+      "/services",
+      "/services/chatbots-ai-agents",
+      "/services/web-development",
+      "/products/clinidesk",
+      "/contact",
+    ];
 const THRESHOLDS = {
   performance: Number(process.env.LH_MIN_PERFORMANCE ?? 0.9),
   accessibility: Number(process.env.LH_MIN_ACCESSIBILITY ?? 0.95),

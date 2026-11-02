@@ -12,7 +12,8 @@ const { QuoteForm } = await import("@/components/quote/QuoteForm");
 async function fillValid(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByLabelText("Full name"), "Ada Lovelace");
   await user.type(screen.getByLabelText("Email"), "ada@example.com");
-  await user.selectOptions(screen.getByLabelText("Service"), "ai-agents");
+  await user.selectOptions(screen.getByLabelText("Service"), "chatbots-ai-agents");
+  await user.selectOptions(screen.getByLabelText("Plan"), "subscription");
   await user.selectOptions(screen.getByLabelText("Budget range"), "not-sure");
   await user.type(
     screen.getByLabelText("Project details"),
@@ -30,6 +31,7 @@ describe("QuoteForm", () => {
       "Email",
       "WhatsApp number",
       "Service",
+      "Plan",
       "Budget range",
       "Project details",
     ]) {
@@ -87,5 +89,25 @@ describe("QuoteForm", () => {
     expect(honeypot).not.toBeNull();
     expect(honeypot).toHaveAttribute("tabindex", "-1");
     expect(honeypot?.closest("[aria-hidden='true']")).not.toBeNull();
+  });
+});
+
+describe("applyPrefill", () => {
+  it("selects allow-listed service and plan values from the URL", async () => {
+    const { applyPrefill } = await import("@/components/quote/QuoteForm");
+    render(<QuoteForm />);
+    const form = screen.getByLabelText("Service").closest("form")!;
+    applyPrefill(form, "?service=web-development&plan=subscription");
+    expect(screen.getByLabelText("Service")).toHaveValue("web-development");
+    expect(screen.getByLabelText("Plan")).toHaveValue("subscription");
+  });
+
+  it("ignores unknown values", async () => {
+    const { applyPrefill } = await import("@/components/quote/QuoteForm");
+    render(<QuoteForm />);
+    const form = screen.getByLabelText("Service").closest("form")!;
+    applyPrefill(form, "?service=<script>&plan=lifetime");
+    expect(screen.getByLabelText("Service")).toHaveValue("");
+    expect(screen.getByLabelText("Plan")).toHaveValue("");
   });
 });

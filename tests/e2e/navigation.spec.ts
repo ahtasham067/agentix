@@ -43,9 +43,10 @@ test("footer links point to the right pages", async ({ page }) => {
     Services: "/services",
     About: "/about",
     Contact: "/contact",
-    "AI Agents": "/services/ai-agents",
-    "n8n Automation": "/services/n8n-automation",
-    "Web Apps": "/services/web-apps",
+    "Chatbots and AI Agents": "/services/chatbots-ai-agents",
+    Automation: "/services/automation",
+    "Web Development": "/services/web-development",
+    "SEO and GEO": "/services/seo-geo",
     "Get a Quote": "/contact",
     Privacy: "/privacy",
     Terms: "/terms",
@@ -72,7 +73,7 @@ test("CTA band buttons go to the quote form and products", async ({ page }) => {
     "/products",
     "/services",
     "/about",
-    "/services/ai-agents",
+    "/services/chatbots-ai-agents",
     "/products/clinidesk",
   ]) {
     await page.goto(route);

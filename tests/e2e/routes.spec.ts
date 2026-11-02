@@ -44,10 +44,9 @@ test("unknown pages return the custom 404", async ({ page }) => {
     .locator('meta[name="robots"]')
     .evaluateAll((els) => els.map((e) => e.getAttribute("content")));
   expect(robots.some((c) => c?.includes("noindex"))).toBe(true);
-  await expect(page.getByRole("link", { name: "Custom AI agent development" })).toHaveAttribute(
-    "href",
-    "/services/ai-agents",
-  );
+  await expect(
+    page.getByRole("link", { name: "AI chatbot and AI agent development" }),
+  ).toHaveAttribute("href", "/services/chatbots-ai-agents");
   expect(await seriousA11yViolations(page)).toEqual([]);
 });
 

@@ -4,8 +4,9 @@ import { validateQuote } from "@/lib/quote-schema";
 const valid = {
   fullName: "  Ada Lovelace ",
   email: "ada@example.com",
-  whatsapp: "+92 300 0000000",
-  service: "ai-agents",
+  whatsapp: "+92 302 5889452",
+  service: "chatbots-ai-agents",
+  plan: "one-time",
   budget: "under-250k",
   details: "We need a WhatsApp booking agent for our clinic.",
 };
@@ -25,9 +26,12 @@ describe("quote schema", () => {
     ["fullName", "A", "Please enter your full name."],
     ["email", "not-an-email", "Please enter a valid email address."],
     ["email", "", "Please enter your email address."],
-    ["whatsapp", "abc", "Please enter a valid phone number, for example +92 300 0000000."],
+    ["whatsapp", "abc", "Please enter a valid phone number, for example +92 3XX XXXXXXX."],
     ["service", "", "Please choose a service."],
     ["service", "crypto", "Please choose a service."],
+    ["service", "ai-agents", "Please choose a service."],
+    ["plan", "", "Please choose a plan."],
+    ["plan", "lifetime", "Please choose a plan."],
     ["budget", "", "Please select a budget range."],
     ["details", "Too short", "Please tell us a bit more (at least 20 characters)."],
   ])("rejects an invalid %s", (field, value, message) => {

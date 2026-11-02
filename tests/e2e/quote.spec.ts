@@ -5,7 +5,8 @@ async function fillForm(page: Page, email: string) {
   await page.getByLabel("Full name").fill("Playwright Tester");
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("WhatsApp number").fill("+92 300 1234567");
-  await page.getByLabel("Service").selectOption("n8n-automation");
+  await page.getByLabel("Service").selectOption("automation");
+  await page.getByLabel("Plan").selectOption("subscription");
   await page.getByLabel("Budget range").selectOption("250k-1m");
   await page
     .getByLabel("Project details")
@@ -24,6 +25,7 @@ test("shows validation errors for an empty or invalid form", async ({ page }) =>
   await expect(page.getByText("Please enter your full name.")).toBeVisible();
   await expect(page.getByText("Please enter your email address.")).toBeVisible();
   await expect(page.getByText("Please choose a service.")).toBeVisible();
+  await expect(page.getByText("Please choose a plan.")).toBeVisible();
   await expect(page.getByText("Please select a budget range.")).toBeVisible();
   await expect(page.getByLabel("Full name")).toBeFocused();
 
@@ -44,7 +46,8 @@ test("submits a valid quote and stores it", async ({ page }, testInfo) => {
   expect(rows).toHaveLength(1);
   expect(rows[0]).toMatchObject({
     full_name: "Playwright Tester",
-    service: "n8n-automation",
+    service: "automation",
+    plan: "subscription",
     budget: "250k-1m",
     whatsapp: "+92 300 1234567",
   });
