@@ -6,14 +6,15 @@ set search_path = public, extensions;
 
 select plan(10);
 
-set local role anon;
+-- Constraints, checked as the service role (the only role that writes quotes).
+set local role service_role;
 
 select lives_ok(
   $$insert into public.quotes (full_name, email, service, plan, budget, details)
     select 'Test Visitor', 'services@example.com', s, 'one-time', 'not-sure',
       'We need a dashboard for our team and customers.'
     from unnest(array['chatbots-ai-agents', 'automation', 'web-development', 'seo-geo', 'not-sure']) s$$,
-  'anon can submit a quote for each of the four services and not-sure'
+  'a quote can name each of the four services and not-sure'
 );
 select throws_ok(
   $$insert into public.quotes (full_name, email, service, budget, details)
@@ -27,7 +28,7 @@ select lives_ok(
   $$insert into public.quotes (full_name, email, service, plan, budget, details)
     values ('Test Visitor', 'plan@example.com', 'web-development', 'subscription', 'not-sure',
       'We need a dashboard for our team and customers.')$$,
-  'anon can choose the subscription plan'
+  'a quote can choose the subscription plan'
 );
 select throws_ok(
   $$insert into public.quotes (full_name, email, service, plan, budget, details)
@@ -37,6 +38,9 @@ select throws_ok(
   null,
   'unknown plans are rejected'
 );
+
+reset role;
+set local role anon;
 select throws_ok(
   $$insert into public.quotes (full_name, email, service, budget, details, notified_at)
     values ('Test Visitor', 'plan@example.com', 'web-development', 'not-sure',
