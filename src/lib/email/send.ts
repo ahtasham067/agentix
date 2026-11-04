@@ -1,93 +1,66 @@
 import "server-only";
-import nodemailer from "nodemailer";
 import { contact } from "@/content/site";
-import { emailConfigured, getEmailEnv } from "@/lib/env";
+import { getEmailEnv, missingEmailSettings, type EmailEnv } from "@/lib/env";
 import type { QuoteInput } from "@/lib/quote-schema";
 import { buildConfirmationEmail, buildOwnerEmail, type EmailMessage } from "./quote-email";
+import { createSender } from "./sender";
 
-const SEND_TIMEOUT_MS = 10_000;
-const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "::1"]);
+const SECRET_KEYS = ["SMTP_PASS"] as const;
 
-let transport: ReturnType<typeof nodemailer.createTransport> | undefined;
-
-function getTransport() {
-  if (transport) return transport;
-  const env = getEmailEnv();
-  transport = nodemailer.createTransport({
-    host: env.SMTP_HOST,
-    port: env.SMTP_PORT,
-    secure: env.SMTP_SECURE,
-    // Remote servers must upgrade to TLS; the local mail catcher has no TLS.
-    requireTLS: !env.SMTP_SECURE && !LOCAL_HOSTS.has(env.SMTP_HOST ?? ""),
-    auth: env.SMTP_USER ? { user: env.SMTP_USER, pass: env.SMTP_PASS } : undefined,
-    connectionTimeout: SEND_TIMEOUT_MS,
-    greetingTimeout: SEND_TIMEOUT_MS,
-    socketTimeout: SEND_TIMEOUT_MS,
-  });
-  return transport;
+/** Sender and owner addresses. Throws, naming the missing variables, when email is not set up. */
+export function emailAddresses(env: EmailEnv = getEmailEnv()): { from: string; owner: string } {
+  const missing = missingEmailSettings(env);
+  if (missing.length > 0) {
+    throw new Error(`${env.EMAIL_PROVIDER} email is not configured: set ${missing.join(", ")}`);
+  }
+  return { from: env.EMAIL_FROM!, owner: env.EMAIL_TO ?? contact.email };
 }
 
-async function send(message: EmailMessage): Promise<void> {
-  const sending = getTransport().sendMail({
-    ...message,
-    // Message content never loads local files or remote URLs.
-    disableFileAccess: true,
-    disableUrlAccess: true,
-  });
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  const timeout = new Promise<never>((_, reject) => {
-    timer = setTimeout(() => reject(new Error("SMTP send timed out")), SEND_TIMEOUT_MS);
-  });
-  try {
-    await Promise.race([sending, timeout]);
-  } finally {
-    clearTimeout(timer);
+/** Sends one message with the provider chosen by EMAIL_PROVIDER. Throws when it fails. */
+export async function sendEmail(
+  message: EmailMessage,
+  env: EmailEnv = getEmailEnv(),
+): Promise<{ provider: EmailEnv["EMAIL_PROVIDER"]; id?: string }> {
+  emailAddresses(env);
+  const { id } = await createSender(env).send(message);
+  return { provider: env.EMAIL_PROVIDER, id };
+}
+
+/** A one-line description of a send error, with any secret value removed. */
+export function describeEmailError(error: unknown, env?: EmailEnv): string {
+  let text = error instanceof Error ? error.message : String(error);
+  const code = error instanceof Error ? (error as { code?: unknown }).code : undefined;
+  if (typeof code === "string" && !text.includes(code)) text = `${code}: ${text}`;
+  for (const key of SECRET_KEYS) {
+    const secret = env?.[key];
+    if (secret) text = text.replaceAll(secret, "[redacted]");
   }
+  return text;
 }
 
 /** Emails the owner about a new quote. Returns false (never throws) when it fails. */
 export async function sendOwnerNotification(quote: QuoteInput, id?: string): Promise<boolean> {
+  let env: EmailEnv | undefined;
   try {
-    const env = getEmailEnv();
-    if (!emailConfigured(env)) {
-      console.error("[quote] email is not configured; owner notification skipped");
-      return false;
-    }
-    await send(
-      buildOwnerEmail(quote, {
-        from: env.EMAIL_FROM!,
-        to: env.QUOTE_NOTIFY_TO ?? contact.email,
-        id,
-      }),
-    );
+    env = getEmailEnv();
+    const { from, owner } = emailAddresses(env);
+    await sendEmail(buildOwnerEmail(quote, { from, to: owner, id }), env);
     return true;
   } catch (error) {
-    console.error(
-      "[quote] owner notification failed",
-      error instanceof Error ? error.message : error,
-    );
+    console.error("[quote] owner notification failed:", describeEmailError(error, env));
     return false;
   }
 }
 
 /** Optional confirmation to the visitor (QUOTE_CONFIRMATION_ENABLED=true). Never throws. */
 export async function sendVisitorConfirmation(quote: QuoteInput): Promise<void> {
+  let env: EmailEnv | undefined;
   try {
-    const env = getEmailEnv();
-    if (!env.QUOTE_CONFIRMATION_ENABLED || !emailConfigured(env)) return;
-    await send(buildConfirmationEmail(quote, { from: env.EMAIL_FROM! }));
+    env = getEmailEnv();
+    if (!env.QUOTE_CONFIRMATION_ENABLED) return;
+    const { from } = emailAddresses(env);
+    await sendEmail(buildConfirmationEmail(quote, { from }), env);
   } catch (error) {
-    console.error(
-      "[quote] visitor confirmation failed",
-      error instanceof Error ? error.message : error,
-    );
-  }
-}
-
-export function confirmationEnabled(): boolean {
-  try {
-    return getEmailEnv().QUOTE_CONFIRMATION_ENABLED;
-  } catch {
-    return false;
+    console.error("[quote] visitor confirmation failed:", describeEmailError(error, env));
   }
 }

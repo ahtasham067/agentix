@@ -22,6 +22,8 @@ const adminSchema = publicDbSchema.extend({
 const flag = optional(z.enum(["true", "false"])).transform((v) => v === "true");
 
 const emailSchema = z.object({
+  /** Which service sends email. smtp: any SMTP server (Gmail, Mailpit). */
+  EMAIL_PROVIDER: optional(z.enum(["smtp"])).default("smtp"),
   SMTP_HOST: optional(z.string().min(1)),
   SMTP_PORT: optional(z.coerce.number().int().positive()).default(587),
   /** true for implicit TLS (port 465); false uses STARTTLS when the server offers it. */
@@ -31,7 +33,7 @@ const emailSchema = z.object({
   /** Sender, for example: Agentix <quotes@agentix.website> */
   EMAIL_FROM: optional(z.string().min(3)),
   /** Owner inbox for new quotes. Defaults to the public contact email. */
-  QUOTE_NOTIFY_TO: optional(z.email()),
+  EMAIL_TO: optional(z.email()),
   /** Also send the visitor a short confirmation email. */
   QUOTE_CONFIRMATION_ENABLED: flag,
 });
@@ -54,9 +56,18 @@ export function getEmailEnv(): EmailEnv {
   return parse(emailSchema, "email (SMTP)");
 }
 
-/** True when SMTP is set up well enough to send mail. */
+/** Names of the variables the chosen email provider still needs. Empty when ready. */
+export function missingEmailSettings(env: EmailEnv = getEmailEnv()): string[] {
+  const missing: string[] = [];
+  if (!env.EMAIL_FROM) missing.push("EMAIL_FROM");
+  if (!env.SMTP_HOST) missing.push("SMTP_HOST");
+  if (env.SMTP_USER && !env.SMTP_PASS) missing.push("SMTP_PASS");
+  return missing;
+}
+
+/** True when the chosen email provider is set up well enough to send mail. */
 export function emailConfigured(env: EmailEnv = getEmailEnv()): boolean {
-  return Boolean(env.SMTP_HOST && env.EMAIL_FROM && (!env.SMTP_USER || env.SMTP_PASS));
+  return missingEmailSettings(env).length === 0;
 }
 
 /**
@@ -65,10 +76,9 @@ export function emailConfigured(env: EmailEnv = getEmailEnv()): boolean {
  */
 export function assertEmailConfigured(nodeEnv = process.env.NODE_ENV): void {
   if (nodeEnv !== "production") return;
-  if (!emailConfigured()) {
-    throw new Error(
-      "Quote emails are required in production: set SMTP_HOST, EMAIL_FROM and, if your server needs it, SMTP_USER and SMTP_PASS.",
-    );
+  const missing = missingEmailSettings();
+  if (missing.length > 0) {
+    throw new Error(`Quote emails are required in production: set ${missing.join(", ")}.`);
   }
 }
 

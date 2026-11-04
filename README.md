@@ -44,7 +44,8 @@ Every variable is listed in [`.env.example`](.env.example). `.env*` files are gi
 | `TRUSTED_IP_HEADER` | server | Header the platform sets with the client IP (default `x-real-ip`, set by Vercel). Never a visitor-controlled header. |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS` | server only | SMTP for quote emails. **Required in production**: the server refuses requests without `SMTP_HOST` and `EMAIL_FROM`. Gmail: `smtp.gmail.com`, `465`, `true`, your Gmail address, App Password. Resend: `smtp.resend.com`, `465`, `true`, `resend`, API key. The e2e tests always use Mailpit, whatever is set here. |
 | `EMAIL_FROM` | server | Sender address, for example `Agentix <quotes@agentix.website>` on a verified domain, or `Agentix <you@gmail.com>` with Gmail. |
-| `QUOTE_NOTIFY_TO` | server | Inbox for new quotes. Defaults to `NEXT_PUBLIC_CONTACT_EMAIL`. |
+| `EMAIL_PROVIDER` | server | Which service sends email: `smtp` (default). |
+| `EMAIL_TO` | server | Inbox for new quotes. Defaults to `NEXT_PUBLIC_CONTACT_EMAIL`. |
 | `QUOTE_CONFIRMATION_ENABLED` | server | `true` also sends the visitor a short confirmation email. |
 | `MAILPIT_URL` | tests | Local Mailpit API for the e2e email tests (`npm run db:env` sets it). |
 | `INDEXNOW_KEY` | server | IndexNow key, served at `/indexnow-key.txt` (see below). |

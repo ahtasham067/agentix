@@ -30,6 +30,7 @@ const mailpitUrl = local.MAILPIT_URL || local.INBUCKET_URL || "http://127.0.0.1:
 const next = {
   NEXT_PUBLIC_SITE_URL: "http://localhost:3000",
   IP_HASH_SALT: randomBytes(24).toString("hex"),
+  EMAIL_PROVIDER: "smtp",
   SMTP_HOST: "127.0.0.1",
   SMTP_PORT: "57325",
   SMTP_SECURE: "false",

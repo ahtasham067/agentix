@@ -5,12 +5,13 @@
 
 /** @type {Record<string, string>} */
 export const TEST_MAIL_ENV = {
+  EMAIL_PROVIDER: "smtp",
   SMTP_HOST: "127.0.0.1",
   SMTP_PORT: "57325",
   SMTP_SECURE: "false",
   SMTP_USER: "",
   SMTP_PASS: "",
   EMAIL_FROM: "Agentix <quotes@agentix.website>",
-  QUOTE_NOTIFY_TO: "",
+  EMAIL_TO: "",
   QUOTE_CONFIRMATION_ENABLED: "true",
 };
