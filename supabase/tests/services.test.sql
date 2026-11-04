@@ -55,8 +55,8 @@ select throws_ok(
   'products reject old service slugs'
 );
 select throws_ok(
-  $$update public.posts set related_services = array['n8n-automation']
-    where slug = 'n8n-vs-zapier-vs-make'$$,
+  $$insert into public.posts (slug, title, seo_title, description, body, related_services)
+    values ('old-slug', 'A post with an old slug', 'A post title that is long enough', repeat('d', 130), repeat('b', 300), array['n8n-automation'])$$,
   '23514',
   null,
   'posts reject old service slugs'
