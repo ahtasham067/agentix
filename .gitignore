@@ -35,3 +35,7 @@ npm-debug.log*
 
 # private source material (contains personal contact details)
 cv.pdf
+
+# Raw project pictures (originals contain private data). Only the blurred WebP
+# copies in public/projects/ are committed; see scripts/prepare-screenshots.mjs.
+/images/*/
