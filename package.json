@@ -29,7 +29,8 @@
     "test:seo": "playwright test --project=seo",
     "test:lighthouse": "node scripts/lighthouse.mjs",
     "audit:pages": "node scripts/audit-pages.mjs",
-    "check:secrets": "node scripts/check-secrets.mjs"
+    "check:secrets": "node scripts/check-secrets.mjs",
+    "email:test": "tsx --conditions=react-server scripts/email-test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",
