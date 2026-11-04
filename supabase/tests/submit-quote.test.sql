@@ -4,7 +4,7 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set search_path = public, extensions;
 
-select plan(7);
+select plan(9);
 
 select ok(
   not has_function_privilege('anon', 'public.submit_quote(text, text, text, text, text, text, text, text, integer, integer)', 'execute'),
@@ -46,6 +46,17 @@ select results_eq(
   $$select count(*)::int from public.quotes where email = 'rate@example.com' and whatsapp is null$$,
   array[1],
   'empty WhatsApp is stored as null'
+);
+select results_eq(
+  $$select bool_and(not notified) from public.quotes where email = 'rate@example.com'$$,
+  array[true],
+  'a new quote is not notified yet'
+);
+update public.quotes set notified_at = now() where email = 'rate@example.com';
+select results_eq(
+  $$select bool_and(notified) from public.quotes where email = 'rate@example.com'$$,
+  array[true],
+  'notified is true once notified_at is set'
 );
 
 select * from finish();
