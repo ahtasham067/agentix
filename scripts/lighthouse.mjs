@@ -75,22 +75,40 @@ const chrome = await chromeLauncher.launch({
 fs.mkdirSync(OUT, { recursive: true });
 const rows = [];
 let failed = false;
+
+/** One performance-only run, used to warm a route and to read the host CPU benchmark. */
+async function warmUpRun(url) {
+  const { lhr } = await lighthouse(url, {
+    port: chrome.port,
+    output: "json",
+    logLevel: "error",
+    onlyCategories: ["performance"],
+  });
+  return lhr;
+}
+
 try {
+  // Calibrate the CPU slowdown once per run, from the median of three benchmark
+  // readings. A single reading swings a lot on a busy host, and calibrating each page
+  // separately mixed 2x and 4x throttling in the same run.
+  await fetch(BASE + PAGES[0]);
+  const readings = [];
+  for (let i = 0; i < 3; i++)
+    readings.push((await warmUpRun(BASE + PAGES[0])).environment.benchmarkIndex);
+  readings.sort((a, b) => a - b);
+  const benchmarkIndex = Math.round(readings[1]);
+  const multiplier = cpuMultiplier(benchmarkIndex);
+  console.log(
+    `CPU benchmark ${readings.map(Math.round).join("/")} (median ${benchmarkIndex}): ${multiplier}x slowdown`,
+  );
+
   for (const path of PAGES) {
     const url = BASE + path;
     // Warm the route so the measured run reflects a cached production response.
     await fetch(url);
     const runs = [];
-    // One discarded warm-up run: the first loads after a server or browser start are
-    // slower. It also measures the host CPU (benchmarkIndex) for the calibration.
-    const { lhr: warmUp } = await lighthouse(url, {
-      port: chrome.port,
-      output: "json",
-      logLevel: "error",
-      onlyCategories: ["performance"],
-    });
-    const benchmarkIndex = Math.round(warmUp.environment.benchmarkIndex);
-    const multiplier = cpuMultiplier(benchmarkIndex);
+    // One discarded warm-up run: the first loads after a server or browser start are slower.
+    const warmUp = await warmUpRun(url);
     for (let i = 0; i < RUNS; i++) {
       const { lhr: run } = await lighthouse(
         url,
