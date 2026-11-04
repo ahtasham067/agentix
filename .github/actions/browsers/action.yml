@@ -1,0 +1,20 @@
+name: Install Playwright browsers
+description: Restores the browser cache for the installed Playwright version, then installs any missing browsers with their system dependencies.
+inputs:
+  browsers:
+    description: Space-separated browsers to install.
+    default: chromium
+runs:
+  using: composite
+  steps:
+    - name: Playwright version
+      id: version
+      shell: bash
+      run: echo "version=$(node -p 'require("@playwright/test/package.json").version')" >> "$GITHUB_OUTPUT"
+    - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ runner.os }}-${{ steps.version.outputs.version }}-${{ inputs.browsers }}
+    - name: Install browsers and system dependencies
+      shell: bash
+      run: npx playwright install --with-deps ${{ inputs.browsers }}
