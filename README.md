@@ -42,9 +42,10 @@ Every variable is listed in [`.env.example`](.env.example). `.env*` files are gi
 | `IP_HASH_SALT` | server | Random secret for hashing IPs (rate limiting). Raw IPs are never stored. |
 | `RATE_LIMIT_MAX`, `RATE_LIMIT_WINDOW_MINUTES` | server | Quote rate limit per IP (default 3 per 10 minutes). |
 | `TRUSTED_IP_HEADER` | server | Header the platform sets with the client IP (default `x-real-ip`, set by Vercel). Never a visitor-controlled header. |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS` | server only | SMTP for quote emails. **Required in production**: the server refuses requests without `SMTP_HOST` and `EMAIL_FROM`. Gmail: `smtp.gmail.com`, `465`, `true`, your Gmail address, App Password. Resend: `smtp.resend.com`, `465`, `true`, `resend`, API key. The e2e tests always use Mailpit, whatever is set here. |
-| `EMAIL_FROM` | server | Sender address, for example `Agentix <quotes@agentix.website>` on a verified domain, or `Agentix <you@gmail.com>` with Gmail. |
-| `EMAIL_PROVIDER` | server | Which service sends email: `smtp` (default). |
+| `EMAIL_PROVIDER` | server | Which service sends quote emails: `resend` (default) or `smtp`. **Required in production**: the server refuses to start until the chosen provider is set up. The e2e tests always use Mailpit, whatever is set here. |
+| `RESEND_API_KEY` | server only | Resend API key with "Sending access" (see [Quote emails with Resend](#quote-emails-with-resend)). |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS` | server only | SMTP settings when `EMAIL_PROVIDER=smtp`. Gmail: `smtp.gmail.com`, `465`, `true`, your Gmail address, App Password. Mailpit in development. |
+| `EMAIL_FROM` | server | Sender address: `Agentix <onboarding@resend.dev>` with Resend until your domain is verified, then `Agentix <quotes@agentix.website>`. With Gmail, `Agentix <you@gmail.com>`. |
 | `EMAIL_TO` | server | Inbox for new quotes. Defaults to `NEXT_PUBLIC_CONTACT_EMAIL`. |
 | `QUOTE_CONFIRMATION_ENABLED` | server | `true` also sends the visitor a short confirmation email. |
 | `MAILPIT_URL` | tests | Local Mailpit API for the e2e email tests (`npm run db:env` sets it). |
@@ -93,6 +94,7 @@ scripts/                   seed generator, env writer, icon generator, Lighthous
 | `test:lighthouse` | Lighthouse mobile, median of 5 runs, on `/`, `/products`, `/services`, `/services/chatbots-ai-agents`, `/services/web-development`, `/products/clinidesk`, `/contact`. Needs performance 90, accessibility 95, best practices 90, SEO 100 |
 | `audit:pages` | Click-through audit of every public page at 390, 768 and 1440px against a running server: console errors, overflow, broken links, `target=_blank` rel, unnamed controls, keyboard focus, empty form submit. Screenshots in `test-results/audit/` |
 | `check:secrets` | Fails if a server secret or JWT appears in `.next/static` (runs in `verify` after the build) |
+| `email:test` | Sends one test email to the owner inbox with the current `EMAIL_PROVIDER` and prints `PASS` or `FAIL` with the reason. Uses `.env.local`; never prints keys |
 | `db:start`, `db:stop`, `db:reset`, `db:test` | Supabase local stack, reset with seed, pgTAP tests |
 | `db:env`, `db:types`, `db:seed:gen` | Write `.env.local`, generate DB types, generate `seed.sql` |
 | `audit` | `npm audit --audit-level=high` |
@@ -110,8 +112,8 @@ Visual results (diff PNGs and `report.json`) are written to `test-results/visual
 - RLS on every table: the public can read published products only (the unused `posts` table stays locked the same way). `quotes` allows anonymous insert of the form columns only; nobody can read, update or delete quotes without the service role, and `submit_quote` is callable by the service role only.
 - The quote form validates with zod on the client and the server (allow-listed service and plan, control characters rejected, length caps), has a honeypot, and rate-limits atomically in Postgres (`submit_quote`, advisory lock per salted IP hash). The IP comes only from `TRUSTED_IP_HEADER`.
 - Server Actions reject cross-site requests (Origin check) and bodies over 64 KB.
-- Quote emails escape every visitor value, keep visitor text out of headers except a cleaned subject, set Reply-To to the visitor, and never load files or URLs. If sending fails the quote stays saved and the visitor sees WhatsApp and email alternatives.
-- The service role key and SMTP password are only imported in `server-only` modules; `check:secrets` scans the client bundle after every build.
+- Quote emails escape every visitor value, keep visitor text out of headers except a cleaned subject, set Reply-To to the visitor, and never load files or URLs. The quote is saved before any email is sent. If sending fails, the visitor still sees the normal thank-you message, the server logs the reason (secrets redacted), and the row keeps `notified = false`, so no lead is lost.
+- The service role key, SMTP password and Resend API key are only imported in `server-only` modules; `check:secrets` scans the client bundle after every build.
 - External links use `rel="noopener noreferrer"`. Error pages log on the server or console and never show error messages.
 - `npm audit --audit-level=high` runs in `verify`.
 
@@ -129,15 +131,47 @@ Visual results (diff PNGs and `report.json`) are written to `test-results/visual
    ```
    Delete the `internal-draft` test product afterwards if you like: `delete from products where slug = 'internal-draft';`
 3. **Import the repo in Vercel.** Framework: Next.js. No build settings to change.
-4. **Set environment variables** in Vercel (Production and Preview) from the table above. At minimum: `NEXT_PUBLIC_SITE_URL=https://agentix.website`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `IP_HASH_SALT`, `REVALIDATE_SECRET`, and the SMTP settings (`SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `EMAIL_FROM`). Without SMTP the production server refuses requests, so quote emails can never be silently lost.
-   - **Resend:** add and verify your domain in Resend (DNS records), create an API key, then use `smtp.resend.com`, port `465`, `SMTP_SECURE=true`, user `resend`, password = the API key, and `EMAIL_FROM=Agentix <quotes@agentix.website>`. Any other SMTP provider works the same way.
-   - **Gmail (no domain needed):** turn on 2-Step Verification, create an App Password at [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords), then use `smtp.gmail.com`, port `465`, `SMTP_SECURE=true`, user = your Gmail address, password = the 16-character App Password without spaces, and `EMAIL_FROM=Agentix <your Gmail address>`. Gmail always sends from the signed-in address and allows about 500 emails a day.
+4. **Set environment variables** in Vercel (Production and Preview) from the table above. At minimum: `NEXT_PUBLIC_SITE_URL=https://agentix.website`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `IP_HASH_SALT`, `REVALIDATE_SECRET`, and the email settings below. Without them the production server refuses to start, so quote emails can never be silently lost.
+   - **Resend (default):** `EMAIL_PROVIDER=resend`, `RESEND_API_KEY` (tick **Sensitive**), `EMAIL_FROM=Agentix <onboarding@resend.dev>`, `EMAIL_TO=ahtasham067@gmail.com` and `QUOTE_CONFIRMATION_ENABLED=false`. See [Quote emails with Resend](#quote-emails-with-resend).
+   - **Gmail (no domain needed):** `EMAIL_PROVIDER=smtp`, then turn on 2-Step Verification, create an App Password at [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords), then use `smtp.gmail.com`, port `465`, `SMTP_SECURE=true`, user = your Gmail address, password = the 16-character App Password without spaces, and `EMAIL_FROM=Agentix <your Gmail address>`. Gmail always sends from the signed-in address and allows about 500 emails a day.
 5. **Domains:** add `agentix.website` and `www.agentix.website`. Make the apex the primary domain and set `www` to redirect to it (301). The app also redirects `www` itself, as a fallback.
 6. **Supabase URL settings** (Authentication → URL Configuration): set the Site URL to `https://agentix.website` and add it to the allowed redirect URLs. The site does not use Supabase Auth today, but this keeps future auth emails pointing to the right domain.
 7. **Optional:** a Supabase Database Webhook on `products` (insert/update) that POSTs to `https://agentix.website/api/revalidate` with the `x-revalidate-secret` header.
 8. Deploy, then run through the post-launch checklist below.
 
 Behind Vercel, the client IP for rate limiting comes from `x-real-ip`, which Vercel sets and visitors cannot spoof. If you self-host, set `TRUSTED_IP_HEADER` to the header your proxy overwrites.
+
+## Quote emails with Resend
+
+New quotes are emailed to the owner through the [Resend](https://resend.com) HTTP API (`EMAIL_PROVIDER=resend`). The key stays on the server and is never sent to the browser.
+
+**Get an API key**
+
+1. Sign up at [resend.com/signup](https://resend.com/signup) with the inbox that should receive quotes (`ahtasham067@gmail.com`). Until a domain is verified, Resend only delivers to the email address of your own account.
+2. Open **API Keys** in the sidebar, click **Create API Key**, name it (for example `agentix-production`), choose **Sending access** and **All domains**, and click **Add**.
+3. Copy the key (it starts with `re_`); Resend shows it only once.
+4. Put it in `.env.local` as `RESEND_API_KEY=re_...` and in Vercel (Settings → Environment Variables, Production and Preview, **Sensitive**). Never commit it.
+5. Run `npm run email:test`. It sends one test email with the current provider and prints `PASS` or `FAIL` with the reason.
+
+**Before the domain is verified** use `EMAIL_FROM=Agentix <onboarding@resend.dev>` and keep `QUOTE_CONFIRMATION_ENABLED=false`. Owner notifications work, but confirmation emails to visitors would be refused, because the test sender only delivers to your own Resend address.
+
+**Verify `agentix.website`** (needed for visitor confirmations and a branded sender):
+
+1. Register the domain first if you have not yet.
+2. In Resend open **Domains → Add Domain**, enter `agentix.website` and pick a region.
+3. Resend shows the DNS records to add at your DNS provider. Copy the exact values it shows; they look like this:
+
+   | Type | Name | Value | Purpose |
+   | --- | --- | --- | --- |
+   | MX | `send` | `feedback-smtp.<region>.amazonses.com` (priority 10) | Bounces and complaints (Return-Path) |
+   | TXT | `send` | `v=spf1 include:amazonses.com ~all` | SPF |
+   | TXT | `resend._domainkey` | `p=MIGfMA0GCSqGSIb3DQEB...` (your public key) | DKIM |
+   | TXT | `_dmarc` | `v=DMARC1; p=none;` | DMARC (optional, recommended) |
+
+4. Wait for DNS to propagate (minutes to a few hours), then click **Verify DNS Records** until the domain shows **Verified**.
+5. Set `EMAIL_FROM=Agentix <quotes@agentix.website>` and `QUOTE_CONFIRMATION_ENABLED=true`, then run `npm run email:test` again.
+
+To use Gmail instead, set `EMAIL_PROVIDER=smtp` with the Gmail settings in the table above.
 
 ## Google Search Console
 
