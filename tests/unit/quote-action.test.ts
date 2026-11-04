@@ -6,9 +6,8 @@ const sendOwnerNotification = vi.fn();
 const sendVisitorConfirmation = vi.fn();
 const afterCallbacks: (() => unknown)[] = [];
 
-vi.mock("next/headers", () => ({
-  headers: async () => new Headers({ "x-real-ip": "10.0.0.1" }),
-}));
+let requestHeaders = new Headers({ "x-real-ip": "10.0.0.1" });
+vi.mock("next/headers", () => ({ headers: async () => requestHeaders }));
 vi.mock("next/server", () => ({ after: (fn: () => unknown) => afterCallbacks.push(fn) }));
 vi.mock("@/lib/env", () => ({
   getAdminEnv: () => ({
@@ -65,6 +64,8 @@ describe("submitQuote", () => {
     sendOwnerNotification.mockReset();
     sendVisitorConfirmation.mockReset();
     afterCallbacks.length = 0;
+    requestHeaders = new Headers({ "x-real-ip": "10.0.0.1" });
+    vi.unstubAllEnvs();
   });
 
   it("saves the quote, emails the owner and records notified_at", async () => {
@@ -102,6 +103,34 @@ describe("submitQuote", () => {
     expect(state).toEqual({ status: "success", name: "Ada" });
     expect(log).toHaveBeenCalledWith(expect.stringContaining("quote-1 saved, but the owner email"));
     log.mockRestore();
+  });
+
+  it("validates a smoke-test submission but never saves or emails it", async () => {
+    vi.stubEnv("SMOKE_TEST_TOKEN", "smoke-token-0123456789");
+    requestHeaders = new Headers({
+      "x-real-ip": "10.0.0.1",
+      "x-smoke-test": "smoke-token-0123456789",
+    });
+    const state = await submitQuote({ status: "idle" }, form());
+    expect(state).toEqual({ status: "success", name: "Ada" });
+    expect(rpc).not.toHaveBeenCalled();
+    expect(sendOwnerNotification).not.toHaveBeenCalled();
+    expect(afterCallbacks).toHaveLength(0);
+  });
+
+  it("treats a wrong smoke-test token as a normal submission", async () => {
+    vi.stubEnv("SMOKE_TEST_TOKEN", "smoke-token-0123456789");
+    requestHeaders = new Headers({ "x-real-ip": "10.0.0.1", "x-smoke-test": "guess" });
+    sendOwnerNotification.mockResolvedValue(true);
+    await submitQuote({ status: "idle" }, form());
+    expect(rpc).toHaveBeenCalledTimes(1);
+  });
+
+  it("still rejects invalid input that carries the smoke-test token", async () => {
+    vi.stubEnv("SMOKE_TEST_TOKEN", "smoke-token-0123456789");
+    requestHeaders = new Headers({ "x-smoke-test": "smoke-token-0123456789" });
+    const state = await submitQuote({ status: "idle" }, form({ email: "nope" }));
+    expect(state.status).toBe("error");
   });
 
   it("drops honeypot submissions without saving or emailing", async () => {
