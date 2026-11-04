@@ -1,5 +1,6 @@
 import type { FaqItem } from "@/components/sections/FAQ";
 import { formatPlanPrice, formatPrice, PRICING_DISCLAIMER, pricingGroups } from "./pricing";
+import { TOOLS_SENTENCE } from "./tools";
 
 const [websitePlans, chatbotPlans] = pricingGroups.map((g) => g.plans);
 
@@ -12,8 +13,7 @@ export const faq = {
   },
   whichTools: {
     question: "Which tools can you connect?",
-    answer:
-      "WhatsApp, Gmail, Slack, Google Sheets, Airtable, CRMs, databases and OpenAI, plus most tools that offer an API or webhooks. If your tool has an API, n8n can usually talk to it.",
+    answer: `We work with ${TOOLS_SENTENCE}. We also connect Gmail, CRMs, databases and most other tools that offer an API or webhooks.`,
   },
   howLong: {
     question: "How long does a project take?",

@@ -3,6 +3,7 @@ import { formatPlanPrice, PRICING_DISCLAIMER, pricingGroups } from "@/content/pr
 import { pageSeo } from "@/content/seo";
 import { services } from "@/content/services";
 import { contact, EXPERIENCE, founder, sameAs, SITE_DESCRIPTION, SITE_NAME } from "@/content/site";
+import { TOOLS_SENTENCE } from "@/content/tools";
 import { getPublishedProducts } from "@/lib/products";
 import { absoluteUrl } from "@/lib/seo/schema";
 
@@ -26,6 +27,8 @@ function header(): string[] {
     `> ${SITE_DESCRIPTION}`,
     "",
     `${SITE_NAME} is a software house founded by ${founder.name}, a full-stack developer with ${EXPERIENCE.years} years of experience and ${EXPERIENCE.projects} projects delivered. It offers four services: ${services.map((s) => s.name).join(", ")}.`,
+    "",
+    `Tools we build with: ${TOOLS_SENTENCE}.`,
     "",
     `Contact: email ${contact.email}, phone and WhatsApp ${contact.phoneDisplay}. Location: ${contact.location}. Quote form: ${absoluteUrl("/contact")}`,
     "",

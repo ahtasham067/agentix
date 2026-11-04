@@ -29,14 +29,21 @@ export function ChipList({
   variant = "outline",
   className = "",
   label,
+  visualMask = false,
 }: {
-  items: string[];
+  items: readonly string[];
   variant?: ChipVariant;
   className?: string;
   label?: string;
+  /** Marks a list that differs from the design on purpose, so the visual test masks it. */
+  visualMask?: boolean;
 }) {
   return (
-    <ul aria-label={label} className={`m-0 flex list-none flex-wrap p-0 ${className}`}>
+    <ul
+      aria-label={label}
+      data-visual-mask={visualMask ? "" : undefined}
+      className={`m-0 flex list-none flex-wrap p-0 ${className}`}
+    >
       {items.map((item) => (
         <li key={item}>
           <Chip variant={variant}>{item}</Chip>

@@ -3,6 +3,7 @@ import type { Feature, IconName, ServiceSlug, Step } from "./types";
 import { faq } from "./faq";
 import { howWeWork } from "./home";
 import { formatPlanPrice, formatPrice, getPricingGroup } from "./pricing";
+import { TOOLS } from "./tools";
 
 export type ServiceVisual = "support-chat" | "workflow" | "dashboard" | "search";
 
@@ -32,7 +33,7 @@ export interface Service {
   capabilities: Feature[];
   outcomes: string[];
   productsTitle: string;
-  /** Tools list ("Connects with" chips). */
+  /** Tools list ("Connects with" chips). The build services use the shared TOOLS list. */
   connects: string[];
   faqTitle: string;
   faqs: FaqItem[];
@@ -110,7 +111,7 @@ export const services: Service[] = [
       "Monitoring and fixes after launch",
     ],
     productsTitle: "Agents we have built",
-    connects: ["WhatsApp", "Gmail", "Slack", "Google Sheets", "CRMs", "Databases", "OpenAI", "n8n"],
+    connects: [...TOOLS],
     faqTitle: "About AI agents",
     faqs: [
       faq.whatIsAgent,
@@ -179,7 +180,7 @@ export const services: Service[] = [
     tools: {
       heading: "Which tools do our chatbots and agents connect to?",
       paragraphs: [
-        "Most of our agents run on n8n, which connects the language model to the tools you already use: the WhatsApp Business Cloud API, Gmail, Slack, Google Sheets, CRMs and databases.",
+        "Most of our agents run on n8n, or on Make.com or Zapier when your team already uses them. The workflow connects the language model to the tools you already use: the WhatsApp Business Cloud API, Gmail, Slack, Google Sheets, Airtable, CRMs and databases. On your website, the chat sits in your Next.js, React or Vue.js front end.",
         "We use OpenAI models for most agents. When documents must stay private, we can run local models with Ollama and answer from your own files with retrieval (RAG). For document workflows we also use MCP to connect agents to services such as Google Drive.",
         "Every agent comes with a way to review conversations and clear rules for when to hand off to a human.",
       ],
@@ -255,19 +256,7 @@ export const services: Service[] = [
       "Fixes and changes after launch",
     ],
     productsTitle: "Workflows we have built",
-    connects: [
-      "n8n",
-      "Make.com",
-      "Zapier",
-      "Airtable",
-      "WhatsApp",
-      "Gmail",
-      "Slack",
-      "Google Sheets",
-      "CRMs",
-      "Webhooks",
-      "OpenAI",
-    ],
+    connects: [...TOOLS],
     faqTitle: "About automation",
     faqs: [
       {
@@ -430,16 +419,7 @@ export const services: Service[] = [
       "Support and changes after launch",
     ],
     productsTitle: "Web apps we have built",
-    connects: [
-      "React",
-      "Next.js",
-      "Vue.js",
-      "Ruby on Rails",
-      "Supabase",
-      "PostgreSQL",
-      "Stripe",
-      "Vercel",
-    ],
+    connects: [...TOOLS],
     faqTitle: "About web development",
     faqs: [
       faq.websiteCost,

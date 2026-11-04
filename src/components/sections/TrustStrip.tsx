@@ -1,6 +1,5 @@
 import { ChipList } from "@/components/ui/Chip";
-
-const tools = ["n8n", "OpenAI", "WhatsApp", "Slack", "Google Sheets", "Supabase"];
+import { TRUST_STRIP_TOOLS } from "@/content/tools";
 
 export function TrustStrip({ className = "" }: { className?: string }) {
   return (
@@ -14,7 +13,12 @@ export function TrustStrip({ className = "" }: { className?: string }) {
             5+ years building web apps and automation
           </p>
         </div>
-        <ChipList items={tools} label="Tools we use" className="gap-[10px]" />
+        <ChipList
+          items={TRUST_STRIP_TOOLS}
+          label="Tools we use"
+          className="gap-[10px]"
+          visualMask
+        />
       </div>
     </div>
   );

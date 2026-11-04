@@ -3,6 +3,7 @@ import { projects } from "../../src/content/projects";
 import { services } from "../../src/content/services";
 import { AI_CRAWLERS } from "../../src/lib/seo/crawlers";
 import { contact, SITE_DESCRIPTION, SITE_NAME } from "../../src/content/site";
+import { TOOLS, TOOLS_SENTENCE } from "../../src/content/tools";
 
 /** GEO checks: AI answer engines can find, read and cite every public page. */
 
@@ -33,6 +34,8 @@ test("llms.txt lists every public page as plain text", async ({ request }) => {
   expect(body).toContain(contact.email);
   expect(body).toContain(contact.phoneDisplay);
   expect(body).toContain("Rs 5,999");
+  expect(body).toContain(`Tools we build with: ${TOOLS_SENTENCE}.`);
+  expect(body).not.toContain("/blog");
   for (const { loc } of await sitemapUrls(request)) {
     expect(body, `llms.txt links ${loc}`).toContain(`(${loc})`);
   }
@@ -119,7 +122,7 @@ test("Organization facts are identical on every page", async ({ request }) => {
     expect(org.description).toBe(SITE_DESCRIPTION);
     expect(org.email).toBe(contact.email);
     expect(org.telephone).toBe(contact.phone);
-    expect(org.knowsAbout).toEqual(services.map((s) => s.name));
+    expect(org.knowsAbout).toEqual([...services.map((s) => s.name), ...TOOLS]);
     seen.add(JSON.stringify(org));
     const person = blocks
       .flatMap((m) => [JSON.parse(m[1])].flat())

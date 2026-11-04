@@ -157,6 +157,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           items={service.connects}
           label={`Tools for ${service.name.toLowerCase()}`}
           className="mt-[36px] gap-[10px]"
+          visualMask
         />
       </section>
 

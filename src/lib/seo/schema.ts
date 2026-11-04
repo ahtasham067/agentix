@@ -16,6 +16,7 @@ import type {
 import { CURRENCY, quoteHref, type PricingGroup } from "@/content/pricing";
 import { services } from "@/content/services";
 import { contact, founder, sameAs, SITE_DESCRIPTION, SITE_NAME, siteUrl } from "@/content/site";
+import { TOOLS } from "@/content/tools";
 import type { Faq, Project } from "@/content/types";
 
 /** JSON-LD builders. They only describe facts that are visible on the page. */
@@ -41,7 +42,7 @@ export function founderPageSchema(): WithContext<Person> {
     jobTitle: founder.role,
     url: absoluteUrl("/about"),
     worksFor: { "@id": ORG_ID },
-    knowsAbout: ["Ruby on Rails", "React", "Next.js", "Vue.js", "n8n", "AI agents", "SEO"],
+    knowsAbout: [...TOOLS, "AI agents", "SEO", "GEO"],
     alumniOf: { "@type": "CollegeOrUniversity", name: "COMSATS University Islamabad" },
     ...(sameAs.length ? { sameAs } : {}),
   };
@@ -65,7 +66,7 @@ export function organizationSchema(): WithContext<Organization> {
       telephone: contact.phone,
       url: absoluteUrl("/contact"),
     },
-    knowsAbout: services.map((s) => s.name),
+    knowsAbout: [...services.map((s) => s.name), ...TOOLS],
     founder: { "@id": FOUNDER_ID },
     ...(sameAs.length ? { sameAs } : {}),
   };
