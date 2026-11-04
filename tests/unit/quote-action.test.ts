@@ -41,7 +41,6 @@ vi.mock("@/lib/supabase/admin", () => ({
 }));
 
 const { submitQuote } = await import("@/app/contact/actions");
-const { emailFailedNotice } = await import("@/content/contact");
 
 function form(extra: Record<string, string> = {}) {
   const data = new FormData();
@@ -93,14 +92,16 @@ describe("submitQuote", () => {
     expect(sendVisitorConfirmation).toHaveBeenCalledTimes(1);
   });
 
-  it("keeps the saved quote and shows a clear message when the email fails", async () => {
+  it("keeps the saved quote and shows the normal success when the email fails", async () => {
     sendOwnerNotification.mockResolvedValue(false);
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
     const state = await submitQuote({ status: "idle" }, form());
     expect(rpc).toHaveBeenCalledTimes(1);
+    // notified_at stays null, so the row keeps notified = false.
     expect(update).not.toHaveBeenCalled();
-    expect(state).toEqual({ status: "success", name: "Ada", notice: emailFailedNotice });
-    expect(emailFailedNotice).toContain("+92 302 5889452");
-    expect(emailFailedNotice).toContain("ahtasham067@gmail.com");
+    expect(state).toEqual({ status: "success", name: "Ada" });
+    expect(log).toHaveBeenCalledWith(expect.stringContaining("quote-1 saved, but the owner email"));
+    log.mockRestore();
   });
 
   it("drops honeypot submissions without saving or emailing", async () => {

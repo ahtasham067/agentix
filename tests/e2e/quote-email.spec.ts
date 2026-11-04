@@ -36,7 +36,6 @@ test("a quote sends the owner an email with the right, escaped content", async (
   await fill(page, { email, details });
   await page.getByRole("button", { name: "Send request" }).click();
   await expect(page.getByTestId("quote-success")).toContainText("Thanks, Mail.");
-  await expect(page.getByTestId("quote-email-notice")).toHaveCount(0);
 
   const [owner] = await waitForMail(`to:${OWNER} ${tag}`);
   expect(owner.From.Address).toBe("quotes@agentix.website");
@@ -65,6 +64,7 @@ test("a quote sends the owner an email with the right, escaped content", async (
   const [row] = await quoteRow(email);
   expect(row).toMatchObject({ service: "web-development", plan: "subscription" });
   expect(row.notified_at).not.toBeNull();
+  expect(row.notified).toBe(true);
 });
 
 test("the form works without JavaScript and still sends the email", async ({

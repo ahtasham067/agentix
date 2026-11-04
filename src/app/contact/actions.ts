@@ -2,7 +2,6 @@
 
 import { headers } from "next/headers";
 import { after } from "next/server";
-import { emailFailedNotice } from "@/content/contact";
 import { contact } from "@/content/site";
 import { sendOwnerNotification, sendVisitorConfirmation } from "@/lib/email/send";
 import { getAdminEnv } from "@/lib/env";
@@ -17,8 +16,6 @@ export interface QuoteState {
   values?: Partial<Record<QuoteField, string>>;
   /** First name for the thank-you message. */
   name?: string;
-  /** Shown with a success when the quote was saved but the owner email failed. */
-  notice?: string;
 }
 
 const MAX_FIELD_LENGTH = 5000;
@@ -87,7 +84,8 @@ export async function submitQuote(_prev: QuoteState, formData: FormData): Promis
   }
 
   const name = quote.fullName.split(/\s+/)[0];
-  // The quote is saved. Now tell the owner; if that fails, keep the quote and say so.
+  // The quote is saved. Now tell the owner. If that fails, the quote stays with
+  // notified = false and the visitor still sees the normal thank-you message.
   const notified = await sendOwnerNotification(quote, id);
   if (notified) {
     const { error } = await supabase
@@ -95,10 +93,10 @@ export async function submitQuote(_prev: QuoteState, formData: FormData): Promis
       .update({ notified_at: new Date().toISOString() })
       .eq("id", id);
     if (error) console.error("[quote] could not record notified_at", error.message);
+  } else {
+    console.error(`[quote] ${id} saved, but the owner email was not sent (notified = false)`);
   }
   after(() => sendVisitorConfirmation(quote));
 
-  return notified
-    ? { status: "success", name }
-    : { status: "success", name, notice: emailFailedNotice };
+  return { status: "success", name };
 }
