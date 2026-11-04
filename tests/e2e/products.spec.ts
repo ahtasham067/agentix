@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { projects } from "../../src/content/projects";
 
 test("filter chips show the matching products", async ({ page }) => {
   await page.goto("/products");
@@ -55,4 +56,11 @@ test("the stats band shows the published product count", async ({ page }) => {
   await expect(page.getByText("products in our portfolio")).toBeVisible();
   const value = page.locator("dl div", { hasText: "products in our portfolio" }).locator("dd");
   await expect(value).toHaveText("8");
+});
+
+test("every product page states the founder's role", async ({ page }) => {
+  for (const p of projects.filter((x) => x.published)) {
+    await page.goto(`/products/${p.slug}`);
+    await expect(page.locator("main").getByText(`Role: ${p.role}`, { exact: true })).toBeVisible();
+  }
 });

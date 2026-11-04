@@ -113,6 +113,11 @@ export interface Project {
    * (SoftwareApplication), "website" a business website (WebPage about a WebSite).
    */
   schemaKind: "software" | "website";
+  /**
+   * The founder's role on the project, shown as "Role: …" on the detail page and
+   * used in JSON-LD and llms.txt. A short title, optionally with the scope in
+   * brackets. Never claim work the owner did not do.
+   */
   role?: string;
   audience?: string;
   clientWork: boolean;

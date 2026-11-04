@@ -61,7 +61,9 @@ export async function buildLlmsTxt(): Promise<string> {
     "## Projects",
     "",
     link("All products and projects", "/products", pageSeo.products.description),
-    ...products.map((p) => link(p.name, `/products/${p.slug}`, p.summary)),
+    ...products.map((p) =>
+      link(p.name, `/products/${p.slug}`, p.role ? `${p.summary} Role: ${p.role}.` : p.summary),
+    ),
     "",
     "## Company",
     "",
@@ -111,7 +113,8 @@ export async function buildLlmsFullTxt(): Promise<string> {
       p.answer || p.description,
       "",
     );
-    if (p.facts.length) out.push(...p.facts.map((f) => `- ${f.label}: ${f.value}`), "");
+    const facts = [...(p.role ? [{ label: "Role", value: p.role }] : []), ...p.facts];
+    if (facts.length) out.push(...facts.map((f) => `- ${f.label}: ${f.value}`), "");
     for (const f of p.faqs) out.push(`**${f.question}**`, "", f.answer, "");
   }
 

@@ -161,9 +161,19 @@ export function productSchema(
     | "seo"
     | "category"
     | "schemaKind"
+    | "role"
   >,
 ): WithContext<SoftwareApplication> | WithContext<CreativeWork> | WithContext<WebPage> {
   const url = absoluteUrl(`/products/${product.slug}`);
+  const builder = { "@id": FOUNDER_ID, "@type": "Person", name: founder.name } as const;
+  // schema.org Role: the founder, with the role shown on the page.
+  const withRole = <P extends string>(property: P) =>
+    product.role
+      ? ({ "@type": "Role", roleName: product.role, [property]: builder } as {
+          "@type": "Role";
+          roleName: string;
+        } & Record<P, typeof builder>)
+      : builder;
   const base = {
     name: product.name,
     description: product.seo.description,
@@ -176,8 +186,13 @@ export function productSchema(
       "@context": ctx,
       "@type": "WebPage",
       ...base,
-      about: { "@type": "WebSite", name: product.name, url: product.websiteUrl },
-      author: { "@id": FOUNDER_ID, "@type": "Person", name: founder.name },
+      about: {
+        "@type": "WebSite",
+        name: product.name,
+        url: product.websiteUrl,
+        creator: withRole("creator"),
+      },
+      author: builder,
       isPartOf: { "@id": WEBSITE_ID },
     };
   }
@@ -186,7 +201,7 @@ export function productSchema(
       "@context": ctx,
       "@type": "CreativeWork",
       ...base,
-      contributor: { "@id": FOUNDER_ID, "@type": "Person", name: founder.name },
+      contributor: withRole("contributor"),
     };
   }
   return {
@@ -196,6 +211,7 @@ export function productSchema(
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web",
     creator: { "@id": ORG_ID },
+    author: withRole("author"),
     ...(product.websiteUrl ? { sameAs: product.websiteUrl } : {}),
   };
 }

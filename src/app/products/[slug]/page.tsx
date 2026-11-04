@@ -127,6 +127,14 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
             {paragraph}
           </p>
         ))}
+        {product.role && (
+          <p
+            data-seo-extra
+            className="mt-[14px] max-w-[500px] text-[16px] leading-[24px] text-muted"
+          >
+            <span className="font-semibold text-text">Role:</span> {product.role}
+          </p>
+        )}
         <div className="mt-[34px] flex flex-wrap gap-[14px]">
           {product.websiteUrl ? (
             <a
