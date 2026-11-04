@@ -5,6 +5,7 @@ import fs from "node:fs";
 import { chromium } from "@playwright/test";
 import * as chromeLauncher from "chrome-launcher";
 import lighthouse from "lighthouse";
+import { TEST_MAIL_ENV } from "./test-mail-env.mjs";
 
 const PORT = Number(process.env.LH_PORT ?? 3000);
 const BASE = process.env.LH_BASE_URL ?? `http://localhost:${PORT}`;
@@ -60,6 +61,8 @@ if (!process.env.LH_BASE_URL) {
   server = spawn("npx", ["next", "start", "--port", String(PORT)], {
     stdio: "ignore",
     detached: true,
+    // Mail goes to the local Mailpit, never to a real inbox.
+    env: { ...process.env, ...TEST_MAIL_ENV },
   });
   await waitForServer(BASE);
 }

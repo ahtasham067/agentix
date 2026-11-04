@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import { TEST_MAIL_ENV } from "./scripts/test-mail-env.mjs";
 
 // Local Supabase keys for database assertions (written by `npm run db:env`).
 try {
@@ -55,5 +56,7 @@ export default defineConfig({
     timeout: 120_000,
     stdout: "ignore",
     stderr: "pipe",
+    // Mail goes to the local Mailpit, never to a real inbox.
+    env: TEST_MAIL_ENV,
   },
 });
