@@ -19,6 +19,7 @@ const { sendEmail, sendOwnerNotification, sendVisitorConfirmation } =
 const OWNER = "ahtasham067@gmail.com";
 const EMAIL_KEYS = [
   "EMAIL_PROVIDER",
+  "RESEND_API_KEY",
   "SMTP_HOST",
   "SMTP_PORT",
   "SMTP_SECURE",
@@ -57,6 +58,7 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.unstubAllEnvs();
+  vi.unstubAllGlobals();
   log.mockRestore();
 });
 
@@ -162,5 +164,108 @@ describe("SMTP provider", () => {
     expect(sendMail).toHaveBeenCalledWith(
       expect.objectContaining({ to: "ada@example.com", replyTo: OWNER }),
     );
+  });
+});
+
+describe("Resend provider", () => {
+  const KEY = "re_TestKey_1234567890abcdef";
+  const RESEND = {
+    EMAIL_PROVIDER: "resend",
+    RESEND_API_KEY: KEY,
+    EMAIL_FROM: "Agentix <onboarding@resend.dev>",
+    EMAIL_TO: OWNER,
+  };
+
+  /** Replaces fetch with a fake Resend endpoint that answers with `status` and `body`. */
+  function mockResend(status: number, body: unknown) {
+    const fetchMock = vi.fn<(url: string, init: RequestInit) => Promise<Response>>(
+      async () =>
+        new Response(JSON.stringify(body), {
+          status,
+          headers: { "Content-Type": "application/json" },
+        }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    return fetchMock;
+  }
+
+  it("posts the owner email to the Resend API with Reply-To set to the visitor", async () => {
+    setEmailEnv(RESEND);
+    const fetchMock = mockResend(200, { id: "email-1" });
+
+    await expect(sendOwnerNotification(quote, "quote-1")).resolves.toBe(true);
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchMock.mock.calls[0];
+    expect(url).toBe("https://api.resend.com/emails");
+    expect(init.method).toBe("POST");
+    expect(init.headers).toMatchObject({
+      Authorization: `Bearer ${KEY}`,
+      "Content-Type": "application/json",
+    });
+    const payload = JSON.parse(String(init.body));
+    expect(payload).toMatchObject({
+      from: "Agentix <onboarding@resend.dev>",
+      to: [OWNER],
+      reply_to: "ada@example.com",
+      subject: "New quote: Web Development, One-time plan – Ada Lovelace",
+    });
+    expect(payload.text).toContain("Build our site <b>now</b> & soon.");
+    expect(payload.html).toContain("&lt;b&gt;now&lt;/b&gt; &amp; soon.");
+    expect(payload.html).not.toContain("<b>now</b>");
+  });
+
+  it("returns the Resend email id from sendEmail", async () => {
+    setEmailEnv(RESEND);
+    mockResend(200, { id: "email-2" });
+    const message = {
+      from: RESEND.EMAIL_FROM,
+      to: OWNER,
+      subject: "s",
+      text: "t",
+      html: "<p>t</p>",
+    };
+    await expect(sendEmail(message)).resolves.toEqual({ provider: "resend", id: "email-2" });
+  });
+
+  it("returns false and logs status and reason when Resend fails", async () => {
+    setEmailEnv(RESEND);
+    mockResend(500, { name: "application_error", message: "Something went wrong." });
+
+    await expect(sendOwnerNotification(quote, "quote-1")).resolves.toBe(false);
+    expect(logged()).toContain(
+      "[quote] owner notification failed: Resend 500 application_error: Something went wrong.",
+    );
+  });
+
+  it("returns false on a bad key and never logs the key", async () => {
+    setEmailEnv(RESEND);
+    mockResend(403, { name: "invalid_api_key", message: `API key is invalid: ${KEY}` });
+
+    await expect(sendOwnerNotification(quote, "quote-1")).resolves.toBe(false);
+    expect(logged()).toContain("Resend 403 invalid_api_key: API key is invalid: [redacted]");
+    expect(logged()).not.toContain(KEY);
+  });
+
+  it("returns false when Resend cannot be reached", async () => {
+    setEmailEnv(RESEND);
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => {
+        throw new TypeError("fetch failed");
+      }),
+    );
+
+    await expect(sendOwnerNotification(quote, "quote-1")).resolves.toBe(false);
+    expect(logged()).toContain("Resend request failed: fetch failed");
+  });
+
+  it("names the missing key instead of calling Resend", async () => {
+    setEmailEnv({ ...RESEND, RESEND_API_KEY: "" });
+    const fetchMock = mockResend(200, { id: "never" });
+
+    await expect(sendOwnerNotification(quote, "quote-1")).resolves.toBe(false);
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(logged()).toContain("resend email is not configured: set RESEND_API_KEY");
   });
 });

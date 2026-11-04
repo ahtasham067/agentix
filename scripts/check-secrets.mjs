@@ -12,6 +12,7 @@ try {
 const SECRET_VARS = [
   "SUPABASE_SERVICE_ROLE_KEY",
   "SMTP_PASS",
+  "RESEND_API_KEY",
   "IP_HASH_SALT",
   "REVALIDATE_SECRET",
   "INDEXNOW_KEY",
@@ -21,7 +22,7 @@ const PATTERNS = [
   { name: "JWT", re: /eyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}/ },
   { name: "Supabase secret key", re: /sb_secret_[A-Za-z0-9_-]{10,}/ },
   { name: "Resend API key", re: /\bre_[A-Za-z0-9]{8,}_[A-Za-z0-9]{8,}/ },
-  { name: "service role name", re: /SUPABASE_SERVICE_ROLE_KEY|SMTP_PASS/ },
+  { name: "service role name", re: /SUPABASE_SERVICE_ROLE_KEY|SMTP_PASS|RESEND_API_KEY/ },
 ];
 
 const dir = ".next/static";

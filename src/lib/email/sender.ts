@@ -1,5 +1,6 @@
 import "server-only";
 import type { EmailEnv } from "@/lib/env";
+import { createResendSender } from "./providers/resend";
 import { createSmtpSender } from "./providers/smtp";
 import type { EmailMessage } from "./quote-email";
 
@@ -12,6 +13,8 @@ export interface EmailSender {
 
 export function createSender(env: EmailEnv): EmailSender {
   switch (env.EMAIL_PROVIDER) {
+    case "resend":
+      return createResendSender(env);
     case "smtp":
       return createSmtpSender(env);
   }

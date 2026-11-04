@@ -22,8 +22,10 @@ const adminSchema = publicDbSchema.extend({
 const flag = optional(z.enum(["true", "false"])).transform((v) => v === "true");
 
 const emailSchema = z.object({
-  /** Which service sends email. smtp: any SMTP server (Gmail, Mailpit). */
-  EMAIL_PROVIDER: optional(z.enum(["smtp"])).default("smtp"),
+  /** Which service sends email. resend: Resend HTTP API. smtp: any SMTP server (Gmail, Mailpit). */
+  EMAIL_PROVIDER: optional(z.enum(["resend", "smtp"])).default("resend"),
+  /** Resend API key ("Sending access" is enough). Server only. */
+  RESEND_API_KEY: optional(z.string().min(1)),
   SMTP_HOST: optional(z.string().min(1)),
   SMTP_PORT: optional(z.coerce.number().int().positive()).default(587),
   /** true for implicit TLS (port 465); false uses STARTTLS when the server offers it. */
@@ -60,8 +62,12 @@ export function getEmailEnv(): EmailEnv {
 export function missingEmailSettings(env: EmailEnv = getEmailEnv()): string[] {
   const missing: string[] = [];
   if (!env.EMAIL_FROM) missing.push("EMAIL_FROM");
-  if (!env.SMTP_HOST) missing.push("SMTP_HOST");
-  if (env.SMTP_USER && !env.SMTP_PASS) missing.push("SMTP_PASS");
+  if (env.EMAIL_PROVIDER === "resend") {
+    if (!env.RESEND_API_KEY) missing.push("RESEND_API_KEY");
+  } else {
+    if (!env.SMTP_HOST) missing.push("SMTP_HOST");
+    if (env.SMTP_USER && !env.SMTP_PASS) missing.push("SMTP_PASS");
+  }
   return missing;
 }
 

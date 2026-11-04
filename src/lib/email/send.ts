@@ -5,7 +5,7 @@ import type { QuoteInput } from "@/lib/quote-schema";
 import { buildConfirmationEmail, buildOwnerEmail, type EmailMessage } from "./quote-email";
 import { createSender } from "./sender";
 
-const SECRET_KEYS = ["SMTP_PASS"] as const;
+const SECRET_KEYS = ["SMTP_PASS", "RESEND_API_KEY"] as const;
 
 /** Sender and owner addresses. Throws, naming the missing variables, when email is not set up. */
 export function emailAddresses(env: EmailEnv = getEmailEnv()): { from: string; owner: string } {
