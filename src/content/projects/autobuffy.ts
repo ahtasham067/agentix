@@ -3,6 +3,7 @@ import { screenshots } from "./screenshots.generated";
 
 // Client work. Facts from the owner's CV. The store has vehicle-fitment search;
 // the CV does not say we built that search, so the copy never claims it.
+// TODO: confirm the role title. "Developer" plus the CV's list of work is used.
 export const autobuffy: Project = {
   slug: "autobuffy",
   name: "AutoBuffy",
@@ -17,7 +18,7 @@ export const autobuffy: Project = {
   category: "web-apps",
   thumbnail: "autobuffy",
   schemaKind: "software",
-  role: "RESTful APIs, payments, analytics, database optimization and deployments",
+  role: "Developer (RESTful APIs, payments, analytics, database tuning and deployments)",
   audience: "Online auto parts shoppers",
   clientWork: true,
   facts: [

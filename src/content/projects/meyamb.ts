@@ -1,8 +1,9 @@
 import type { Project } from "../types";
 import { screenshots } from "./screenshots.generated";
 
-// Client work. Facts from the owner's CV.
-// TODO: confirm the exact scope of our work on Meyamb.
+// Client work. Facts from the owner's CV and the owner's answers (2026-11-02):
+// the stack is mostly Ruby on Rails; the owner worked mostly as a security
+// analyst (the app's security improvements) and also on the front end.
 export const meyamb: Project = {
   slug: "meyamb",
   name: "Meyamb",
@@ -11,13 +12,13 @@ export const meyamb: Project = {
   description:
     "A cross-border fintech platform for the Central African diaspora, with a virtual Visa card, bill payments, money transfers and savings vaults.",
   answer:
-    "Meyamb is a cross-border fintech platform for the Central African diaspora. Users get a virtual Visa card, pay bills, send money, save in vaults and see every transaction in real time, after KYC verification. It is client work, built with Ruby on Rails, Vue.js and Redis and shipped through AWS CodePipeline.",
+    "Meyamb is a cross-border fintech platform for the Central African diaspora, with a virtual Visa card, bill payments, money transfers, savings vaults, KYC checks and real-time history, built mostly on Ruby on Rails. On this client project, Agentix founder Ahtasham Naeem worked mainly as a security analyst on the app's security improvements, and also on the front end.",
   tags: ["Fintech", "Rails", "Vue.js"],
   stack: "Rails, Vue.js",
   category: "web-apps",
   thumbnail: "meyamb",
   schemaKind: "software",
-  role: "Platform development with Ruby on Rails and Vue.js",
+  role: "Security analyst and developer",
   audience: "The Central African diaspora",
   clientWork: true,
   facts: [
@@ -50,7 +51,8 @@ export const meyamb: Project = {
     {
       heading: "Our role on Meyamb",
       paragraphs: [
-        "Meyamb is client work. Agentix founder Ahtasham Naeem worked on the platform. It is built with Ruby on Rails and Vue.js, uses Redis, and ships through AWS CodePipeline.",
+        "Meyamb is client work, and the product belongs to its owners. Agentix founder Ahtasham Naeem worked on it mostly as a security analyst and made the security improvements for the app. Ahtasham also worked on the front end.",
+        "The platform is built mostly with Ruby on Rails, with Vue.js and Redis, and ships through AWS CodePipeline.",
       ],
     },
     {
@@ -79,8 +81,13 @@ export const meyamb: Project = {
         "Use a virtual Visa card, pay bills directly, send money, save in savings vaults, verify their identity with KYC and see their transaction history in real time.",
     },
     {
+      question: "What was Agentix's role on Meyamb?",
+      answer:
+        "Agentix founder Ahtasham Naeem worked mostly as a security analyst and made the security improvements for the app. Ahtasham also worked on the front end.",
+    },
+    {
       question: "What is Meyamb built with?",
-      answer: "Ruby on Rails and Vue.js, with Redis, delivered through AWS CodePipeline.",
+      answer: "Mostly Ruby on Rails, with Vue.js and Redis, delivered through AWS CodePipeline.",
     },
     {
       question: "Do you build fintech web apps?",
@@ -97,7 +104,7 @@ export const meyamb: Project = {
     keyword: "cross-border fintech platform",
     title: "Cross-Border Fintech Platform – Meyamb | Agentix",
     description:
-      "Meyamb is a cross-border fintech platform for the Central African diaspora: virtual Visa card, bill payments, money transfers, savings vaults and KYC.",
+      "Meyamb is a cross-border fintech platform for the Central African diaspora: virtual Visa card, transfers and KYC. Our role: security work and front end.",
   },
   indexable: true,
   featured: false,

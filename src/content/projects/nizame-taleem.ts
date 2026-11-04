@@ -3,7 +3,8 @@ import { screenshots } from "./screenshots.generated";
 
 // Facts and results from the owner's CV. The owner's notes (intro.md) confirm it
 // was built at a previous employer, so it is client work and the employer is not named.
-// TODO: confirm the UI library. The CV says Bootstrap; intro.md says Ant Design.
+// The owner confirmed (2026-11-02): the UI uses Ant Design, and the owner was a
+// full-stack developer on it.
 export const nizameTaleem: Project = {
   slug: "nizame-taleem",
   name: "Nizame-Taleem",
@@ -12,19 +13,19 @@ export const nizameTaleem: Project = {
   description:
     "A school management system that brings admissions, staff, classes, fees, attendance, exams and reports into one place.",
   answer:
-    "Nizame-Taleem is a school management system that brings admissions, staff, classes, fees, attendance, exams and reports into one place for school administrators and staff. It is client work built with Ruby on Rails and React, and because every area shares one database, a change in one place, such as a new admission, shows up everywhere.",
+    "Nizame-Taleem is a school management system that brings admissions, staff, classes, fees, attendance, exams and reports into one place for school administrators and staff. It is client work built with Ruby on Rails, React and Ant Design on one shared database, and Agentix founder Ahtasham Naeem worked on it as a full-stack developer.",
   tags: ["Web app", "Rails", "React"],
   stack: "Rails, React",
   category: "web-apps",
   thumbnail: "nizame-taleem",
   schemaKind: "software",
-  role: "Ruby on Rails and React development",
+  role: "Full-stack developer",
   audience: "School administrators and staff",
   clientWork: true,
   facts: [
     { label: "Type", value: "School management system" },
     { label: "Sector", value: "Education" },
-    { label: "Stack", value: "Rails, React, Bootstrap" },
+    { label: "Stack", value: "Rails, React, Ant Design" },
     { label: "Built with", value: "Ruby on Rails and React" },
   ],
   features: [
@@ -45,7 +46,7 @@ export const nizameTaleem: Project = {
       heading: "A school management system in one place",
       paragraphs: [
         "Running a school means handling admissions, staff, classes, fees, attendance, exams and reports every day. When each of these lives in a separate register or spreadsheet, routine work takes longer and reports drift out of date.",
-        "Nizame-Taleem brings all seven areas into one school management system, built with Ruby on Rails, React and Bootstrap.",
+        "Nizame-Taleem brings all seven areas into one school management system, built with Ruby on Rails, React and Ant Design. It is client work, and Agentix founder Ahtasham Naeem worked on it as a full-stack developer.",
       ],
     },
     {
@@ -77,7 +78,12 @@ export const nizameTaleem: Project = {
     },
     {
       question: "What is Nizame-Taleem built with?",
-      answer: "Ruby on Rails, React.js and Bootstrap.",
+      answer: "Ruby on Rails, React.js and Ant Design.",
+    },
+    {
+      question: "What was Agentix's role on Nizame-Taleem?",
+      answer:
+        "Agentix founder Ahtasham Naeem worked on Nizame-Taleem as a full-stack developer, on both the Ruby on Rails back end and the React front end.",
     },
     {
       question: "Can you build a school management system for us?",
@@ -87,7 +93,7 @@ export const nizameTaleem: Project = {
   ],
   screenshots: screenshots["nizame-taleem"],
   screens: [],
-  builtWith: ["Ruby on Rails", "React.js", "Bootstrap"],
+  builtWith: ["Ruby on Rails", "React.js", "Ant Design"],
   relatedServices: ["web-development"],
   relatedProjects: ["research-buddy", "clinidesk", "meyamb"],
   seo: {

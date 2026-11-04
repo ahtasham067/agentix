@@ -41,9 +41,34 @@ describe("project content", () => {
     },
   );
 
-  it("keeps projects without real details out of the index", () => {
-    const hidden = projects.filter((p) => !p.indexable).map((p) => p.slug);
-    expect(hidden.sort()).toEqual(["nexa-ai", "uphex"]);
+  it("indexes every project now that each has confirmed details", () => {
+    expect(projects.filter((p) => !p.indexable).map((p) => p.slug)).toEqual([]);
+  });
+
+  it.each(projects.map((p) => [p.slug, p] as const))("%s states the founder's role", (_, p) => {
+    expect(p.role?.trim()).toBeTruthy();
+    expect(p.role!.length).toBeLessThanOrEqual(90);
+  });
+
+  it("uses the roles the owner confirmed", () => {
+    const role = (slug: string) => projects.find((p) => p.slug === slug)!.role;
+    expect(role("nexa-ai")).toBe("Full-stack developer");
+    expect(role("uphex")).toBe("Full-stack developer, mainly the Ruby on Rails back end");
+    expect(role("meyamb")).toBe("Security analyst and developer");
+    expect(role("nizame-taleem")).toBe("Full-stack developer");
+  });
+
+  it("names Ant Design, not Bootstrap, for Nizame-Taleem", () => {
+    const json = JSON.stringify(projects.find((p) => p.slug === "nizame-taleem"));
+    expect(json).toContain("Ant Design");
+    expect(json).not.toContain("Bootstrap");
+  });
+
+  it("calls Nexa AI a personal project, never a university project", () => {
+    const json = JSON.stringify(projects.find((p) => p.slug === "nexa-ai")).toLowerCase();
+    expect(json).toContain("personal project");
+    for (const word of ["university", "fyp", "final year", "prototype"])
+      expect(json).not.toContain(word);
   });
 
   it("gives every indexable project a keyword-led FAQ and sections", () => {

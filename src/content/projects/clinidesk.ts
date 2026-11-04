@@ -18,7 +18,7 @@ export const clinidesk: Project = {
   thumbnail: "clinidesk",
   schemaKind: "software",
   websiteUrl: "https://clinidesk.online",
-  role: "Built the WhatsApp AI agent, the n8n workflows and the dashboard",
+  role: "Full-stack developer (WhatsApp AI agent, n8n workflows and dashboard)",
   audience: "Clinics, hospitals and doctors",
   clientWork: false,
   facts: [

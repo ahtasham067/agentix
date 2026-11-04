@@ -3,6 +3,7 @@ import { screenshots } from "./screenshots.generated";
 
 // Facts and results from the owner's CV. The owner's notes (intro.md) confirm it
 // was built at a previous employer, so it is client work and the employer is not named.
+// TODO: confirm the role title. "Developer" plus the CV's list of work is used.
 export const researchBuddy: Project = {
   slug: "research-buddy",
   name: "Research Buddy",
@@ -17,7 +18,7 @@ export const researchBuddy: Project = {
   category: "web-apps",
   thumbnail: "research-buddy",
   schemaKind: "software",
-  role: "Built tagging, folders, filters, DOI/ISBN lookup and citations",
+  role: "Developer (tagging, folders, filters, DOI/ISBN lookup and citations)",
   audience: "Researchers and students",
   clientWork: true,
   facts: [

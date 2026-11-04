@@ -1,27 +1,28 @@
 import type { Project } from "../types";
 import { screenshots } from "./screenshots.generated";
 
-// Facts only from the Nexa AI repository README (projects/nexa-ai/README.md).
-// TODO: confirm with the owner whether Nexa AI is their own project or client
-// work, their role, and whether the page may link the repository. Until then it
-// stays noindex and out of the sitemap, and it makes no ownership claim.
+// Facts from the Nexa AI repository README (projects/nexa-ai/README.md) and the
+// owner's answers (2026-11-02): the owner's own personal project (not a
+// university project), complete, built full-stack by the owner alone.
+// TODO: confirm whether the page may link the repository.
 export const nexaAi: Project = {
   slug: "nexa-ai",
   name: "Nexa AI",
   summary: "An AI assistant project for online shopping.",
   tagline: "Shop by asking, not by filtering.",
   description:
-    "A demonstration store with natural-language search, a shopping assistant that answers from the catalog, comparison, recommendations and image search.",
+    "A complete demo store with natural-language search, a shopping assistant that answers from the catalog, comparison, recommendations and image search. A personal project, built end to end by Agentix founder Ahtasham Naeem.",
   answer:
-    "Nexa AI is an intelligent shopping prototype: a demonstration store with natural-language search, a shopping assistant that answers only from the product catalog, side-by-side comparison, personalised recommendations and image search. It is built with Next.js 16, FastAPI and PostgreSQL with pgvector, using MiniLM and CLIP embeddings and optional Google Gemini answers.",
+    "Nexa AI is a complete AI shopping assistant demo store with natural-language search, catalog-grounded answers, side-by-side comparison, recommendations and image search. It is a personal project of Agentix founder Ahtasham Naeem, who built both the Next.js front end and the FastAPI, PostgreSQL and pgvector back end, with MiniLM and CLIP embeddings and optional Google Gemini.",
   tags: ["AI agent"],
   stack: "AI",
   category: "ai-agents",
   thumbnail: "nexa-ai",
   schemaKind: "software",
+  role: "Full-stack developer",
   clientWork: false,
   facts: [
-    { label: "Type", value: "Shopping prototype (demo)" },
+    { label: "Type", value: "Personal project (demo store)" },
     { label: "Stack", value: "Next.js, FastAPI, PostgreSQL" },
     { label: "AI", value: "MiniLM, CLIP, optional Gemini" },
     { label: "Catalog", value: "420 demo products" },
@@ -68,12 +69,24 @@ export const nexaAi: Project = {
         "Text is embedded with all-MiniLM-L6-v2 and images with CLIP ViT-B/32. Google Gemini is optional and is used for assistant answers and comparison summaries.",
       ],
     },
+    {
+      heading: "Who built Nexa AI",
+      paragraphs: [
+        "Nexa AI is a personal project of Agentix founder Ahtasham Naeem, and it is complete. Ahtasham built all of it as a full-stack developer: the Next.js front end, the FastAPI back end, the PostgreSQL and pgvector database, and the search and assistant features on top of them.",
+        "It is not a live store. The catalog is demo data and checkout is simulated, so the project shows how an AI shopping assistant works from end to end without taking real orders.",
+      ],
+    },
   ],
   faqs: [
     {
       question: "Is Nexa AI a live store?",
       answer:
         "No. It is a demonstration. The catalog comes from the Amazon Berkeley Objects dataset, prices and stock are synthetic values, and payment is always simulated.",
+    },
+    {
+      question: "Who built Nexa AI?",
+      answer:
+        "Agentix founder Ahtasham Naeem, as a personal project. Ahtasham built the whole app as a full-stack developer, from the Next.js front end to the FastAPI and PostgreSQL back end.",
     },
     {
       question: "How does Nexa AI image search work?",
@@ -101,14 +114,14 @@ export const nexaAi: Project = {
     "Google Gemini",
   ],
   relatedServices: ["chatbots-ai-agents", "web-development"],
-  relatedProjects: ["clinidesk"],
+  relatedProjects: ["clinidesk", "naeem-stationery-store"],
   seo: {
-    keyword: "AI shopping assistant prototype",
-    title: "Nexa AI: AI Shopping Assistant Prototype | Agentix",
+    keyword: "AI shopping assistant",
+    title: "Nexa AI: AI Shopping Assistant With Image Search | Agentix",
     description:
-      "Nexa AI is an AI shopping assistant prototype with natural-language search, catalog-grounded answers, comparison and image search on Next.js and FastAPI.",
+      "Nexa AI is a complete AI shopping assistant demo store with natural-language and image search, built full-stack on Next.js and FastAPI by Ahtasham Naeem.",
   },
-  indexable: false,
+  indexable: true,
   featured: false,
   sortOrder: 2,
   published: true,

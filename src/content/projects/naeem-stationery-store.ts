@@ -20,7 +20,7 @@ export const naeemStationeryStore: Project = {
   thumbnail: "naeem-stationery-store",
   schemaKind: "website",
   websiteUrl: "https://naeemshop.online",
-  role: "Full-stack developer: design, development, deployment and marketing setup",
+  role: "Full-stack developer (design, development, deployment and marketing setup)",
   audience: "Customers in Sahiwal, mainly students, teachers and schools",
   clientWork: false,
   facts: [
