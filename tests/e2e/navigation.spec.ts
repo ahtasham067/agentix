@@ -51,6 +51,7 @@ test("footer links point to the right pages", async ({ page }) => {
     Privacy: "/privacy",
     Terms: "/terms",
   };
+  await expect(footer.getByRole("link", { name: "Blog" })).toHaveCount(0);
   for (const [name, href] of Object.entries(expected)) {
     await expect(footer.getByRole("link", { name, exact: true }).first()).toHaveAttribute(
       "href",
