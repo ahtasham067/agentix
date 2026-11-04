@@ -412,3 +412,25 @@ enabled = true
 # declarative_schema_path = "./schemas"
 # JSON string passed through to pg-delta SQL formatting.
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":80,\"commaStyle\":\"trailing\"}"
+
+# Production project (Mumbai, ap-south-1). `supabase config push` applies the settings
+# above with these overrides. The site has no user accounts, so every sign-up path is off.
+[remotes.production]
+project_id = "ktcadrojhcsrcrnvscaw"
+
+[remotes.production.auth]
+site_url = "https://agentix.website"
+additional_redirect_urls = [
+  "https://agentix.website/**",
+  "https://agentix-ahtasham.vercel.app/**",
+  "https://agentix-*-ahtasham067-4615s-projects.vercel.app/**",
+]
+enable_signup = false
+enable_anonymous_sign_ins = false
+
+[remotes.production.auth.email]
+enable_signup = false
+# Keep Supabase's safer hosted defaults instead of the local development values.
+enable_confirmations = true
+max_frequency = "1m0s"
+otp_length = 8
