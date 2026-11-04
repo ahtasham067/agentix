@@ -35,7 +35,7 @@ export const pageSeo = {
     path: "/services",
     title: "AI Chatbot, Automation, Web & SEO Services | Agentix",
     description:
-      "AI chatbot, automation, web and SEO services from one team: chatbots and agents, n8n workflows, custom websites, and SEO and GEO, with clear pricing.",
+      "AI chatbot, automation, web and SEO services from one team: chatbots and agents, n8n and Make.com workflows, web development, and SEO and GEO.",
     keyword: "AI chatbot, automation, web and SEO services",
     lastModified: "2026-11-02",
     ogLabel: "Services",

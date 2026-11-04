@@ -105,8 +105,9 @@ export default async function AboutPage() {
             Agentix is a small software house led by founder Ahtasham Naeem, a full-stack developer
             with more than 5 years of experience across fintech, e-commerce, education and
             healthcare and a BS in Computer Science from COMSATS University Islamabad. We build with
-            Ruby on Rails, React, Next.js, Vue.js and Supabase, and we build AI agents and workflows
-            with n8n, OpenAI, retrieval (RAG) and MCP.
+            Next.js, React, Vue.js, Ruby on Rails and Supabase for web development, and we build AI
+            agents and automation with n8n, Make.com, Zapier, Airtable, OpenAI, retrieval (RAG) and
+            MCP.
           </p>
           <p>
             Most of our clients find us through Upwork or a referral, and many come back for a

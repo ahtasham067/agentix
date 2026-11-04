@@ -36,8 +36,8 @@ export function AuthorBox({
         </h2>
         <p className="mt-[6px] text-[16px] leading-[1.6] text-muted">
           {name} is the founder of Agentix and a full-stack developer with {EXPERIENCE.years} years
-          of experience and {EXPERIENCE.projects} projects delivered, working in Ruby on Rails,
-          React, Next.js and n8n automation.{" "}
+          of experience and {EXPERIENCE.projects} projects delivered, building AI agents, automation
+          and web apps with n8n, Make.com, Next.js, React and Ruby on Rails.{" "}
           <Link href="/about" className={link}>
             More about Agentix
           </Link>

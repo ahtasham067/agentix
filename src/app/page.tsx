@@ -36,8 +36,12 @@ export default async function HomePage() {
             Your repetitive work, <br className="hidden md:block" />
             handled by AI agents.
           </h1>
-          <p className="mx-auto mt-[16px] max-w-[630px] text-center text-[18px] leading-[1.55] text-muted md:text-[19.5px] md:leading-[31px]">
-            We build custom AI agents and n8n workflows for support, sales and operations.
+          <p
+            data-visual-mask=""
+            className="mx-auto mt-[16px] max-w-[630px] text-center text-[18px] leading-[1.55] text-muted md:text-[19.5px] md:leading-[31px]"
+          >
+            We build custom AI agents, chatbots, automation workflows and web apps for support,
+            sales and operations.
           </p>
           <div className="mt-[32px] flex flex-wrap justify-center gap-[14px]">
             <ButtonLink href="/products">View Products</ButtonLink>
@@ -57,7 +61,7 @@ export default async function HomePage() {
         <SectionHead
           id="build-title"
           title="What we build for you"
-          intro="Four ways we put AI to work in your business."
+          intro="AI agents, automation, web development and SEO from one team."
           link={{ href: "/services", label: "All services" }}
           className="[&_p]:mt-[12px]!"
         />

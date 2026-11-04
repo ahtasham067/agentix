@@ -43,7 +43,7 @@ export const homeUseCases = {
     {
       icon: "browser",
       title: "Internal tools",
-      text: "n8n workflows move data between apps, send scheduled reports and feed the dashboards your team uses every day.",
+      text: "Automation workflows in n8n, Make.com or Zapier move data between apps and send scheduled reports, and web dashboards show your team the numbers every day.",
     },
   ] satisfies Feature[],
 };

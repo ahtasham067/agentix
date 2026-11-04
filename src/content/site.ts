@@ -9,7 +9,7 @@ export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:30
 
 /** One-line description used in the footer, Organization JSON-LD and llms.txt. */
 export const SITE_DESCRIPTION =
-  "A software house building AI agents, n8n automation, web apps and SEO.";
+  "A software house for AI chatbots, automation, web development and SEO.";
 
 /** Phone in E.164 form (+923025889452), for tel: and wa.me links. */
 const phoneE164 = `+${(process.env.NEXT_PUBLIC_CONTACT_PHONE || "+923025889452").replace(/\D/g, "")}`;
