@@ -8,7 +8,7 @@ import { CalendarScreen, PatientHistoryScreen } from "@/components/illustrations
 import { WindowFrame } from "@/components/illustrations/WindowFrame";
 import { PageHero } from "@/components/layout/PageHero";
 import { ProductCard } from "@/components/products/ProductCard";
-import { AuthorBox } from "@/components/blog/AuthorBox";
+import { AuthorBox } from "@/components/sections/AuthorBox";
 import { ScreenshotGallery } from "@/components/products/ScreenshotGallery";
 import { AnswerFirst } from "@/components/sections/AnswerFirst";
 import { CtaBand } from "@/components/sections/CtaBand";

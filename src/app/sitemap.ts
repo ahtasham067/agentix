@@ -1,13 +1,12 @@
 import type { MetadataRoute } from "next";
 import { pageSeo } from "@/content/seo";
 import { services } from "@/content/services";
-import { getPublishedPosts } from "@/lib/posts";
 import { getPublishedProducts } from "@/lib/products";
 import { absoluteUrl } from "@/lib/seo/schema";
 
 /** Public, indexable URLs only. Draft content and noindex pages are left out. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [products, posts] = await Promise.all([getPublishedProducts(), getPublishedPosts()]);
+  const products = await getPublishedProducts();
   const staticPages = Object.values(pageSeo);
 
   return [
@@ -31,11 +30,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "monthly" as const,
         priority: 0.7,
       })),
-    ...posts.map((p) => ({
-      url: absoluteUrl(`/blog/${p.slug}`),
-      lastModified: new Date(p.updatedAt),
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    })),
   ];
 }

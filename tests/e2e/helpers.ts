@@ -14,7 +14,6 @@ export const staticRoutes = [
   "/contact",
   "/privacy",
   "/terms",
-  "/blog",
 ];
 
 export function adminClient() {

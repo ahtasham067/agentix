@@ -3,7 +3,6 @@ import { formatPlanPrice, PRICING_DISCLAIMER, pricingGroups } from "@/content/pr
 import { pageSeo } from "@/content/seo";
 import { services } from "@/content/services";
 import { contact, EXPERIENCE, founder, sameAs, SITE_DESCRIPTION, SITE_NAME } from "@/content/site";
-import { getPublishedPosts } from "@/lib/posts";
 import { getPublishedProducts } from "@/lib/products";
 import { absoluteUrl } from "@/lib/seo/schema";
 
@@ -16,8 +15,8 @@ const link = (title: string, path: string, note?: string) =>
   `- [${title}](${absoluteUrl(path)})${note ? `: ${note}` : ""}`;
 
 async function sources() {
-  const [products, posts] = await Promise.all([getPublishedProducts(), getPublishedPosts()]);
-  return { products: products.filter((p) => p.indexable), posts };
+  const products = await getPublishedProducts();
+  return { products: products.filter((p) => p.indexable) };
 }
 
 function header(): string[] {
@@ -49,7 +48,7 @@ function pricing(): string[] {
 
 /** Short version: every public page with a one-line note. */
 export async function buildLlmsTxt(): Promise<string> {
-  const { products, posts } = await sources();
+  const { products } = await sources();
   return [
     ...header(),
     "## Services",
@@ -70,8 +69,6 @@ export async function buildLlmsTxt(): Promise<string> {
     link("Home", "/", pageSeo.home.description),
     link("About", "/about", pageSeo.about.description),
     link("Get a quote", "/contact", pageSeo.contact.description),
-    link("Blog", "/blog", pageSeo.blog.description),
-    ...posts.map((p) => link(p.title, `/blog/${p.slug}`, p.description)),
     "",
     "## Optional",
     "",
@@ -89,7 +86,7 @@ export async function buildLlmsTxt(): Promise<string> {
 
 /** Full version: adds each page's direct answer, comparison tables and FAQs. */
 export async function buildLlmsFullTxt(): Promise<string> {
-  const { products, posts } = await sources();
+  const { products } = await sources();
   const out = [...header(), ...pricing()];
 
   for (const s of services) {
@@ -118,10 +115,5 @@ export async function buildLlmsFullTxt(): Promise<string> {
     for (const f of p.faqs) out.push(`**${f.question}**`, "", f.answer, "");
   }
 
-  if (posts.length) {
-    out.push("## Blog", "");
-    for (const p of posts) out.push(link(p.title, `/blog/${p.slug}`, p.description));
-    out.push("");
-  }
   return out.join("\n");
 }

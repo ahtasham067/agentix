@@ -5,7 +5,7 @@ const link = "text-accent underline underline-offset-[3px] hover:text-text";
 
 /**
  * Who wrote or built this (E-E-A-T and GEO): the founder's real experience and
- * profiles. Used on blog posts, service pages and project pages.
+ * profiles. Used on service pages and project pages.
  */
 export function AuthorBox({
   name = founder.name,

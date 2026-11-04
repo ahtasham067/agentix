@@ -1,9 +1,8 @@
 import { projects } from "../src/content/projects";
 import type { Project } from "../src/content/types";
-import { loadPosts } from "./posts";
 
 const HEADER = `-- GENERATED FILE. Do not edit by hand.
--- Source: src/content/projects/*.ts and src/content/posts/*.md (posts start as drafts).
+-- Source: src/content/projects/*.ts
 -- Regenerate with: npm run db:seed:gen
 `;
 
@@ -133,23 +132,6 @@ const testDraft: Project = {
   published: false,
 };
 
-function postValues(): string {
-  return loadPosts()
-    .map((p) =>
-      [
-        text(p.slug),
-        text(p.title),
-        text(p.seoTitle),
-        text(p.description),
-        text(p.body),
-        textArray(p.relatedServices),
-        "false",
-      ].join(",\n    "),
-    )
-    .map((v) => `  (\n    ${v}\n  )`)
-    .join(",\n");
-}
-
 export function buildSeedSql(): string {
   const rows = [...projects, testDraft].map(productValues).join(",\n");
   return `${HEADER}
@@ -158,8 +140,5 @@ insert into public.products (
 ) values
 ${rows};
 
--- Blog posts are drafts. Publish one by setting published = true and published_at = now().
-insert into public.posts (slug, title, seo_title, description, body, related_services, published) values
-${postValues()};
 `;
 }

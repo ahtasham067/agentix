@@ -116,9 +116,9 @@ test("every link that opens a new tab uses noopener noreferrer", async ({ page }
 });
 
 test("the revalidation webhook needs the secret", async ({ request }) => {
-  expect((await request.post("/api/revalidate", { data: { tag: "posts" } })).status()).toBe(401);
+  expect((await request.post("/api/revalidate", { data: { tag: "products" } })).status()).toBe(401);
   const wrong = await request.post("/api/revalidate", {
-    data: { tag: "posts" },
+    data: { tag: "products" },
     headers: { "x-revalidate-secret": "wrong-secret-wrong-secret" },
   });
   expect(wrong.status()).toBe(401);

@@ -1,6 +1,6 @@
 import { legalUpdated } from "./legal";
 
-/** Search metadata for fixed pages. Products and posts take theirs from the database. */
+/** Search metadata for fixed pages. Products take theirs from the database. */
 export interface PageSeo {
   path: string;
   title: string;
@@ -57,15 +57,6 @@ export const pageSeo = {
     keyword: "get a quote for AI automation and web development",
     lastModified: "2026-11-02",
     ogLabel: "Get a quote",
-  },
-  blog: {
-    path: "/blog",
-    title: "AI Agents & Automation Blog | Agentix",
-    description:
-      "Practical guides on AI agents, n8n workflow automation, WhatsApp booking bots and Next.js web apps, written by the Agentix team for business owners.",
-    keyword: "AI agents and automation blog",
-    lastModified: "2026-11-02",
-    ogLabel: "Blog",
   },
   privacy: {
     path: "/privacy",

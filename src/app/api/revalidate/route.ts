@@ -1,7 +1,7 @@
 import { timingSafeEqual } from "node:crypto";
 import { revalidateTag } from "next/cache";
 
-const TAGS = new Set(["posts", "products"]);
+const TAGS = new Set(["products"]);
 
 function sameSecret(a: string, b: string) {
   const x = Buffer.from(a);
@@ -10,9 +10,9 @@ function sameSecret(a: string, b: string) {
 }
 
 /**
- * Refreshes cached posts or products after the owner edits them in Supabase.
+ * Refreshes cached products after the owner edits them in Supabase.
  * Call from a Supabase database webhook:
- *   POST /api/revalidate  header x-revalidate-secret: <REVALIDATE_SECRET>  body {"tag":"posts"}
+ *   POST /api/revalidate  header x-revalidate-secret: <REVALIDATE_SECRET>  body {"tag":"products"}
  */
 export async function POST(request: Request) {
   const secret = process.env.REVALIDATE_SECRET;
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     return Response.json({ ok: false }, { status: 401 });
   }
   const body = (await request.json().catch(() => ({}))) as { tag?: string; table?: string };
-  const tag = body.tag ?? body.table ?? "posts";
+  const tag = body.tag ?? body.table ?? "products";
   if (!TAGS.has(tag)) return Response.json({ ok: false, error: "unknown tag" }, { status: 400 });
   revalidateTag(tag, "max");
   return Response.json({ ok: true, tag });

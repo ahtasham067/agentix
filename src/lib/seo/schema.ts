@@ -1,7 +1,5 @@
 import type {
   AboutPage,
-  Blog,
-  BlogPosting,
   BreadcrumbList,
   ContactPage,
   CreativeWork,
@@ -241,50 +239,5 @@ export function aboutPageSchema(page: {
     description: page.description,
     url: absoluteUrl("/about"),
     mainEntity: { "@id": ORG_ID },
-  };
-}
-
-export interface PostSummary {
-  slug: string;
-  title: string;
-  description: string;
-  publishedAt: string;
-  updatedAt: string;
-}
-
-export function blogSchema(posts: PostSummary[]): WithContext<Blog> {
-  return {
-    "@context": ctx,
-    "@type": "Blog",
-    name: `${SITE_NAME} blog`,
-    url: absoluteUrl("/blog"),
-    publisher: { "@id": ORG_ID },
-    blogPost: posts.map((p) => ({
-      "@type": "BlogPosting",
-      headline: p.title,
-      url: absoluteUrl(`/blog/${p.slug}`),
-      datePublished: p.publishedAt,
-      dateModified: p.updatedAt,
-    })),
-  };
-}
-
-export function blogPostingSchema(
-  post: PostSummary & { author: string },
-): WithContext<BlogPosting> {
-  const url = absoluteUrl(`/blog/${post.slug}`);
-  return {
-    "@context": ctx,
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: post.description,
-    url,
-    mainEntityOfPage: url,
-    image: `${url}/opengraph-image`,
-    datePublished: post.publishedAt,
-    dateModified: post.updatedAt,
-    author: { "@type": "Person", "@id": FOUNDER_ID, name: post.author },
-    publisher: { "@id": ORG_ID },
-    inLanguage: "en",
   };
 }

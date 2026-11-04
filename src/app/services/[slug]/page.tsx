@@ -7,7 +7,7 @@ import { ServiceVisual } from "@/components/illustrations/ServiceVisual";
 import { SupportChat } from "@/components/illustrations/SupportChat";
 import { PageHero } from "@/components/layout/PageHero";
 import { ProductCard } from "@/components/products/ProductCard";
-import { AuthorBox } from "@/components/blog/AuthorBox";
+import { AuthorBox } from "@/components/sections/AuthorBox";
 import { AnswerFirst } from "@/components/sections/AnswerFirst";
 import { ComparisonTable } from "@/components/sections/ComparisonTable";
 import { CtaBand } from "@/components/sections/CtaBand";
