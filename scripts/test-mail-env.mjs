@@ -15,3 +15,6 @@ export const TEST_MAIL_ENV = {
   EMAIL_TO: "",
   QUOTE_CONFIRMATION_ENABLED: "true",
 };
+
+/** Smoke-test token for local test servers only (never used in production). */
+export const TEST_SMOKE_TOKEN = "local-smoke-test-token-not-a-secret";
