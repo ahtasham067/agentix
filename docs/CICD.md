@@ -30,6 +30,8 @@ How changes get from a branch to production, which checks guard `main`, and what
  every Monday: Dependabot PRs (npm, GitHub Actions) + CodeQL weekly scan
 ```
 
+The smoke test starts from Vercel's own success event. When a merge also runs `deploy-db`, Vercel reports on the GitHub deployment that job created for the same commit, so the Deployments page can show one entry for both.
+
 ## The checks
 
 | Check | What it runs | Typical time |
@@ -115,7 +117,7 @@ Open the failed job in the Actions tab; Playwright jobs upload a report with tra
 | `build` | type error, or content that no longer matches the seed | `npm run build`; after content changes run `npm run db:seed:gen` |
 | `e2e` | broken page, changed copy, flaky timing | download the report, run `npx playwright show-trace <trace.zip>`, reproduce with `npm run test:e2e` |
 | `visual` | layout or copy change on a compared page | look at the diff image; if the change is intended, the design PNG must be updated by the designer |
-| `lighthouse` | slower page or bigger bundle | open the report artifact, look at total blocking time and the largest scripts |
+| `lighthouse` | slower page or bigger bundle | open the report artifact, look at total blocking time and the largest scripts. The gate uses applied throttling, so PageSpeed Insights (simulated throttling) can show lower scores for the same page |
 | `security` | vulnerable dependency, leaked secret, server secret in the client bundle | `npm audit fix` or update the package; for a leaked secret rotate it first (DEPLOYMENT.md, section 9), then remove it |
 | `ci-gate` | one of the jobs above failed or was cancelled | fix that job |
 | smoke test issue | production broken after a deploy | roll back (below), then fix in a PR |
