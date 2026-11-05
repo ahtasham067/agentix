@@ -119,6 +119,7 @@ Open the failed job in the Actions tab; Playwright jobs upload a report with tra
 | `security` | vulnerable dependency, leaked secret, server secret in the client bundle | `npm audit fix` or update the package; for a leaked secret rotate it first (DEPLOYMENT.md, section 9), then remove it |
 | `ci-gate` | one of the jobs above failed or was cancelled | fix that job |
 | smoke test issue | production broken after a deploy | roll back (below), then fix in a PR |
+| no smoke run after a deploy | Vercel is not reporting deployments to GitHub | see step 5 of "Connect GitHub to Vercel" in `docs/DEPLOYMENT.md` |
 
 ## Rollback
 

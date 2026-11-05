@@ -17,9 +17,13 @@ concurrency:
 jobs:
   smoke:
     name: smoke
+    # The deploy-db job also reports deployments, to the GitHub environment `production`.
+    # Expressions compare strings without case, so only the creator tells the two apart:
+    # without this check the smoke test ran before Vercel had finished building.
     if: >-
       github.event_name == 'workflow_dispatch' ||
       (github.event.deployment_status.state == 'success' &&
+       github.event.deployment_status.creator.login == 'vercel[bot]' &&
        startsWith(github.event.deployment.environment, 'Production'))
     runs-on: ubuntu-24.04
     timeout-minutes: 15

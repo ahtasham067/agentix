@@ -107,6 +107,14 @@ The `production` environment only allows deployments from `main` (Settings → E
 2. Production branch: `main`. Every other branch and every pull request gets a Preview deployment, and Vercel comments the preview URL on the PR.
 3. Settings → Build and Deployment: framework Next.js, Node.js 22.x, default build and install commands.
 4. Settings → Deployment Protection: Vercel Authentication for previews (production stays public).
+5. Let Vercel report deployments to GitHub, because `smoke.yml` starts from those events. New projects can have this off, and then the smoke test never runs after a deploy:
+
+   ```bash
+   printf '%s' '{"gitProviderOptions":{"createDeployments":"enabled"}}' \
+     | npx vercel api /v9/projects/agentix -X PATCH --input -
+   ```
+
+6. Turn on Dependabot alerts, which also turns on the dependency graph that the `security` job's dependency review needs: `gh api -X PUT repos/ahtasham067/agentix/vulnerability-alerts`.
 
 ## 6. Domain and DNS
 
