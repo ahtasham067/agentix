@@ -43,7 +43,7 @@ How changes get from a branch to production, which checks guard `main`, and what
 | `e2e (cross-browser)` | `tests/smoke` in Chromium, WebKit and Firefox | 4 min |
 | `seo-geo` | `npm run test:seo` (metadata, structured data, sitemap, robots, llms.txt, AI crawler rules) | 4 min |
 | `visual` | `npm run test:visual`: pixel diff against `images/agentix-0*.png`, under 2% per page | 4 min |
-| `lighthouse` | `npm run test:lighthouse` with `LH_RUNS=3` (median): SEO 100, performance 90+, accessibility 95+, best practices 90+ | 6 min |
+| `lighthouse` | `npm run test:lighthouse` with `LH_RUNS=3` (median, applied throttling): SEO 100, performance 90+, accessibility 95+, best practices 90+ | 6 min |
 | `security` | `npm audit --audit-level=high`, gitleaks on the new commits, dependency review (PRs), `check:secrets` on the client bundle | 3 min |
 | `ci-gate` | passes only when every job above passed | <1 min |
 | `codeql` | CodeQL security-extended queries (separate workflow) | 5 min |
