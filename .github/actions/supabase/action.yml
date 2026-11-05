@@ -1,8 +1,9 @@
 name: Start local Supabase
 description: >
-  Starts the local Supabase stack from supabase/config.toml (database, REST API and
-  the Mailpit mail catcher only), applies migrations and the seed, and writes
+  Starts the local Supabase stack from supabase/config.toml (database, REST API, Auth
+  and the Mailpit mail catcher only), applies migrations and the seed, and writes
   .env.local with the local keys, exactly like `npm run db:env` on a laptop.
+  Auth stays on because `supabase status` only prints the API keys while it runs.
 runs:
   using: composite
   steps:
@@ -13,7 +14,7 @@ runs:
       shell: bash
       run: >
         supabase start
-        -x gotrue,realtime,storage-api,imgproxy,postgres-meta,studio,edge-runtime,logflare,vector,supavisor
+        -x realtime,storage-api,imgproxy,postgres-meta,studio,edge-runtime,logflare,vector,supavisor
     - name: Write .env.local
       shell: bash
       run: npm run db:env
