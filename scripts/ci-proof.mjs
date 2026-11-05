@@ -1,1 +1,0 @@
-var deliberateLintError = 1
