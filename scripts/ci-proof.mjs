@@ -1,0 +1,1 @@
+var deliberateLintError = 1
