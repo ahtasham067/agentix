@@ -42,6 +42,13 @@ function cpuMultiplier(benchmarkIndex) {
   return 1;
 }
 
+// Applied ("devtools") throttling really slows the CPU and the network. Lighthouse's default
+// simulation multiplies each task's wall-clock time instead, so waiting counts as work: one
+// first-layout task that blocked on browser font lookups (about 150 ms, only 50 ms of CPU) was
+// scored as a 600 ms long task, and on identical code the failing page changed between CI runs
+// (`/` 87 then 100, `/products` 93 then 80). LH_THROTTLING=simulate brings the default back.
+const THROTTLING = process.env.LH_THROTTLING ?? "devtools";
+
 async function waitForServer(url, ms = 120_000) {
   const start = Date.now();
   while (Date.now() - start < ms) {
@@ -121,6 +128,7 @@ try {
         {
           extends: "lighthouse:default",
           settings: {
+            throttlingMethod: THROTTLING,
             throttling: {
               ...warmUp.configSettings.throttling,
               cpuSlowdownMultiplier: multiplier,

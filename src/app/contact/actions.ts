@@ -7,6 +7,7 @@ import { sendOwnerNotification, sendVisitorConfirmation } from "@/lib/email/send
 import { getAdminEnv } from "@/lib/env";
 import { QUOTE_FIELDS, validateQuote, type FieldErrors, type QuoteField } from "@/lib/quote-schema";
 import { clientIp, hashIp } from "@/lib/rate-limit";
+import { isSmokeTest, SMOKE_TEST_HEADER } from "@/lib/smoke";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export interface QuoteState {
@@ -44,12 +45,19 @@ export async function submitQuote(_prev: QuoteState, formData: FormData): Promis
   }
 
   const quote = result.data;
+  const requestHeaders = await headers();
+  // Post-deploy smoke test: prove the form and action work without saving or emailing.
+  if (isSmokeTest(requestHeaders.get(SMOKE_TEST_HEADER))) {
+    console.info("[quote] smoke test: validated, not saved or emailed");
+    return { status: "success", name: quote.fullName.split(/\s+/)[0] };
+  }
+
   let id: string;
   let supabase: ReturnType<typeof createAdminClient>;
   try {
     const env = getAdminEnv();
     supabase = createAdminClient();
-    const ipHash = hashIp(clientIp(await headers(), env.TRUSTED_IP_HEADER), env.IP_HASH_SALT);
+    const ipHash = hashIp(clientIp(requestHeaders, env.TRUSTED_IP_HEADER), env.IP_HASH_SALT);
 
     // One database call checks the rate limit and inserts atomically (see submit_quote).
     const { data, error } = await supabase.rpc("submit_quote", {

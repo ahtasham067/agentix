@@ -1,0 +1,75 @@
+# Nightly production check: keeps the free Supabase project awake, then runs the
+# smoke test and Lighthouse against the live site. Opens an issue on failure.
+name: Nightly production check
+
+on:
+  schedule:
+    - cron: "30 21 * * *" # 02:30 in Pakistan (UTC+5)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  keep-alive:
+    name: supabase-keep-alive
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Query the production database
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          status=$(curl -s -o /dev/null -w '%{http_code}' \
+            -H "apikey: $SUPABASE_ANON_KEY" -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
+            "$SUPABASE_URL/rest/v1/products?select=slug&limit=1")
+          echo "Supabase REST status: $status"
+          test "$status" = "200"
+
+  smoke:
+    name: smoke
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      SMOKE_BASE_URL: ${{ vars.PRODUCTION_URL }}
+      SMOKE_TEST_TOKEN: ${{ secrets.SMOKE_TEST_TOKEN }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/browsers
+      - run: npm run test:smoke
+
+  lighthouse:
+    name: lighthouse
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      LH_BASE_URL: ${{ vars.PRODUCTION_URL }}
+      LH_RUNS: "3"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/browsers
+      - run: npm run test:lighthouse
+      - name: Upload the Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: lighthouse-production
+          path: test-results/lighthouse
+          retention-days: 14
+
+  report:
+    name: report
+    needs: [keep-alive, smoke, lighthouse]
+    if: failure()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Open an issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: .github/scripts/report-failure.sh "Nightly production check failed"

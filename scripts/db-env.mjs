@@ -13,6 +13,11 @@ const local = Object.fromEntries(
     .map((m) => [m[1], m[2]]),
 );
 
+// `supabase status` leaves out the API keys when Auth is not running.
+for (const name of ["API_URL", "ANON_KEY", "SERVICE_ROLE_KEY"]) {
+  if (!local[name]) throw new Error(`supabase status did not print ${name}. Is Auth running?`);
+}
+
 const file = ".env.local";
 const current = existsSync(file)
   ? Object.fromEntries(

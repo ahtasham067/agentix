@@ -1,5 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
-import { TEST_MAIL_ENV } from "./scripts/test-mail-env.mjs";
+import { TEST_MAIL_ENV, TEST_SMOKE_TOKEN } from "./scripts/test-mail-env.mjs";
 
 // Local Supabase keys for database assertions (written by `npm run db:env`).
 try {
@@ -9,7 +9,9 @@ try {
 }
 
 const PORT = Number(process.env.TEST_PORT ?? 3000);
-const baseURL = `http://localhost:${PORT}`;
+// SMOKE_BASE_URL points the smoke projects at a deployed site (no local server).
+const SMOKE_BASE_URL = process.env.SMOKE_BASE_URL?.replace(/\/+$/, "");
+const baseURL = SMOKE_BASE_URL ?? `http://localhost:${PORT}`;
 // Smoother, platform-independent text rendering for screenshots.
 const launchOptions = { args: ["--font-render-hinting=none"] };
 
@@ -44,19 +46,38 @@ export default defineConfig({
       },
     },
     {
+      name: "smoke",
+      testDir: "tests/smoke",
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 }, launchOptions },
+    },
+    {
+      name: "webkit-smoke",
+      testDir: "tests/smoke",
+      // The shared launch flag is Chromium-only.
+      use: { ...devices["Desktop Safari"], launchOptions: {} },
+    },
+    {
+      name: "firefox-smoke",
+      testDir: "tests/smoke",
+      // The shared launch flag is Chromium-only.
+      use: { ...devices["Desktop Firefox"], launchOptions: {} },
+    },
+    {
       name: "seo",
       testDir: "tests/seo",
       use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 }, launchOptions },
     },
   ],
-  webServer: {
-    command: `npm run start -- --port ${PORT}`,
-    url: baseURL,
-    reuseExistingServer: false,
-    timeout: 120_000,
-    stdout: "ignore",
-    stderr: "pipe",
-    // Mail goes to the local Mailpit, never to a real inbox.
-    env: TEST_MAIL_ENV,
-  },
+  webServer: SMOKE_BASE_URL
+    ? undefined
+    : {
+        command: `npm run start -- --port ${PORT}`,
+        url: baseURL,
+        reuseExistingServer: false,
+        timeout: 120_000,
+        stdout: "ignore",
+        stderr: "pipe",
+        // Mail goes to the local Mailpit, never to a real inbox.
+        env: { ...TEST_MAIL_ENV, SMOKE_TEST_TOKEN: TEST_SMOKE_TOKEN },
+      },
 });

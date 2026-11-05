@@ -4,7 +4,7 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set search_path = public, extensions;
 
-select plan(22);
+select plan(23);
 
 -- Setup sanity: the seed holds 8 published products and 1 draft.
 select results_eq(
@@ -60,35 +60,14 @@ select throws_ok(
   'anon cannot delete products'
 );
 
--- anon: quotes
-select lives_ok(
+-- anon: quotes (written only through submit_quote with the service role)
+select throws_ok(
   $$insert into public.quotes (full_name, email, whatsapp, service, budget, details)
     values ('Test Visitor', 'visitor@example.com', '+92 302 5889452', 'chatbots-ai-agents', 'under-250k',
       'We need a WhatsApp booking agent for our clinic.')$$,
-  'anon can insert a valid quote'
-);
-select throws_ok(
-  $$insert into public.quotes (full_name, email, service, budget, details)
-    values ('Test Visitor', 'not-an-email', 'web-development', 'not-sure',
-      'We need a dashboard for our team and customers.')$$,
-  '23514',
+  '42501',
   null,
-  'invalid email is rejected'
-);
-select throws_ok(
-  $$insert into public.quotes (full_name, email, service, budget, details)
-    values ('Test Visitor', 'visitor@example.com', 'web-development', 'not-sure', 'Too short')$$,
-  '23514',
-  null,
-  'too-short project details are rejected'
-);
-select throws_ok(
-  $$insert into public.quotes (full_name, email, service, budget, details)
-    values ('Test Visitor', 'visitor@example.com', 'crypto', 'not-sure',
-      'We need a dashboard for our team and customers.')$$,
-  '23514',
-  null,
-  'unknown service is rejected'
+  'anon cannot insert quotes'
 );
 select throws_ok(
   $$insert into public.quotes (full_name, email, service, budget, details, ip_hash)
@@ -145,6 +124,35 @@ select throws_ok(
 reset role;
 set local role service_role;
 
+select lives_ok(
+  $$insert into public.quotes (full_name, email, whatsapp, service, budget, details)
+    values ('Test Visitor', 'visitor@example.com', '+92 302 5889452', 'chatbots-ai-agents', 'under-250k',
+      'We need a WhatsApp booking agent for our clinic.')$$,
+  'service role can insert a valid quote'
+);
+select throws_ok(
+  $$insert into public.quotes (full_name, email, service, budget, details)
+    values ('Test Visitor', 'not-an-email', 'web-development', 'not-sure',
+      'We need a dashboard for our team and customers.')$$,
+  '23514',
+  null,
+  'invalid email is rejected'
+);
+select throws_ok(
+  $$insert into public.quotes (full_name, email, service, budget, details)
+    values ('Test Visitor', 'visitor@example.com', 'web-development', 'not-sure', 'Too short')$$,
+  '23514',
+  null,
+  'too-short project details are rejected'
+);
+select throws_ok(
+  $$insert into public.quotes (full_name, email, service, budget, details)
+    values ('Test Visitor', 'visitor@example.com', 'crypto', 'not-sure',
+      'We need a dashboard for our team and customers.')$$,
+  '23514',
+  null,
+  'unknown service is rejected'
+);
 select results_eq(
   $$select count(*)::int from public.quotes where email = 'visitor@example.com'$$,
   array[1],

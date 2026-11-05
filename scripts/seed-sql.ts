@@ -132,13 +132,21 @@ const testDraft: Project = {
   published: false,
 };
 
-export function buildSeedSql(): string {
-  const rows = [...projects, testDraft].map(productValues).join(",\n");
-  return `${HEADER}
+/**
+ * Seed SQL for the products table. The local seed (default) adds the unpublished
+ * test row the tests rely on. The production seed has published content only and
+ * skips rows whose slug already exists, so loading it twice is harmless.
+ */
+export function buildSeedSql({ production = false }: { production?: boolean } = {}): string {
+  const rows = (production ? projects : [...projects, testDraft]).map(productValues).join(",\n");
+  const header = production
+    ? HEADER.replace("-- Regenerate", "-- Production seed: published products only.\n-- Regenerate")
+    : HEADER;
+  return `${header}
 insert into public.products (
   ${PRODUCT_COLUMNS.join(",\n  ")}
 ) values
-${rows};
+${rows}${production ? "\non conflict (slug) do nothing" : ""};
 
 `;
 }

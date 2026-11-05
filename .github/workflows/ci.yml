@@ -1,0 +1,315 @@
+# Checks for every pull request into main and every push to main.
+# Branch protection requires only `ci-gate`, which passes when all jobs pass.
+# See docs/CICD.md.
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+  CI: "true"
+
+jobs:
+  lint-typecheck:
+    name: lint-typecheck
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup
+      - name: ESLint and Prettier
+        run: npm run lint
+      - name: TypeScript
+        run: npm run typecheck
+
+  unit-tests:
+    name: unit-tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup
+      - name: Vitest with coverage
+        run: npm run test:coverage
+      - name: Coverage summary
+        if: always()
+        run: |
+          # shellcheck disable=SC2016 # the JavaScript template literals are meant literally
+          node -e '
+            const t = require("./coverage/coverage-summary.json").total;
+            const row = (k) => `| ${k} | ${t[k].pct}% | ${t[k].covered}/${t[k].total} |`;
+            console.log(["### Unit test coverage", "", "| | % | covered |", "|---|---|---|",
+              ...["statements", "branches", "functions", "lines"].map(row)].join("\n"));
+          ' >> "$GITHUB_STEP_SUMMARY"
+
+  database:
+    name: database
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: supabase/setup-cli@689adcfb80d947100a1eab127289b97d1fb07b13 # v3.2.0
+        with:
+          version: 2.115.0
+      - name: Start the local database
+        run: supabase db start
+      - name: Apply every migration and the seed from scratch
+        run: supabase db reset
+      - name: pgTAP and RLS tests
+        run: supabase test db
+      - name: No schema drift (migrations match the database)
+        run: |
+          supabase db diff --schema public | tee diff.sql
+          if grep -qvE '^\s*(--.*)?$' diff.sql; then
+            echo "::error::supabase db diff is not empty: the schema differs from the migrations."
+            exit 1
+          fi
+
+  migration-safety:
+    name: migration-safety
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Block destructive statements
+        env:
+          BASE_REF: origin/${{ github.base_ref }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: node scripts/check-migrations.mjs
+
+  build:
+    name: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    outputs:
+      service-role-key: ${{ steps.keys.outputs.service-role-key }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/supabase
+      - name: next build
+        run: npm run build
+      # The local Supabase keys are the CLI's public demo keys, not secrets. The
+      # security job needs the value to prove it never reaches the client bundle.
+      - name: Expose the local service role key
+        id: keys
+        run: |
+          key=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' .env.local | cut -d= -f2-)
+          echo "service-role-key=$key" >> "$GITHUB_OUTPUT"
+      - name: Upload the build
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: next-build
+          path: |
+            .next
+            !.next/cache
+          include-hidden-files: true
+          retention-days: 3
+
+  e2e:
+    name: e2e (${{ matrix.suite }})
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - suite: desktop
+            projects: --project=desktop
+            browsers: chromium
+          - suite: mobile
+            projects: --project=mobile
+            browsers: chromium
+          - suite: cross-browser
+            projects: --project=smoke --project=webkit-smoke --project=firefox-smoke
+            browsers: chromium webkit firefox
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/supabase
+      - uses: ./.github/actions/browsers
+        with:
+          browsers: ${{ matrix.browsers }}
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: next-build
+          path: .next
+      - name: Playwright
+        run: npx playwright test ${{ matrix.projects }}
+      - name: Upload the report and traces
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-${{ matrix.suite }}
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7
+
+  seo-geo:
+    name: seo-geo
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/supabase
+      - uses: ./.github/actions/browsers
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: next-build
+          path: .next
+      - name: SEO and GEO tests (llms.txt, AI crawlers, structured data)
+        run: npm run test:seo
+      - name: Upload the report
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-seo
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7
+
+  visual:
+    name: visual
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/supabase
+      - uses: ./.github/actions/browsers
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: next-build
+          path: .next
+      - name: Pixel diff against the design PNGs (under 2% per page)
+        run: npm run test:visual
+      - name: Upload the diff images
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: visual-diffs
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7
+
+  lighthouse:
+    name: lighthouse
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/supabase
+      - uses: ./.github/actions/browsers
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: next-build
+          path: .next
+      - name: Lighthouse, median of 3 mobile runs
+        env:
+          LH_RUNS: "3"
+        run: npm run test:lighthouse
+      - name: Upload the Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: lighthouse
+          path: test-results/lighthouse
+          retention-days: 7
+
+  security:
+    name: security
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+      - name: npm audit (high and critical)
+        run: npm run audit
+      - name: Secret scan of the new commits (gitleaks)
+        env:
+          RANGE: >-
+            ${{ github.event_name == 'pull_request'
+              && format('origin/{0}..{1}', github.base_ref, github.event.pull_request.head.sha)
+              || format('{0}..{1}', github.event.before, github.sha) }}
+        run: |
+          if ! git rev-parse -q --verify "${RANGE%%..*}^{commit}" >/dev/null; then RANGE="${RANGE##*..}"; fi
+          echo "Scanning $RANGE"
+          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/repo" \
+            ghcr.io/gitleaks/gitleaks:v8.28.0@sha256:cdbb7c955abce02001a9f6c9f602fb195b7fadc1e812065883f695d1eeaba854 \
+            git /repo --redact --no-banner --log-opts="$RANGE"
+      - name: Dependency review
+        if: github.event_name == 'pull_request'
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: high
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: next-build
+          path: .next
+      - name: No server secret in the client bundle
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: ${{ needs.build.outputs.service-role-key }}
+        run: npm run check:secrets
+
+  ci-gate:
+    name: ci-gate
+    if: always()
+    needs:
+      [
+        lint-typecheck,
+        unit-tests,
+        database,
+        migration-safety,
+        build,
+        e2e,
+        seo-geo,
+        visual,
+        lighthouse,
+        security,
+      ]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Every required job passed
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          echo "$NEEDS" | jq -r 'to_entries[] | "\(.key): \(.value.result)"'
+          # migration-safety only runs on pull requests; every other job must succeed.
+          failed=$(echo "$NEEDS" | jq -r '[to_entries[]
+            | select(.value.result != "success")
+            | select((.key == "migration-safety" and .value.result == "skipped") | not)
+            | .key] | join(", ")')
+          if [ -n "$failed" ]; then
+            echo "::error::Not passed: $failed"
+            exit 1
+          fi
